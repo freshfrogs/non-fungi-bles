@@ -846,7 +846,7 @@
           // ==> MUSHROOM_1
 
           overlay_one = getRandomInt(1, 2);
-          overlay_two = getRandomInt(1, 2);
+          overlay_two = getRandomInt(1, 3);
 
           // Generate Stem => 
           mushroom_1_stem_type = getRandomInt(1, mushroom_1_stems.length);
@@ -916,6 +916,15 @@
             mushroom_1_spore.src = './non-fungi-bles/mushroom_1/Spores/'+mushroom_1_spores[mushroom_1_spore_type-1]+'.png';
             mushroom_1_spore.className = 'mushroom_img';
             mushroom_1_spore.alt = mushroom_1_spores[mushroom_1_spore_type-1];
+            destination.appendChild(mushroom_1_spore);
+
+          } else if (overlay_two == 3) {
+
+            // Generate Spores => 
+            mushroom_1_spore = document.createElement('img');
+            mushroom_1_spore.src = './non-fungi-bles/spiral.png';
+            mushroom_1_spore.className = 'mushroom_img';
+            mushroom_1_spore.alt = 'spiral';
             destination.appendChild(mushroom_1_spore);
 
           }
