@@ -930,7 +930,7 @@
           token_img = './mushroom/'+token+'.png'
           token_name = '#'+token
 
-          document.getElementById('mint_token').innerHTML = '<strong>'+token_name+'</strong>10,000 supply'//+token_type;
+          //document.getElementById('mint_token').innerHTML = '<strong>'+token_name+'</strong>10,000 supply'//+token_type;
           document.getElementById('mint_token').removeAttribute('href');
 
           document.getElementById('mint_total').innerHTML = '<strong>MINT</strong>Ξ<b id="mint_total_actual">'+(mint_price*mint_quantity)+'</b> +gas';
@@ -950,7 +950,7 @@
       <header id="thisheader">
         <div class="downloads pre">
           <ul class="downloads2">
-            <li><a id="mint_token" class="pointer" href=""><strong>MINT</strong>Ξ0.01 +gas</a></li>
+            <li><a id="mint_token" class="pointer" href=""><strong>MINT</strong>$1 +gas</a></li>
             <li><a id="mint_total" class="pointer" href="https://etherscan.io/token/0xbe4bef8735107db540de269ff82c7de9ef68c51b"><strong>Etherscan</strong>view on</a></li>
             <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/fresh-frogs" target="_blank"><strong>OpenSea</strong>view on</a></li>
           </ul>
