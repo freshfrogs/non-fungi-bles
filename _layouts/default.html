@@ -765,7 +765,7 @@
           document.querySelector("#mint_total").addEventListener("click", async (e) => {
 
             console.log('Sending mint transaction!');
-            console.log(mint_quantity+' FROGS @ Ξ'+mint_price+' : ['+(mint_price*mint_quantity)+']');
+            console.log(mint_quantity+' Mushrooms @ Ξ'+mint_price+' : ['+(mint_price*mint_quantity)+']');
             
             try {
                 
@@ -888,7 +888,7 @@
         }
         
         document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity);
-        consoleOutput('<br>'+'<strong>Connected!</strong> <acc style="color: #333 !important;">[ '+truncateAddress(user_address)+' ]</acc><br>'+'Mushroom #'+mint_id+' is now available to mint!<br>Maximum of <u>'+mint_limit+'</u> Frogs @ Ξ'+mint_price+'<br>'+'<p></p>')
+        consoleOutput('<br>'+'<strong>Connected!</strong> <acc style="color: #333 !important;">[ '+truncateAddress(user_address)+' ]</acc><br>'+'Mushroom #'+mint_id+' is now available to mint!<br>Maximum of <u>'+mint_limit+'</u> Mushrooms @ Ξ'+mint_price+'<br>'+'<p></p>')
 
       }
 
