@@ -293,11 +293,6 @@
     padding: 0px !important;
     overflow: hidden;
     margin-bottom: 16px;
-    float: none !important;
-    width: 100% !important;
-    height: 100% !important;
-    margin-left: auto;
-    margin-right: auto;
   }
   header {
     overflow: hidden;
@@ -408,9 +403,15 @@
     image-rendering: pixelated;
     overflow: hidden;
     position: absolute;
-    width: 512px;
-    height: 512px;
+    width: 256px;
+    height: 256px;
     border-radius: 5px;
+    margin: -64px;
+  }
+  .frogImg4:hover{
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1);
   }
   .frogImg5 {
     transition: all .2s;
@@ -639,13 +640,14 @@
     width: 90%;
   }
   .mushroom_frame {
-    width: 512px;
-    height: 512px;
+    width: 128px;
+    height: 128px;
     border-radius: 5px;
-    margin: -16px;
+    margin: 8px;
     padding: 0px;
     overflow: hidden;
     display: inline-block;
+    margin-bottom: 16px;
   }
 </style>
 <html lang="{{ site.lang | default: "en-US" }}">
@@ -693,9 +695,264 @@
 
       document.addEventListener("DOMContentLoaded", async () => {
 
-        recent_fungi(5)
+        recent_fungi(10)
+
+        const web3 = new Web3(window.ethereum);
+        const f0 = new F0();
+
+        COLLECTION = collection = new web3.eth.Contract(token_abi, CONTRACT_ADDRESS);
+
+        fetch_opensea_data();
+
+        try { // Connect
+
+          await f0.init({
+
+            web3: web3,
+            contract: CONTRACT_ADDRESS,
+            network: NETWORK
+
+          })
+
+          // Assign variables
+
+          user_address = await web3.currentProvider.selectedAddress;
+          user_invites = await f0.myInvites();
+          user_inviteKeys = Object.keys(user_invites);
+          user_invite = "0x0000000000000000000000000000000000000000000000000000000000000000";
+
+          user_tokens = await collection.methods.balanceOf(user_address).call();
+
+          contract_name = await f0.api.name().call();
+          contract_symbol = await f0.api.symbol().call();
+          contract_id = await f0.api.nextId().call();
+          mint_id = contract_id = parseInt(contract_id);
+
+          if (opensea_failed){
+
+            display_token(contract_id);
+            console.log('Nex token_id : ' + contract_id);
+
+          }
+
+          getInvites();
+
+          console.log('Connected  Smart Contract : '+contract_name+' ('+contract_symbol+')');
+          console.log('Ethereum : '+contract_address);
+          console.log('Connected User : '+user_address);
+
+          // Update minting ui
+
+          // Remove token from minting tray
+
+          document.querySelector("#remove_token").addEventListener("click", async (e) => {
+            if (mint_quantity <= 1) {
+              return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
+            } else {
+              mint_quantity = mint_quantity - 1;
+              document.getElementById('mint_total_actual').innerHTML = (1*mint_quantity);
+              document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
+            }
+          })
+
+          // Add token to minting tray mint_total
+
+          document.querySelector("#add_token").addEventListener("click", async (e) => {
+            if (mint_quantity >= 9) {
+              return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
+            } else {
+              mint_quantity = mint_quantity + 1;
+              document.getElementById('mint_total_actual').innerHTML = (1*mint_quantity);
+              document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
+            }
+
+            //if (mint_quantity <= (mint_limit - user_tokens)) {
+            //} else { console.log('User mint limit reached!'); console.log('Mint Limit '+mint_limit+' : '+user_tokens+' User Tokens'); }
+
+          })
+
+          // Send mint transaction to provider!
+
+          document.querySelector("#mint_total").addEventListener("click", async (e) => {
+
+            console.log('Sending mint transaction!');
+            console.log(mint_quantity+' Mushrooms @ Ξ'+mint_price+' : ['+(mint_price*mint_quantity)+']');
+            
+            try {
+                
+              consoleOutput('<br>'+'<strong>Minting ('+mint_quantity+') Mushroom Token(s)...</strong>'+'<br>'+'Please sign the transaction and wait...<br>Do not leave or refresh the page!'+'<p></p>')
+              document.getElementById('pre').style.backgroundColor = '#99ffc5'
+                
+              let tokens = await f0.mint(user_invite, mint_quantity)
+              
+              // AWAIT RESPONSE!
+
+              consoleOutput('<br>'+'<strong>Congratulations</strong><br><b>'+mint_quantity+' Mushroom Token(s)</b> successfully minted!'+'<p></p>');
+              document.getElementById('pre').style.backgroundColor = '#99ffc5'
+              return; // BREAK!
+
+            } catch (e) {
+                
+              // Something went wrong!
+              
+              consoleOutput('<br><p>'+e.message+'</p><a href="https://discord.gg/xWMFWgpvd3" target="_blank" class="pointer"><strong><u>Discord #Support</u></strong></a>')
+              document.getElementById('pre').style.backgroundColor = '#ff99b6'
+              return; // BREAK!
+
+            }
+
+          })
+
+        } catch (e) { consoleOutput('<strong></strong><br>Wallet failed to connect..<br>'+e.message+'<a class="pointer" href="https://freshfrogs.io/"><b id="connected">🔌 Connect Wallet</b></a>'); }
 
       })
+
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
+      }
+
+      function consoleOutput(output) {
+        document.getElementById("pre").innerHTML = output
+      }
+
+      function truncateAddress(address) {
+        if (!address) {
+          return "";
+        }
+        return `${address.substr(0, 5)}...${address.substr(
+          address.length - 5,
+          address.length
+        )}`;
+      }
+
+      /*
+        Fetch OpenSea collection data
+      */
+
+      function fetch_opensea_data() {
+
+        // Collection variables
+        // Trait list and rarities
+
+        fetch('https://api.opensea.io/api/v1/collection/non-fungi-bles', options)
+        .then(collection => collection.json())
+        .then(collection => {
+
+          var { collection: { banner_image_url, created_date, description, dev_seller_fee_basis_points, external_url, featured_image_url, name, payout_address, traits, stats: { floor_price, market_cap, total_volume, count, num_owners } } } = collection
+
+          traits_list = traits;
+
+        })
+        .catch(e => {
+
+            console.log('Error: Could not talk to Opensea. (1)');
+            console.error('Error : ' + e.message)
+      
+        });
+        
+        // Pull next available token ID prior to web3 connection
+        //
+
+        fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&asset_contract_address=0x4aFd4635417132892A4eA9CAE128d03e803317fD&limit=12&include_orders=false', options)
+        .then((assets) => assets.json())
+        .then((assets) => {
+
+          var { assets } = assets
+          var contract_id = mint_id = parseInt(assets[0].name.replace('Mushroom #', '')) + 1;
+
+          display_token(contract_id);
+          console.log('Nex token_id : ' + contract_id);
+
+        })
+        .catch(e => {
+
+          opensea_failed = true;
+          console.log('Error: Could not talk to Opensea. (2)');
+          console.error('Error : ' + e.message)
+
+        });
+
+      }
+
+      // Check invites
+      async function getInvites() {
+
+        mint_price = JSON.stringify(user_invites[user_invite].condition.converted.eth, user_invite, 1);
+        mint_limit = JSON.stringify(user_invites[user_invite].condition.converted.limit, user_invite, 1);
+
+        for (var i = 0; i < 10; i++) { 
+
+          if (user_inviteKeys[i] === "0x27e18d050c101c6caf9693055d8be1f71d62e8639a2f3b84c75403a667f3e064") {
+
+            if (user_address.toString().toLowerCase() === "0x97648BB89f2C5335fDeCE9edeEBB8d88FA3D0A38".toLowerCase() || user_address.toString().toLowerCase() === "0xCeed98bF7F53f87E6bA701B8FD9d426A2D28b359_0".toLowerCase() || user_address.toString().toLowerCase() === "0xF01e067d442f4254cd7c89A5D42d90ad554616E8".toLowerCase() || user_address.toString().toLowerCase() === "0x8Fe45D16694C0C780f4c3aAa6fCa2DDB6E252B25".toLowerCase()) {
+
+              user_invite = "0x27e18d050c101c6caf9693055d8be1f71d62e8639a2f3b84c75403a667f3e064";
+              mint_price = JSON.stringify(user_invites[user_invite].condition.converted.eth, user_invite, 1);
+              mint_limit = JSON.stringify(user_invites[user_invite].condition.converted.limit, user_invite, 1);
+
+              break;
+
+            }
+          }
+        }
+        
+        document.getElementById('mint_total_actual').innerHTML = (1*mint_quantity);
+        consoleOutput('<br>'+'<strong>Connected!</strong> <acc style="color: #333 !important;">[ '+truncateAddress(user_address)+' ]</acc><br>'+'Mushroom #'+mint_id+' is now available to mint!<br>Maximum of <u>'+mint_limit+'</u> Mushrooms @ Ξ'+mint_price+'<br>'+'<p></p>')
+
+      }
+
+      function load_trait(trait, attribute, where) {
+        newAttribute = document.createElement("img")
+        newAttribute.href = "https://opensea.io/collection/fresh-frogs?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]="+trait+"&search[stringTraits][0][values][0]="+attribute
+        newAttribute.id = attribute
+        newAttribute.target = "_blank"
+        if (where == 'frogContainer4') {
+          newAttribute.className = "frogImg4" //shadesAnimation
+        } else {
+          newAttribute.className = "frogImg2" //shadesAnimation
+        }
+        
+        //newAttribute.style.cursor = "pointer"
+        if (attribute === "smoking" || attribute === "smokingPipe" || attribute === "smokingCigar") { 
+          newAttribute.src = "https://freshfrogs.io/the-pond/"+trait+"/"+attribute+"2.gif"
+        //} else if (attribute === "tongueFly") { 
+        //  newAttribute.src = "https://freshfrogs.io/the-pond/"+trait+"/"+attribute+".gif"
+        } else if (attribute === "cyan_tongueFly") { 
+          newAttribute.src = "https://freshfrogs.io/the-pond/"+trait+"/"+attribute+".gif"
+        } else if (attribute === "morphAnimation") {
+          newAttribute.src = "https://freshfrogs.io/the-pond/Frog/loadMorph.gif"
+        } else if (attribute === "shadesAnimation") {
+          newAttribute.src = "https://freshfrogs.io/the-pond/Eyes/shadesAnimation.gif"
+        } else if (attribute.includes("croaking2")) {
+          console.log('! '+trait+' / '+attribute)
+          newAttribute.src = "https://freshfrogs.io/the-pond/"+trait+"/"+attribute+".gif"
+        } else {
+          newAttribute.src = "https://freshfrogs.io/the-pond/"+trait+"/"+attribute+".png"
+        }
+        newAttribute.alt = attribute
+        document.getElementById(where).appendChild(newAttribute)
+      }
+
+      // Display Frog
+      async function display_token(token){
+
+          token_img = './mushroom/'+token+'.png'
+          token_name = 'ID #'+token
+
+          document.getElementById('mint_token').innerHTML = '<strong>'+token_name+'</strong>10,000 supply'//+token_type;
+          document.getElementById('mint_token').removeAttribute('href');
+
+          document.getElementById('mint_total').innerHTML = '<strong>MINT</strong>$<b id="mint_total_actual">1</b> +gas';
+          document.getElementById('mint_total').removeAttribute('href');
+
+          document.getElementById('mint_quantity').innerHTML = '<strong><b id="remove_token">-</b> <b id="mint_quantity_actual">'+mint_quantity+'</b> <b id="add_token">+</b></strong>quantity';
+          document.getElementById('mint_quantity').removeAttribute('href');
+          
+          document.getElementById('previewImg').setAttribute('src', token_img)
+
+      }
 
       async function recent_fungi(thisMany) {
 
@@ -704,7 +961,7 @@
           let mushroomFrame = document.createElement('div');
           mushroomFrame.id = 'Mushroom #'+tokenId;
           mushroomFrame.className = 'mushroom_frame';
-         // mushroomFrame.innerHTML = '<b>Mushroom #'+tokenId+'</b>';
+          mushroomFrame.innerHTML = '<b>Mushroom #'+tokenId+'</b>';
           document.getElementById('thePad').appendChild(mushroomFrame);
 
           var metadata = await (await fetch("./mushroom/json/"+tokenId+".json")).json();
@@ -750,9 +1007,36 @@
     </script>
   </head>
   <body class="bodyb">
-    <section id="thePad">
-      <div class="top">{{ content }}</div>
-    </section>
+    <div class="wrapper">
+      <header id="thisheader">
+        <div class="downloads pre">
+          <ul class="downloads2">
+            <li><a id="mint_token" class="pointer" href=""><strong>Connect</strong>wallet</a></li>
+            <li><a id="mint_total" class="pointer" href="https://etherscan.io/token/0xbe4bef8735107db540de269ff82c7de9ef68c51b"><strong>Etherscan</strong>view on</a></li>
+            <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/fresh-frogs" target="_blank"><strong>OpenSea</strong>view on</a></li>
+          </ul>
+          <div class="bigContainer">
+            <img id="previewImg" class="frogImgMint" src="logo.png"/>
+          </div>
+        </div>
+      </header>
+      <section>
+        <div class="top">{{ content }}</div>
+        <div class="downloads pre">
+          <div id="netStatus" class="netStatus">
+            <div id="recent_mints" class="recent_mints"><img src="blacknwhite.png" class="recentMint" id="displayImg3"></div>
+            <h1 style="color: white !important;">"Non-Fungi-bles" (FNGI)</h1>
+            <p style="padding: 10%; padding-top: 0%; padding-bottom: 0%;">A collection of 10,000 unique pixelated fungi growing on the Ethereum blockchain! Verified and stored on IPFS!</p>
+            opensea.io/collection/non-fungi-bles<a class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><b id="connected">Shop on OpenSea ⛵</b></a>
+            <hr class="hr2"><a class="pointer" href="https://freshfrogs.io/"><b>Fresh Frogs! 🐸</b></a>
+            <br>
+            <div id="pre" class="mintingTextWhite2"><strong></strong><br>Waiting to Connect Web3...<a class="pointer" href="https://freshfrogs.io/"><b id="connected">Connect Wallet 🔌</b></a></div>
+          </div>
+          <br>
+          <div id="thePad" class="thePad"></div>
+        </div>
+      </section>
+    </div>
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
   </body>
 </html>
