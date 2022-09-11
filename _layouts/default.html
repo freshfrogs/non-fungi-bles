@@ -954,7 +954,7 @@
       async function recent_fungi(thisMany) {
 
         for (var j = 1; j < thisMany; j++) {
-          tokenId;
+          let tokenId = getRandomInt(1, 10000);
           let mushroomFrame = document.createElement('div');
           mushroomFrame.id = 'Mushroom #'+tokenId;
           mushroomFrame.className = 'mushroom_frame';
@@ -967,6 +967,13 @@
           }
         }
 
+      }
+
+      // Random Int
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
       }
 
       // loadTrait(_trait(family), _attribute(type), _where(element))
