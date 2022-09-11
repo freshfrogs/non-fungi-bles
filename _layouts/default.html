@@ -960,6 +960,7 @@
           let mushroomFrame = document.createElement('div');
           mushroomFrame.id = 'Mushroom #'+tokenId;
           mushroomFrame.className = 'mushroom_frame';
+          mushroomFrame.innerHTML = '<b>Mushroom #'+tokenId+'</b>';
           document.getElementById('thePad').appendChild(mushroomFrame);
 
           var metadata = await (await fetch("./mushroom/json/"+tokenId+".json")).json();
