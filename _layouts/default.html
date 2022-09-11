@@ -924,15 +924,10 @@
       // Display Frog
       async function display_token(token){
 
-          token_img = 'https://freshfrogs.io/frog/'+token+'.png'
+          token_img = './mushroom/'+token+'.png'
           token_name = 'Mushroom #'+token
 
-          document.getElementById('thisheader').style.backgroundImage = 'url('+token_img+')';
-          document.getElementById('thisheader').style.backgroundSize = "2048px 2048px";
-
-          var this_place = 'frogContainer4';
-
-          document.getElementById('mint_token').innerHTML = '<strong>'+token_name+'</strong>4040 supply'//+token_type;
+          document.getElementById('mint_token').innerHTML = '<strong>'+token_name+'</strong>10,000 supply'//+token_type;
           document.getElementById('mint_token').removeAttribute('href');
 
           document.getElementById('mint_total').innerHTML = '<strong>MINT</strong>Ξ<b id="mint_total_actual">'+(mint_price*mint_quantity)+'</b> +gas';
@@ -940,19 +935,8 @@
 
           document.getElementById('mint_quantity').innerHTML = '<strong><b id="remove_token">-</b> <b id="mint_quantity_actual">'+mint_quantity+'</b> <b id="add_token">+</b></strong>quantity';
           document.getElementById('mint_quantity').removeAttribute('href');
-
-          document.getElementById('frogContainer4').innerHTML = '';
           
-          try {
-
-            var metadata = await (await fetch("https://freshfrogs.io/frog/json/"+token+".json")).json();
-          
-            for (var i = 0; i < metadata.attributes.length; i++) {
-              var data = metadata.attributes[i];
-              load_trait(data.trait_type, data.value, this_place);
-            }
-
-          } catch (e) { console.log('MetaData Fetch Failed! ' + e.message); }
+          document.getElementById('previewImg').setAttribute('src', token_img)
 
       }
 
