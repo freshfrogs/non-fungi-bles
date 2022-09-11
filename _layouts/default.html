@@ -682,10 +682,6 @@
 
       document.addEventListener("DOMContentLoaded", async () => {
 
-        document.getElementById('displayImg1').setAttribute('src', './mushroom/'+getRandomInt(1, 10000)+'.png');
-        document.getElementById('displayImg2').setAttribute('src', './mushroom/'+getRandomInt(1, 10000)+'.png');
-        document.getElementById('displayImg3').setAttribute('src', './mushroom/'+getRandomInt(1, 10000)+'.png');
-
         const web3 = new Web3(window.ethereum);
         const f0 = new F0();
 
@@ -955,7 +951,7 @@
             <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/fresh-frogs" target="_blank"><strong>OpenSea</strong>view on</a></li>
           </ul>
           <div class="bigContainer">
-            <img id="previewImg" class="frogImgMint" src="https://freshfrogs.io/assets/frogs/FLY.gif"/>
+            <img id="previewImg" class="frogImgMint" src="logo.png"/>
           </div>
         </div>
       </header>
