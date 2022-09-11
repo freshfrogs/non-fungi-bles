@@ -294,8 +294,8 @@
     overflow: hidden;
     margin-bottom: 16px;
     float: none !important;
-    width: 1500px;
-    height: 500px;
+    width: 1500px !important;
+    height: 500px !important;
     margin-left: auto;
     margin-right: auto;
   }
@@ -408,10 +408,10 @@
     image-rendering: pixelated;
     overflow: hidden;
     position: absolute;
-    width: 256px;
-    height: 256px;
+    width: 128px;
+    height: 128px;
     border-radius: 5px;
-    margin: -64px;
+    margin: 8px;
   }
   .frogImg4:hover{
     -ms-transform: scale(1.1); /* IE 9 */
@@ -700,7 +700,7 @@
 
       document.addEventListener("DOMContentLoaded", async () => {
 
-        recent_fungi(10)
+        recent_fungi(404)
 
       })
 
