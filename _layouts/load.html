@@ -886,7 +886,7 @@
       // Display Frog
       async function display_token(token){
 
-          token_img = './mushroom/'+token+'.png'
+          token_img = '../mushroom/'+token+'.png'
           token_name = '#'+token
 
           document.getElementById('mint_token').innerHTML = '<strong>Mushroom</strong>'+token_name//+token_type;
@@ -921,7 +921,7 @@
       function loadTrait(trait, attribute, where) {
 
         newAttribute = document.createElement("img");
-        newAttribute.src = "./mushroom/layers/"+trait+"/"+attribute+".png";
+        newAttribute.src = "../mushroom/layers/"+trait+"/"+attribute+".png";
         newAttribute.alt = attribute
 
         if (where.includes('cont_')) {
