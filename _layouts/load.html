@@ -158,7 +158,7 @@
   .bigContainer {
     overflow: hidden;
     width: 256px;
-    height: auto;
+    height: 256px;
     image-rendering: pixelated !important;
     border: 1px solid black;
     margin-top: 16px;
@@ -167,25 +167,40 @@
     margin-right: auto;
   }
   .containerMint {
-    width: 256px;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    background-color: transparent;
-    display: flex;
-    overflow: hidden;
+      width: auto;
+      margin-bottom: 0px;
+      margin-top: 0px;
+      background-color: transparent;
+
+      display: -webkit-box;
+      -webkit-box-orient: horizontal;
+      -webkit-box-pack: center;
+      -webkit-box-align: center;
+
+      display: -moz-box;
+      -moz-box-orient: horizontal;
+      -moz-box-pack: center;
+      -moz-box-align: center;
+
+      display: box;
+      box-orient: horizontal;
+      box-pack: center;
+      box-align: center;
+      overflow: hidden;
   }
 
   .imgWrapperMint {
-    -webkit-box-flex: 13;
-    -moz-box-flex: 1;
-    box-flex: 1;
-    overflow: hidden;
+      -webkit-box-flex: 13;
+      -moz-box-flex: 1;
+      box-flex: 1;
+      overflow: hidden;
   }
-  .mintImg {
-    transition: transform .2s;
-    width: auto;
-    image-rendering: pixelated;
-    overflow: hidden;
+  .frogImgMint {
+      transition: transform .2s;
+      width: 256px;
+      height: 256px;
+      image-rendering: pixelated;
+      overflow: hidden;
   }
   .headLine{
     color: transparent;
@@ -685,26 +700,6 @@
     padding: 1px;
     float: none;
   }
-  .mintImg {
-    width: auto;
-  }
-  .mintImgWrapper {
-    display: inline-flex;
-  }
-  .mushroomImgMint {
-    transition: transform .2s;
-    width: auto;
-    display: block;
-    image-rendering: pixelated;
-    overflow: hidden;
-  }
-  .mushroomImgMint:hover{
-    -ms-transform: scale(1.5); /* IE 9 */
-    -webkit-transform: scale(1.5); /* Safari 3-8 */
-    transform: scale(1.5);
-    box-shadow: none;
-    border: none;
-  }
 </style>
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
@@ -806,18 +801,6 @@
             if (mint_quantity <= 1) {
               return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
             } else {
-
-              if (mint_quantity >= 7) {
-                select = document.getElementById("mushroomContainer");
-                select.removeChild(select.lastChild);
-              } else if (mint_quantity >= 4) {
-                select = document.getElementById("mushroomContainer2");
-                select.removeChild(select.lastChild);
-              } else if (mint_quantity >= 2) {
-                select = document.getElementById("mushroomContainer3");
-                select.removeChild(select.lastChild);
-              }
-
               mint_quantity = mint_quantity - 1;
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 4);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
@@ -827,33 +810,15 @@
           // Add token to minting tray mint_total
 
           document.querySelector("#add_token").addEventListener("click", async (e) => {
-            if (mint_quantity >= 9) {
-              return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
+            if (mint_quantity >= 10) {
+              return; // Quantity always greater than or equal to 1 AND always less than or equal to 10;
             } else {
-
-              if (mint_quantity <= 2) {
-                newMushroom = document.createElement("img")
-                newMushroom.className = "mushroomImgMint"
-                newMushroom.src = "../mushroom/"+(contract_id+mint_quantity)+".png"
-                document.getElementById("mushroomContainer3").appendChild(newMushroom)
-              } else if (mint_quantity <= 5) {
-                newMushroom = document.createElement("img")
-                newMushroom.className = "mushroomImgMint"
-                newMushroom.src = "../mushroom/"+(contract_id+mint_quantity)+".png"
-                document.getElementById("mushroomContainer2").appendChild(newMushroom)
-              } else if (mint_quantity <= 8) {
-                newMushroom = document.createElement("img")
-                newMushroom.className = "mushroomImgMint"
-                newMushroom.src = "../mushroom/"+(contract_id+mint_quantity)+".png"
-                document.getElementById("mushroomContainer").appendChild(newMushroom)
-              }
-              
               mint_quantity = mint_quantity + 1;
               priceupdate = (mint_price*mint_quantity).toFixed(3)
               console.log(priceupdate);
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 6);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
-
+              document.getElementById('previewImg').setAttribute('src', '../mushroom/'+(contract_id+mint_quantity)+'.png');
             }
 
             //if (mint_quantity <= (mint_limit - user_tokens)) {
@@ -961,7 +926,7 @@
         }
         
         document.getElementById('mint_total_actual').innerHTML = mint_price*mint_quantity;
-        consoleOutput('<br>'+'<strong>Connected!</strong> <acc style="color: #333 !important;">[ '+truncateAddress(user_address)+' ]</acc><br>'+'Mushroom #'+mint_id+' is now available to mint!<br>Max of <u>'+mint_limit+'</u> Mushrooms per Wallet<br>'+'<p></p>')
+        consoleOutput('<br>'+'<strong>Connected!</strong> <acc style="color: #333 !important;">[ '+truncateAddress(user_address)+' ]</acc><br>'+'Mushroom #'+mint_id+' is now available to mint!<br>Maximum of <u>'+mint_limit+'</u> Mushrooms @ Ξ'+mint_price+'<br>'+'<p></p>')
 
       }
 
@@ -1073,11 +1038,7 @@
             <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><strong>OpenSea</strong>view on</a></li>
           </ul>
           <div class="bigContainer">
-            <div id="mushroomContainer3" class="containerMint">
-              <img id="previewImg" class="mushroomImgMint" src="../blacknwhite.png"/>
-            </div>
-            <div id="mushroomContainer2" class="containerMint"></div>
-            <div id="mushroomContainer" class="containerMint"></div>
+            <img id="previewImg" class="frogImgMint" src="../blacknwhite.png"/>
           </div>
         </div>
       </header>
