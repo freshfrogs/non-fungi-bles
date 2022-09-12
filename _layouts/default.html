@@ -721,14 +721,8 @@
           contract_id = await f0.api.nextId().call();
           mint_id = contract_id = parseInt(contract_id);
 
-          if (opensea_failed){
-
-            display_token(contract_id);
-            console.log('Nex token_id : ' + contract_id);
-
-          }
-
           getInvites();
+          display_token(mint_id);
 
           console.log('Connected  Smart Contract : '+contract_name+' ('+contract_symbol+')');
           console.log('Ethereum : '+contract_address);
@@ -825,25 +819,6 @@
       */
 
       function fetch_opensea_data() {
-
-        // Collection variables
-        // Trait list and rarities
-
-        fetch('https://api.opensea.io/api/v1/collection/non-fungi-bles', options)
-        .then(collection => collection.json())
-        .then(collection => {
-
-          var { collection: { banner_image_url, created_date, description, dev_seller_fee_basis_points, external_url, featured_image_url, name, payout_address, traits, stats: { floor_price, market_cap, total_volume, count, num_owners } } } = collection
-
-          traits_list = traits;
-
-        })
-        .catch(e => {
-
-            console.log('Error: Could not talk to Opensea. (1)');
-            console.error('Error : ' + e.message)
-      
-        });
         
         // Pull next available token ID prior to web3 connection
         //
@@ -861,7 +836,6 @@
         })
         .catch(e => {
 
-          opensea_failed = true;
           console.log('Error: Could not talk to Opensea. (2)');
           console.error('Error : ' + e.message)
 
