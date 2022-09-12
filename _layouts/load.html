@@ -719,127 +719,11 @@
           contract_id = await f0.api.nextId().call();
           mint_id = contract_id = parseInt(contract_id);
 
-          get_all_holders;
+          get_all_holders();
 
         } catch (e) { console.log(e.message); }
 
       })
-
-      function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min);
-      }
-
-      function consoleOutput(output) {
-        document.getElementById("pre").innerHTML = output
-      }
-
-      function truncateAddress(address) {
-        if (!address) {
-          return "";
-        }
-        return `${address.substr(0, 5)}...${address.substr(
-          address.length - 5,
-          address.length
-        )}`;
-      }
-
-      /*
-        Fetch OpenSea collection data
-      */
-
-      function fetch_opensea_data() {
-        
-        // Pull next available token ID prior to web3 connection
-        //
-
-        fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&asset_contract_address=0x4aFd4635417132892A4eA9CAE128d03e803317fD&limit=12&include_orders=false', options)
-        .then((assets) => assets.json())
-        .then((assets) => {
-
-          var { assets } = assets
-          var contract_id = mint_id = parseInt(assets[0].name.replace('Mushroom #', '')) + 1;
-
-          display_token(contract_id);
-          console.log('Nex token_id : ' + contract_id);
-
-          recent_fungi(contract_id);
-
-        })
-        .catch(e => {
-
-          console.log('Error: Could not talk to Opensea. (2)');
-          console.error('Error : ' + e.message)
-
-        });
-
-      }
-
-      // Check invites
-      async function getInvites() {
-
-        mint_price = JSON.stringify(user_invites[user_invite].condition.converted.eth, user_invite, 1);
-        mint_limit = JSON.stringify(user_invites[user_invite].condition.converted.limit, user_invite, 1);
-
-        for (var i = 0; i < 10; i++) { 
-
-          if (user_inviteKeys[i] === "0x8998b51794e854975484439f8d12ab4bb845d1378c538343c6014e01017bac31") {
-
-            //if (user_address.toString().toLowerCase() === "0x97648BB89f2C5335fDeCE9edeEBB8d88FA3D0A38".toLowerCase() || user_address.toString().toLowerCase() === "0xCeed98bF7F53f87E6bA701B8FD9d426A2D28b359_0".toLowerCase() || user_address.toString().toLowerCase() === "0xF01e067d442f4254cd7c89A5D42d90ad554616E8".toLowerCase() || user_address.toString().toLowerCase() === "0x8Fe45D16694C0C780f4c3aAa6fCa2DDB6E252B25".toLowerCase()) {
-
-              user_invite = "0x8998b51794e854975484439f8d12ab4bb845d1378c538343c6014e01017bac31";
-              mint_price = JSON.stringify(user_invites[user_invite].condition.converted.eth, user_invite, 1);
-              mint_limit = JSON.stringify(user_invites[user_invite].condition.converted.limit, user_invite, 1);
-
-              break;
-
-            //}
-          }
-        }
-        
-        document.getElementById('mint_total_actual').innerHTML = mint_price*mint_quantity;
-        consoleOutput('<br>'+'<strong>Connected!</strong> <acc style="color: #333 !important;">[ '+truncateAddress(user_address)+' ]</acc><br>'+'Mushroom #'+mint_id+' is now available to mint!<br>Maximum of <u>'+mint_limit+'</u> Mushrooms @ Ξ'+mint_price+'<br>'+'<p></p>')
-
-      }
-
-      // Display Frog
-      async function display_token(token){
-
-          token_img = './mushroom/'+token+'.png'
-          token_name = '#'+token
-
-          document.getElementById('mint_token').innerHTML = '<strong>Mushroom</strong>'+token_name//+token_type;
-          document.getElementById('mint_token').removeAttribute('href');
-
-          document.getElementById('mint_total').innerHTML = '<strong>MINT</strong>Ξ<b id="mint_total_actual">'+(mint_price*mint_quantity)+'</b> +gas';
-          document.getElementById('mint_total').removeAttribute('href');
-
-          document.getElementById('mint_quantity').innerHTML = '<strong><b id="remove_token">-</b> <b id="mint_quantity_actual">'+mint_quantity+'</b> <b id="add_token">+</b></strong>quantity';
-          document.getElementById('mint_quantity').removeAttribute('href');
-          
-          document.getElementById('previewImg').setAttribute('src', token_img)
-
-      }
-
-      async function recent_fungi(thisMany) {
-
-        for (var j = 1; j < 12; j++) {
-          let tokenId = thisMany - j; //getRandomInt(1, 10000);
-          let mushroomFrame = document.createElement('div');
-          mushroomFrame.id = 'Mushroom #'+tokenId;
-          mushroomFrame.className = 'mushroom_frame';
-          mushroomFrame.innerHTML = '<b>Mushroom #'+tokenId+'</b>';
-          document.getElementById('thePad').appendChild(mushroomFrame);
-
-          var metadata = await (await fetch("./mushroom/json/"+tokenId+".json")).json();
-          for (var i = 0; i < metadata.attributes.length; i++) {
-            var attribute = metadata.attributes[i];
-            loadTrait(attribute.trait_type, attribute.value, 'Mushroom #'+tokenId);
-          }
-        }
-
-      }
 
       async function get_all_holders() {
 
@@ -874,37 +758,6 @@
 
           console.log(arr);
         */
-
-      }
-
-      // Random Int
-      function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min);
-      }
-
-      // loadTrait(_trait(family), _attribute(type), _where(element))
-      function loadTrait(trait, attribute, where) {
-
-        newAttribute = document.createElement("img");
-        newAttribute.src = "./mushroom/layers/"+trait+"/"+attribute+".png";
-        newAttribute.alt = attribute
-
-        if (where.includes('cont_')) {
-          newAttribute.className = "frogImg3";
-
-        } else {
-          if (trait == 'Trait') {
-            newAttribute.className = "frogImg5";
-
-          } else {
-            newAttribute.className = "frogImg4";
-
-          }
-        }
-
-        document.getElementById(where).appendChild(newAttribute);
 
       }
 
