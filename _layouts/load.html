@@ -810,14 +810,23 @@
           // Add token to minting tray mint_total
 
           document.querySelector("#add_token").addEventListener("click", async (e) => {
-            if (mint_quantity >= 10) {
-              return; // Quantity always greater than or equal to 1 AND always less than or equal to 10;
+            if (mint_quantity >= 9) {
+              return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
             } else {
               mint_quantity = mint_quantity + 1;
               priceupdate = (mint_price*mint_quantity).toFixed(3)
               console.log(priceupdate);
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 6);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
+
+              //
+              displayToken = document.createElement('img');
+              displayToken.src = '../mushroom/'+(contract_id+mint_quantity)+'.png';
+              displayToken.className = 'mintImg'
+              document.getElementById('mintImgWrapper').appendChild(displayToken);
+
+              //
+
             }
 
             //if (mint_quantity <= (mint_limit - user_tokens)) {
@@ -1037,7 +1046,9 @@
             <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><strong>OpenSea</strong>view on</a></li>
           </ul>
           <div class="bigContainer">
-            <img id="previewImg" class="frogImgMint" src="../blacknwhite.png"/>
+            <div id="mintImgWrapper" class="mintImgWrapper">
+              <img id="previewImg" class="frogImgMint" src="../blacknwhite.png"/>
+            </div>
           </div>
         </div>
       </header>
