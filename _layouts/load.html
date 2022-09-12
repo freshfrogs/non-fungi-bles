@@ -195,12 +195,17 @@
       box-flex: 1;
       overflow: hidden;
   }
-  .frogImgMint {
-      transition: transform .2s;
-      width: 256px;
-      height: 256px;
-      image-rendering: pixelated;
-      overflow: hidden;
+  .mushroomImgMint {
+    transition: transform .2s;
+    width: 256px;
+    height: 256px;
+    image-rendering: pixelated;
+    overflow: hidden;
+  }
+  .mushroomImgMint:hover {
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1);
   }
   .headLine{
     color: transparent;
@@ -1075,7 +1080,7 @@
             <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><strong>OpenSea</strong>view on</a></li>
           </ul>
           <div class="bigContainer">
-            <img id="previewImg" class="frogImgMint" src="../blacknwhite.png"/>
+            <img id="previewImg" class="mushroomImgMint" src="../blacknwhite.png"/>
           </div>
         </div>
       </header>
