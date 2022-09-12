@@ -195,12 +195,18 @@
       box-flex: 1;
       overflow: hidden;
   }
-  .frogImgMint {
-      transition: transform .2s;
-      width: 256px;
-      height: 256px;
-      image-rendering: pixelated;
-      overflow: hidden;
+  .mushroomImgMint {
+    transition: all .2s;
+    width: 256px;
+    height: 256px;
+    image-rendering: pixelated;
+    overflow: hidden;
+  }
+  .mushroomImgMint:hover {
+    transition: all .2s;
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1);
   }
   .headLine{
     color: transparent;
@@ -799,11 +805,12 @@
 
           document.querySelector("#remove_token").addEventListener("click", async (e) => {
             if (mint_quantity <= 1) {
-              return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
+              return; // Quantity always greater than or equal to 1 AND always less than or equal to 10;
             } else {
               mint_quantity = mint_quantity - 1;
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 4);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
+              document.getElementById('previewImg').setAttribute('src', '../mushroom/'+((contract_id-1)+mint_quantity)+'.png');
             }
           })
 
@@ -818,10 +825,8 @@
               console.log(priceupdate);
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 6);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
+              document.getElementById('previewImg').setAttribute('src', '../mushroom/'+((contract_id-1)+mint_quantity)+'.png');
             }
-
-            //if (mint_quantity <= (mint_limit - user_tokens)) {
-            //} else { console.log('User mint limit reached!'); console.log('Mint Limit '+mint_limit+' : '+user_tokens+' User Tokens'); }
 
           })
 
@@ -925,7 +930,7 @@
         }
         
         document.getElementById('mint_total_actual').innerHTML = mint_price*mint_quantity;
-        consoleOutput('<br>'+'<strong>Connected!</strong> <acc style="color: #333 !important;">[ '+truncateAddress(user_address)+' ]</acc><br>'+'Mushroom #'+mint_id+' is now available to mint!<br>Maximum of <u>'+mint_limit+'</u> Mushrooms @ Ξ'+mint_price+'<br>'+'<p></p>')
+        consoleOutput('<br>'+'<strong>Connected!</strong> <acc style="color: #333 !important;">[ '+truncateAddress(user_address)+' ]</acc><br>'+'Mushroom #'+mint_id+' is now available to mint!<br>Max <u>'+mint_limit+'</u> Mushrooms per Wallet!<br>'+'<p></p>')
 
       }
 
@@ -1037,7 +1042,7 @@
             <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><strong>OpenSea</strong>view on</a></li>
           </ul>
           <div class="bigContainer">
-            <img id="previewImg" class="frogImgMint" src="../blacknwhite.png"/>
+            <img id="previewImg" class="mushroomImgMint" src="../blacknwhite.png"/>
           </div>
         </div>
       </header>
