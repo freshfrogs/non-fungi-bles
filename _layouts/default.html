@@ -759,6 +759,8 @@
             } else {
               mint_quantity = mint_quantity + 1;
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity);//.slice(0, 6);
+              let priceupdate = Math.round((mint_price*mint_quantity) * 100) / 100
+              console.log(priceupdate);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
             }
 
