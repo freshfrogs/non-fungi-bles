@@ -728,24 +728,24 @@
         var FrogHolders = [];
 
         try {
-        for (var i = 1; i < thisToken; i++) {
+          for (var i = 1; i < thisToken; i++) {
 
-          let owner = await collection.methods.ownerOf(i).call();
-          console.log(owner);
-          let FrogHoldersTotal = FrogHolders.length;
-          for (var j = 1; j < FrogHoldersTotal; j++) {
-            if (FrogHoldersTotal[j].toString().toLowerCase() == owner.toString().toLowerCase()) {
-              break;
-            } else {
-              console.log('New Owner! '+owner);
-              FrogHolders = FrogHolders.concat([
-                owner
-              ]);
+            let owner = await collection.methods.ownerOf(i).call();
+            console.log(owner);
+            let FrogHoldersTotal = FrogHolders.length;
+            for (var j = 1; j < FrogHoldersTotal; j++) {
+              if (FrogHoldersTotal[j].toString().toLowerCase() == owner.toString().toLowerCase()) {
+                break;
+              } else {
+                console.log('New Owner! '+owner);
+                FrogHolders = FrogHolders.concat([
+                  owner
+                ]);
+              }
             }
           }
-        }
 
-        console.log(FrogHolders)
+          console.log(FrogHolders);
         } catch (e) {}
 
       }
