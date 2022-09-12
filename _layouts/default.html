@@ -632,7 +632,7 @@
   }
   .mushroom_token {
     display: block;
-    background-color: antiquewhite;
+    background-color: transparent;
     border: none;
     padding: 4px;
     color: #333 !important;
@@ -644,9 +644,7 @@
     margin-right: auto;
     overflow: hidden;
     width: 256px;
-    border: 1px solid black;
     margin: 16px;
-    box-shadow: 3px 3px rgb(122 122 122 / 20%);
     font-size: small;
     transition: all .2s;
     padding-bottom: 8px;
@@ -662,16 +660,12 @@
     float: right;
   }
   .mushroom_imgContainer {
-    border-radius: 100%;
-    border: 1px solid black;
     margin: 8px;
     width: 128px;
     height: 128px;
     overflow: hidden;
     margin-left: auto;
     margin-right: auto;
-    border-bottom-left-radius: 100%;
-    border-bottom-right-radius: 100%;
   }
   .trait_list {
     min-width: 50%;
@@ -681,11 +675,11 @@
     padding-top: 8px;
   }
   .properties {
-    border-top: 1px solid black;
-    border-left: 1px solid black;
+    border: 1px solid black;
     padding: 8px;
-    border-top-left-radius: 5px;
-    padding-bottom: 0px;
+    border-radius: 5px;
+    background: antiquewhite;
+    text-align: left;
   }
   .mushroom_img {
     transition: transform .2s;
@@ -709,7 +703,7 @@
 </style>
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
-    <link rel="icon" href="favicon.png">
+    <link rel="icon" href="favicon2.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1005,21 +999,17 @@
           // Element Inner HTML
           mushroom_token.innerHTML =
             '<div class="mushroomTokenCont">'+
-              '<div style="text-align: left; margin: 8px; height: 16px;">'+
-                '<strong id="mushroom_'+mushroom_id+'" class="mushroom_name">'+mushroom_name+'</strong>'+
-              '</div>'+
               '<div class="mushroom_imgContainer" id="cont_'+mushroom_id+'">'+
                 //'<img src="'+frog_external+'" class="frog_img"/>'+
               '</div>'+
-              '<div id="traits_'+mushroom_id+'" class="trait_list">'+
-                '<strong>Properties</strong><div id="owner_'+mushroom_id+'"style="float:right;">'+truncateAddress(owner)+'</div><div id="prop_'+mushroom_id+'" class="properties"></div>'+
-              '</div>'+
+              '<div style="text-align: left; margin: 8px; height: 16px;"><strong id="mushroom_'+mushroom_id+'" class="mushroom_name">'+mushroom_name+'</strong></div>'+
+              '<div id="prop_'+mushroom_id+'" class="properties"></div>'+
             '</div>';
 
           // Create Element -->
           mushroom_doc.appendChild(mushroom_token);
-          document.getElementById('cont_'+mushroom_id).style.backgroundImage = 'url('+mushroom_external+')';
-          document.getElementById('cont_'+mushroom_id).style.backgroundSize = "2048px 2048px";
+          //document.getElementById('cont_'+mushroom_id).style.backgroundImage = 'url('+mushroom_external+')';
+         // document.getElementById('cont_'+mushroom_id).style.backgroundSize = "2048px 2048px";
 
           // Update Metadata!
           let metadata = await (await fetch("https://non-fungi-ble.io/mushroom/json/"+mushroom_id+".json")).json();
