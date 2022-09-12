@@ -195,6 +195,12 @@
     box-flex: 1;
     overflow: hidden;
   }
+  .mintImg {
+    transition: transform .2s;
+    width: auto;
+    image-rendering: pixelated;
+    overflow: hidden;
+  }
   .headLine{
     color: transparent;
     image-rendering: crisp-edges;
@@ -695,13 +701,10 @@
   }
   .mintImg {
     width: auto;
-    border-radius: 5px;
   }
   .mintImgWrapper {
-    width: 256px;
     display: inline-flex;
   }
-
 </style>
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
