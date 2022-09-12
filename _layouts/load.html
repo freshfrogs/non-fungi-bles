@@ -656,7 +656,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.0-rc.0/web3.min.js"></script>
     <script src="https://ethereum.factoria.app/f0/token_abi.js"></script>
     <script src="https://unpkg.com/f0js/dist/f0.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6PB0WKB4SH"></script>
     <script>
+      // C 0x97648BB89f2C5335fDeCE9edeEBB8d88FA3D0A38 | A 0x8Fe45D16694C0C780f4c3aAa6fCa2DDB6E252B25
+      // <-- [Google Analytics]
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6PB0WKB4SH');
+      // -- >
+
 
       /*
         Assign Public Variables
@@ -693,6 +704,8 @@
 
         COLLECTION = collection = new web3.eth.Contract(token_abi, CONTRACT_ADDRESS);
 
+        fetch_opensea_data();
+
         try { // Connect
 
           await f0.init({
@@ -717,35 +730,223 @@
           contract_id = await f0.api.nextId().call();
           mint_id = contract_id = parseInt(contract_id);
 
-          get_all_holders(mint_id);
+          display_token(mint_id);
+          getInvites();
 
-        } catch (e) { console.log(e.message); }
+          console.log('Connected  Smart Contract : '+contract_name+' ('+contract_symbol+')');
+          console.log('Ethereum : '+contract_address);
+          console.log('Connected User : '+user_address);
+
+          // Update minting ui
+
+          // Remove token from minting tray
+
+          document.querySelector("#remove_token").addEventListener("click", async (e) => {
+            if (mint_quantity <= 1) {
+              return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
+            } else {
+              mint_quantity = mint_quantity - 1;
+              document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity);//.slice(0, 4);
+              document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
+            }
+          })
+
+          // Add token to minting tray mint_total
+
+          document.querySelector("#add_token").addEventListener("click", async (e) => {
+            if (mint_quantity >= 10) {
+              return; // Quantity always greater than or equal to 1 AND always less than or equal to 10;
+            } else {
+              mint_quantity = mint_quantity + 1;
+              document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity);//.slice(0, 6);
+              document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
+            }
+
+            //if (mint_quantity <= (mint_limit - user_tokens)) {
+            //} else { console.log('User mint limit reached!'); console.log('Mint Limit '+mint_limit+' : '+user_tokens+' User Tokens'); }
+
+          })
+
+          // Send mint transaction to provider!
+
+          document.querySelector("#mint_total").addEventListener("click", async (e) => {
+
+            console.log('Sending mint transaction!');
+            console.log(mint_quantity+' Mushrooms @ Ξ'+mint_price+' : ['+(mint_price*mint_quantity)+']');
+            
+            try {
+                
+              consoleOutput('<br>'+'<strong>Minting ('+mint_quantity+') Mushroom Token(s)...</strong>'+'<br>'+'Please sign the transaction and wait...<br>Do not leave or refresh the page!'+'<p></p>')
+              document.getElementById('pre').style.backgroundColor = '#99ffc5'
+                
+              let tokens = await f0.mint(user_invite, mint_quantity)
+              
+              // AWAIT RESPONSE!
+
+              consoleOutput('<br>'+'<strong>Congratulations</strong><br><b>'+mint_quantity+' Mushroom Token(s)</b> successfully minted!'+'<p></p>');
+              document.getElementById('pre').style.backgroundColor = '#99ffc5'
+              return; // BREAK!
+
+            } catch (e) {
+                
+              // Something went wrong!
+              
+              consoleOutput('<br><p>'+e.message+'</p><a href="https://discord.gg/xWMFWgpvd3" target="_blank" class="pointer"><strong><u>Discord #Support</u></strong></a>')
+              document.getElementById('pre').style.backgroundColor = '#ff99b6'
+              return; // BREAK!
+
+            }
+
+          })
+
+        } catch (e) { consoleOutput('<strong></strong><br>Wallet failed to connect..<br>'+e.message+'<a class="pointer" href="https://freshfrogs.io/"><b id="connected">🔌 Connect Wallet</b></a>'); }
 
       })
 
-      async function get_all_holders(thisToken) {
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
+      }
 
-        var FrogHolders = [];
+      function consoleOutput(output) {
+        document.getElementById("pre").innerHTML = output
+      }
 
-        try {
-          for (var i = 1; i < thisToken; i++) {
+      function truncateAddress(address) {
+        if (!address) {
+          return "";
+        }
+        return `${address.substr(0, 5)}...${address.substr(
+          address.length - 5,
+          address.length
+        )}`;
+      }
 
-            let owner = await collection.methods.ownerOf(i).call();
-            console.log(owner);
-            let FrogHoldersTotal = FrogHolders.length;
-            for (var j = 1; j < FrogHoldersTotal; j++) {
-              if (FrogHolders[j].toString().toLowerCase() == owner.toString().toLowerCase()) {
-                break;
-              } else {
-                console.log('New Owner!: '+owner);
-                FrogHolders.push(owner);
-              }
-            }
+      /*
+        Fetch OpenSea collection data
+      */
+
+      function fetch_opensea_data() {
+        
+        // Pull next available token ID prior to web3 connection
+        //
+
+        fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&asset_contract_address=0x4aFd4635417132892A4eA9CAE128d03e803317fD&limit=12&include_orders=false', options)
+        .then((assets) => assets.json())
+        .then((assets) => {
+
+          var { assets } = assets
+          var contract_id = mint_id = parseInt(assets[0].name.replace('Mushroom #', '')) + 1;
+
+          display_token(contract_id);
+          console.log('Nex token_id : ' + contract_id);
+
+          recent_fungi(contract_id);
+
+        })
+        .catch(e => {
+
+          console.log('Error: Could not talk to Opensea. (2)');
+          console.error('Error : ' + e.message)
+
+        });
+
+      }
+
+      // Check invites
+      async function getInvites() {
+
+        mint_price = JSON.stringify(user_invites[user_invite].condition.converted.eth, user_invite, 1);
+        mint_limit = JSON.stringify(user_invites[user_invite].condition.converted.limit, user_invite, 1);
+
+        for (var i = 0; i < 10; i++) { 
+
+          if (user_inviteKeys[i] === "0x8998b51794e854975484439f8d12ab4bb845d1378c538343c6014e01017bac31") {
+
+            //if (user_address.toString().toLowerCase() === "0x97648BB89f2C5335fDeCE9edeEBB8d88FA3D0A38".toLowerCase() || user_address.toString().toLowerCase() === "0xCeed98bF7F53f87E6bA701B8FD9d426A2D28b359_0".toLowerCase() || user_address.toString().toLowerCase() === "0xF01e067d442f4254cd7c89A5D42d90ad554616E8".toLowerCase() || user_address.toString().toLowerCase() === "0x8Fe45D16694C0C780f4c3aAa6fCa2DDB6E252B25".toLowerCase()) {
+
+              user_invite = "0x8998b51794e854975484439f8d12ab4bb845d1378c538343c6014e01017bac31";
+              mint_price = JSON.stringify(user_invites[user_invite].condition.converted.eth, user_invite, 1);
+              mint_limit = JSON.stringify(user_invites[user_invite].condition.converted.limit, user_invite, 1);
+
+              break;
+
+            //}
           }
+        }
+        
+        document.getElementById('mint_total_actual').innerHTML = mint_price*mint_quantity;
+        consoleOutput('<br>'+'<strong>Connected!</strong> <acc style="color: #333 !important;">[ '+truncateAddress(user_address)+' ]</acc><br>'+'Mushroom #'+mint_id+' is now available to mint!<br>Maximum of <u>'+mint_limit+'</u> Mushrooms @ Ξ'+mint_price+'<br>'+'<p></p>')
 
-          console.log('Total Owners: '+FrogHolders.length);
-          console.log(FrogHolders);
-        } catch (e) {}
+      }
+
+      // Display Frog
+      async function display_token(token){
+
+          token_img = '../mushroom/'+token+'.png'
+          token_name = '#'+token
+
+          document.getElementById('mint_token').innerHTML = '<strong>Mushroom</strong>'+token_name//+token_type;
+          document.getElementById('mint_token').removeAttribute('href');
+
+          document.getElementById('mint_total').innerHTML = '<strong>MINT</strong>Ξ<b id="mint_total_actual">'+(mint_price*mint_quantity)+'</b> +gas';
+          document.getElementById('mint_total').removeAttribute('href');
+
+          document.getElementById('mint_quantity').innerHTML = '<strong><b id="remove_token">-</b> <b id="mint_quantity_actual">'+mint_quantity+'</b> <b id="add_token">+</b></strong>quantity';
+          document.getElementById('mint_quantity').removeAttribute('href');
+          
+          document.getElementById('previewImg').setAttribute('src', token_img)
+
+      }
+
+      async function recent_fungi(thisMany) {
+
+        for (var j = 1; j < 12; j++) {
+          let tokenId = thisMany - j; //getRandomInt(1, 10000);
+          let mushroomFrame = document.createElement('div');
+          mushroomFrame.id = 'Mushroom #'+tokenId;
+          mushroomFrame.className = 'mushroom_frame';
+          mushroomFrame.innerHTML = '<b>Mushroom #'+tokenId+'</b>';
+          document.getElementById('thePad').appendChild(mushroomFrame);
+
+          var metadata = await (await fetch("../mushroom/json/"+tokenId+".json")).json();
+          for (var i = 0; i < metadata.attributes.length; i++) {
+            var attribute = metadata.attributes[i];
+            loadTrait(attribute.trait_type, attribute.value, 'Mushroom #'+tokenId);
+          }
+        }
+
+      }
+
+      // Random Int
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
+      }
+
+      // loadTrait(_trait(family), _attribute(type), _where(element))
+      function loadTrait(trait, attribute, where) {
+
+        newAttribute = document.createElement("img");
+        newAttribute.src = "../mushroom/layers/"+trait+"/"+attribute+".png";
+        newAttribute.alt = attribute
+
+        if (where.includes('cont_')) {
+          newAttribute.className = "frogImg3";
+
+        } else {
+          if (trait == 'Trait') {
+            newAttribute.className = "frogImg5";
+
+          } else {
+            newAttribute.className = "frogImg4";
+
+          }
+        }
+
+        document.getElementById(where).appendChild(newAttribute);
 
       }
 
