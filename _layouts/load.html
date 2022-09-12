@@ -717,17 +717,18 @@
           contract_id = await f0.api.nextId().call();
           mint_id = contract_id = parseInt(contract_id);
 
-          get_all_holders();
+          get_all_holders(mint_id);
 
         } catch (e) { console.log(e.message); }
 
       })
 
-      async function get_all_holders() {
+      async function get_all_holders(thisToken) {
 
         var FrogHolders = [];
 
-        for (var i = 1; i < 4040; i++) {
+        try {
+        for (var i = 1; i < thisToken; i++) {
 
           let owner = await collection.methods.ownerOf(i).call();
           console.log(owner);
@@ -742,23 +743,10 @@
               ]);
             }
           }
-
         }
 
         console.log(FrogHolders)
-
-        /*
-          var FrogHolders = [];
-
-          // Do not forget to assign the result as, unlike push, concat does not change the existing array
-          arr = arr.concat([
-            "dragonfruit",
-            "elderberry",
-            "fig"
-          ]);
-
-          console.log(arr);
-        */
+        } catch (e) {}
 
       }
 
