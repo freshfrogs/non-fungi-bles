@@ -834,19 +834,19 @@
             } else {
 
               if (mint_quantity <= 2) {
-                newMushroom = document.createElement("div")
-                newMushroom.className = "imgWrapperMint"
-                newMushroom.innerHTML = "<img class='mushroomImgMint' src='../mushroom/"+(contract_id+mint_quantity)+".png'/>"
+                newMushroom = document.createElement("img")
+                newMushroom.className = "mushroomImgMint"
+                newMushroom.src = "../mushroom/"+(contract_id+mint_quantity)+".png"
                 document.getElementById("mushroomContainer3").appendChild(newMushroom)
               } else if (mint_quantity <= 5) {
-                newMushroom = document.createElement("div")
-                newMushroom.className = "imgWrapperMint"
-                newMushroom.innerHTML = "<img class='mushroomImgMint' src='../mushroom/"+(contract_id+mint_quantity)+".png'/>"
+                newMushroom = document.createElement("img")
+                newMushroom.className = "mushroomImgMint"
+                newMushroom.src = "../mushroom/"+(contract_id+mint_quantity)+".png"
                 document.getElementById("mushroomContainer2").appendChild(newMushroom)
               } else if (mint_quantity <= 8) {
-                newMushroom = document.createElement("div")
-                newMushroom.className = "imgWrapperMint"
-                newMushroom.innerHTML = "<img class='mushroomImgMint' src='../mushroom/"+(contract_id+mint_quantity)+".png'/>"
+                newMushroom = document.createElement("img")
+                newMushroom.className = "mushroomImgMint"
+                newMushroom.src = "../mushroom/"+(contract_id+mint_quantity)+".png"
                 document.getElementById("mushroomContainer").appendChild(newMushroom)
               }
               
