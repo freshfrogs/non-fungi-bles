@@ -891,8 +891,8 @@
 
       async function recent_fungi(thisMany) {
 
-        for (var j = thisMany; j < 0; j--) {
-          let tokenId = j; //getRandomInt(1, 10000);
+        for (var j = 1; j < 10; j++) {
+          let tokenId = thisMany - j; //getRandomInt(1, 10000);
           let mushroomFrame = document.createElement('div');
           mushroomFrame.id = 'Mushroom #'+tokenId;
           mushroomFrame.className = 'mushroom_frame';
