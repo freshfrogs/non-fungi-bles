@@ -743,7 +743,7 @@
               return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
             } else {
               mint_quantity = mint_quantity - 1;
-              document.getElementById('mint_total_actual').innerHTML = (1*mint_quantity);
+              document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
             }
           })
@@ -755,7 +755,7 @@
               return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
             } else {
               mint_quantity = mint_quantity + 1;
-              document.getElementById('mint_total_actual').innerHTML = (1*mint_quantity);
+              document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
             }
 
