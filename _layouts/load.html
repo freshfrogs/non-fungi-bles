@@ -806,6 +806,18 @@
             if (mint_quantity <= 1) {
               return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
             } else {
+
+              if (mint_quantity >= 7) {
+                var select = document.getElementById("mushroomContainer");
+                select.removeChild(select.lastChild);
+              } else if (mint_quantity >= 4) {
+                var select = document.getElementById("mushroomContainer2");
+                select.removeChild(select.lastChild);
+              } else if (mint_quantity >= 2) {
+                var select = document.getElementById("mushroomContainer3");
+                select.removeChild(select.lastChild);
+              }
+
               mint_quantity = mint_quantity - 1;
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 4);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
