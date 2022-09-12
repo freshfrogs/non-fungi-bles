@@ -890,7 +890,7 @@
         .then(collection => {
           var { collection: { banner_image_url, created_date, description, dev_seller_fee_basis_points, external_url, featured_image_url, name, payout_address, traits, stats: { floor_price, market_cap, total_volume, count, num_owners } } } = collection
           traits_list = traits;
-          contract_id = count
+          contract_id = count+1;
           display_token(contract_id);
           console.log('Nex token_id : ' + contract_id);
           recent_fungi(contract_id);
