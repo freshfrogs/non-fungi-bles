@@ -798,7 +798,7 @@
 
           document.getElementById('mint_total').innerHTML = '<strong>MINT</strong>Ξ<b id="mint_total_actual">'+(mint_price*mint_quantity)+'</b> +gas';
           document.getElementById('mint_total').removeAttribute('href');
-          
+
           getInvites();
 
           console.log('Connected  Smart Contract : '+contract_name+' ('+contract_symbol+')');
@@ -970,7 +970,8 @@
       async function recent_fungi(thisMany) {
 
         for (var j = 1; j < 12; j++) {
-          render_token(j);
+          let tokenId = thisMany - j;
+          render_token(tokenId);
         }
 
       }
