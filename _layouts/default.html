@@ -1055,7 +1055,7 @@
           let attribute = metadata.attributes[i]
           loadTrait(attribute.trait_type, attribute.value, 'cont_'+mushroom_id);
 
-          try { trait_rarity = ((traits_list[attribute.trait_type][attribute.value.toLowerCase()] / 4040) * 100).toFixed(0); } catch (e) { trait_rarity = 'e'; }
+          try { trait_rarity = ((traits_list[attribute.trait_type][attribute.value.toLowerCase()] / contract_id) * 100).toFixed(0); } catch (e) { trait_rarity = 'e'; }
           if (trait_rarity < 1) { trait_rarity = '<1%' } else { trait_rarity = trait_rarity+'%' }
 
           var trait_text = document.createElement('div');
