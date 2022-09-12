@@ -983,8 +983,66 @@
       async function recent_fungi(thisMany) {
 
         for (var j = 1; j < 12; j++) {
-          let tokenId = thisMany - j;
-          render_token(tokenId);
+          let mushroom_id = thisMany - j;
+
+          //
+          let owner = await collection.methods.ownerOf(mushroom_id).call();
+
+          // Token Variable Links
+          let mushroom_opensea = 'https://opensea.io/assets/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
+          let mushroom_etherscan = 'https://etherscan.io/nft/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
+          let mushroom_gemxyz = 'https://www.gem.xyz/asset/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
+          let mushroom_external = 'https://non-fungi-ble.io/mushroom/'+mushroom_id+'.png';
+          let mushroom_name = 'Mushroom #'+mushroom_id;
+
+          // <-- Begin Element
+          mushroom_doc = document.getElementById('thePad');
+          mushroom_token = document.createElement('div');
+          mushroom_token.id = mushroom_name;
+          mushroom_token.className = 'mushroom_token';
+          //frog_token.onclick = function() { display_token(frog_id); }
+
+          // Element Inner HTML
+          mushroom_token.innerHTML =
+            '<div class="mushroomTokenCont">'+
+              '<div style="text-align: left; margin: 8px; height: 16px;">'+
+                '<strong id="mushroom_'+mushroom_id+'" class="mushroom_name">'+mushroom_name+'</strong>'+
+              '</div>'+
+              '<div class="mushroom_imgContainer" id="cont_'+mushroom_id+'">'+
+                //'<img src="'+frog_external+'" class="frog_img"/>'+
+              '</div>'+
+              '<div id="traits_'+mushroom_id+'" class="trait_list">'+
+                '<strong>Properties</strong><div id="owner_'+mushroom_id+'"style="float:right;">'+truncateAddress(owner)+'</div><div id="prop_'+mushroom_id+'" class="properties"></div>'+
+              '</div>'+
+            '</div>';
+
+          // Create Element -->
+          mushroom_doc.appendChild(mushroom_token);
+          document.getElementById('cont_'+mushroom_id).style.backgroundImage = 'url('+mushroom_external+')';
+          document.getElementById('cont_'+mushroom_id).style.backgroundSize = "2048px 2048px";
+
+          // Update Metadata!
+          let metadata = await (await fetch("https://non-fungi-ble.io/mushroom/json/"+mushroom_id+".json")).json();
+          for (let i = 0; i < metadata.attributes.length; i++) {
+
+            // attribute.trait_type : attribute.value
+            let attribute = metadata.attributes[i]
+            loadTrait(attribute.trait_type, attribute.value, 'cont_'+mushroom_id);
+
+            try { trait_rarity = ((traits_list[attribute.trait_type][attribute.value.toLowerCase()] / thisMany) * 100).toFixed(0); } catch (e) { trait_rarity = 'e'; }
+            if (trait_rarity < 1) { trait_rarity = '<1%' } else { trait_rarity = trait_rarity+'%' }
+
+            var trait_text = document.createElement('div');
+            trait_text.style.margin = '2px';
+            trait_text.style.marginLeft = '4px';
+            if (attribute.trait_type == 'Cap') { trait_text.innerHTML = attribute.trait_type+': <mushroom id="mushroomType_'+mushroom_id+'">'+attribute.value+'</mushroom> <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
+            else { trait_text.innerHTML = attribute.trait_type+': '+attribute.value+' <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
+            document.getElementById('prop_'+mushroom_id).appendChild(trait_text);
+
+          }
+          //
+
+
         }
 
       }
@@ -1007,65 +1065,6 @@
 
         document.getElementById(where).appendChild(newAttribute);
 
-      }
-
-      // render_token()
-      async function render_token(mushroom_id) {
-
-        let owner = await collection.methods.ownerOf(mushroom_id).call();
-
-        // Token Variable Links
-        let mushroom_opensea = 'https://opensea.io/assets/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
-        let mushroom_etherscan = 'https://etherscan.io/nft/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
-        let mushroom_gemxyz = 'https://www.gem.xyz/asset/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
-        let mushroom_external = 'https://non-fungi-ble.io/mushroom/'+mushroom_id+'.png';
-        let mushroom_name = 'Mushroom #'+mushroom_id;
-
-        // <-- Begin Element
-        mushroom_doc = document.getElementById('thePad');
-        mushroom_token = document.createElement('div');
-        mushroom_token.id = mushroom_name;
-        mushroom_token.className = 'mushroom_token';
-        //frog_token.onclick = function() { display_token(frog_id); }
-
-        // Element Inner HTML
-        mushroom_token.innerHTML =
-          '<div class="mushroomTokenCont">'+
-            '<div style="text-align: left; margin: 8px; height: 16px;">'+
-              '<strong id="mushroom_'+mushroom_id+'" class="mushroom_name">'+mushroom_name+'</strong>'+
-            '</div>'+
-            '<div class="mushroom_imgContainer" id="cont_'+mushroom_id+'">'+
-              //'<img src="'+frog_external+'" class="frog_img"/>'+
-            '</div>'+
-            '<div id="traits_'+mushroom_id+'" class="trait_list">'+
-              '<strong>Properties</strong><div id="owner_'+mushroom_id+'"style="float:right;">'+truncateAddress(owner)+'</div><div id="prop_'+mushroom_id+'" class="properties"></div>'+
-            '</div>'+
-          '</div>';
-
-        // Create Element -->
-        mushroom_doc.appendChild(mushroom_token);
-        document.getElementById('cont_'+mushroom_id).style.backgroundImage = 'url('+mushroom_external+')';
-        document.getElementById('cont_'+mushroom_id).style.backgroundSize = "2048px 2048px";
-
-        // Update Metadata!
-        let metadata = await (await fetch("https://non-fungi-ble.io/mushroom/json/"+mushroom_id+".json")).json();
-        for (let i = 0; i < metadata.attributes.length; i++) {
-
-          // attribute.trait_type : attribute.value
-          let attribute = metadata.attributes[i]
-          loadTrait(attribute.trait_type, attribute.value, 'cont_'+mushroom_id);
-
-          try { trait_rarity = ((traits_list[attribute.trait_type][attribute.value.toLowerCase()] / contract_id) * 100).toFixed(0); } catch (e) { trait_rarity = 'e'; }
-          if (trait_rarity < 1) { trait_rarity = '<1%' } else { trait_rarity = trait_rarity+'%' }
-
-          var trait_text = document.createElement('div');
-          trait_text.style.margin = '2px';
-          trait_text.style.marginLeft = '4px';
-          if (attribute.trait_type == 'Cap') { trait_text.innerHTML = attribute.trait_type+': <mushroom id="mushroomType_'+mushroom_id+'">'+attribute.value+'</mushroom> <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
-          else { trait_text.innerHTML = attribute.trait_type+': '+attribute.value+' <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
-          document.getElementById('prop_'+mushroom_id).appendChild(trait_text);
-
-        }
       }
 
     </script>
