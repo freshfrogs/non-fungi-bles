@@ -905,18 +905,7 @@
       async function recent_fungi(thisMany) {
 
         for (var j = 1; j < 12; j++) {
-          let tokenId = thisMany - j; //getRandomInt(1, 10000);
-          let mushroomFrame = document.createElement('div');
-          mushroomFrame.id = 'Mushroom #'+tokenId;
-          mushroomFrame.className = 'mushroom_frame';
-          mushroomFrame.innerHTML = '<b>Mushroom #'+tokenId+'</b>';
-          document.getElementById('thePad').appendChild(mushroomFrame);
-
-          var metadata = await (await fetch("./mushroom/json/"+tokenId+".json")).json();
-          for (var i = 0; i < metadata.attributes.length; i++) {
-            var attribute = metadata.attributes[i];
-            loadTrait(attribute.trait_type, attribute.value, 'Mushroom #'+tokenId);
-          }
+          render_token(j);
         }
 
       }
