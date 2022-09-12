@@ -700,6 +700,9 @@
     padding: 1px;
     float: none;
   }
+  .mintImg {
+    width: auto;
+  }
 </style>
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
@@ -822,7 +825,7 @@
               //
               displayToken = document.createElement('img');
               displayToken.src = '../mushroom/'+(contract_id+mint_quantity)+'.png';
-              displayToken.className = 'mintImg'
+              displayToken.className = 'mintImg';
               document.getElementById('mintImgWrapper').appendChild(displayToken);
 
               //
