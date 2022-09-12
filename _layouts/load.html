@@ -987,18 +987,7 @@
         newAttribute.src = "../mushroom/layers/"+trait+"/"+attribute+".png";
         newAttribute.alt = attribute
 
-        if (where.includes('cont_')) {
-          newAttribute.className = "frogImg3";
-
-        } else {
-          if (trait == 'Trait') {
-            newAttribute.className = "frogImg5";
-
-          } else {
-            newAttribute.className = "frogImg4";
-
-          }
-        }
+        newAttribute.className = "mushroom_img";
 
         document.getElementById(where).appendChild(newAttribute);
 
