@@ -732,38 +732,30 @@
         Assign Public Variables
       */
 
-      //
       function _0x4c8f(_0x537bb9,_0x5717b3){const _0x514c09=_0x514c();return _0x4c8f=function(_0x4c8fdb,_0x35dfe7){_0x4c8fdb=_0x4c8fdb-0x105;let _0x148042=_0x514c09[_0x4c8fdb];return _0x148042;},_0x4c8f(_0x537bb9,_0x5717b3);}function _0x514c(){const _0x40e000=['2259356QOnldH','2175464xLKhJr','17864384ktXQNC','767604KHzlFZ','2011625ZhSeNC','1124079ayylfy','application/json','GET','1b80881e422a49d393113ede33c81211','1MAYIBX','2352105WeQtuy'];_0x514c=function(){return _0x40e000;};return _0x514c();}const _0xa10661=_0x4c8f;(function(_0x1abeda,_0x2455f4){const _0x1fd961=_0x4c8f,_0x3248bb=_0x1abeda();while(!![]){try{const _0x55c792=-parseInt(_0x1fd961(0x10e))/0x1*(parseInt(_0x1fd961(0x106))/0x2)+-parseInt(_0x1fd961(0x10a))/0x3+parseInt(_0x1fd961(0x105))/0x4+-parseInt(_0x1fd961(0x10f))/0x5+parseInt(_0x1fd961(0x108))/0x6+-parseInt(_0x1fd961(0x109))/0x7+parseInt(_0x1fd961(0x107))/0x8;if(_0x55c792===_0x2455f4)break;else _0x3248bb['push'](_0x3248bb['shift']());}catch(_0x512bd3){_0x3248bb['push'](_0x3248bb['shift']());}}}(_0x514c,0xac440));const options={'method':_0xa10661(0x10c),'headers':{'Accept':_0xa10661(0x10b),'X-API-KEY':_0xa10661(0x10d)}};
-      //
 
       // User Variables
-
       var user_address, user_invites, user_inviteKeys, user_tokens, user_invite;
 
       // Function Variables
-
       var mint_id, opensea_failed;
       var mint_price = 0.001;
       var mint_quantity = 1;
 
       // Contract Variables
-
       var contract_name, contract_symbol, contract_id, collection, COLLECTION, traits_list, controller, CONTROLLER;
-      var CONTRACT_ADDRESS = contract_address = "0x4aFd4635417132892A4eA9CAE128d03e803317fD"; // main: shrooms: 0x4aFd4635417132892A4eA9CAE128d03e803317fD | frogs: 0xBE4Bef8735107db540De269FF82c7dE9ef68C51b | rinkeby: 0xc2203Ff7B9d1c65c8Cf0F6c776f6CF358af3c524
+      var CONTRACT_ADDRESS = contract_address = "0x4aFd4635417132892A4eA9CAE128d03e803317fD";
       var NETWORK = "main";
 
-      /*
-        Load web page
-      */
-
+      // Load web page
       document.addEventListener("DOMContentLoaded", async () => {
+
+        fetch_opensea_data();
 
         const web3 = new Web3(window.ethereum);
         const f0 = new F0();
 
         COLLECTION = collection = new web3.eth.Contract(token_abi, CONTRACT_ADDRESS);
-
-        fetch_opensea_data();
 
         try { // Connect
 
@@ -803,9 +795,7 @@
           console.log('Ethereum : '+contract_address);
           console.log('Connected User : '+user_address);
 
-          // Update minting ui
-
-          // Remove token from minting tray
+          // Remove token from minting tray mint_total
 
           document.querySelector("#remove_token").addEventListener("click", async (e) => {
             if (mint_quantity <= 1) {
@@ -891,41 +881,19 @@
         )}`;
       }
 
-      /*
-        Fetch OpenSea collection data
-      */
-
+      // Fetch OpenSea Data
       function fetch_opensea_data() {
-        
-        // Pull next available token ID prior to web3 connection
-        //
-
-        fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&asset_contract_address=0x4aFd4635417132892A4eA9CAE128d03e803317fD&limit=12&include_orders=false', options)
-        .then((assets) => assets.json())
-        .then((assets) => {
-
-          var { assets } = assets
-          var contract_id = mint_id = parseInt(assets[0].name.replace('Mushroom #', '')) + 1;
-
-          display_token(contract_id);
-          console.log('Nex token_id : ' + contract_id);
-
-          recent_fungi(contract_id);
-
-        })
-        .catch(e => {
-
-          console.log('Error: Could not talk to Opensea. (2)');
-          console.error('Error : ' + e.message)
-
-        });
 
         // Fetch Collection Data via OpenSea API
         fetch('https://api.opensea.io/api/v1/collection/non-fungi-bles', options)
         .then(collection => collection.json())
         .then(collection => {
           var { collection: { banner_image_url, created_date, description, dev_seller_fee_basis_points, external_url, featured_image_url, name, payout_address, traits, stats: { floor_price, market_cap, total_volume, count, num_owners } } } = collection
-          traits_list = traits;
+          var traits_list = traits;
+          var contract_id = count
+          display_token(contract_id);
+          console.log('Nex token_id : ' + contract_id);
+          recent_fungi(contract_id);
         })
         .catch(e => {
           console.log('Error: Failed to fetch OpenSea collection data!');
