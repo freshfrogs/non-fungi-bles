@@ -195,17 +195,12 @@
       box-flex: 1;
       overflow: hidden;
   }
-  .mushroomImgMint {
-    transition: transform .2s;
-    width: 256px;
-    height: 256px;
-    image-rendering: pixelated;
-    overflow: hidden;
-  }
-  .mushroomImgMint:hover {
-    -ms-transform: scale(1.1); /* IE 9 */
-    -webkit-transform: scale(1.1); /* Safari 3-8 */
-    transform: scale(1.1);
+  .frogImgMint {
+      transition: transform .2s;
+      width: 256px;
+      height: 256px;
+      image-rendering: pixelated;
+      overflow: hidden;
   }
   .headLine{
     color: transparent;
@@ -640,7 +635,7 @@
     background-color: transparent;
     border: none;
     padding: 4px;
-    color: white !important;
+    color: #333 !important;
     box-shadow: none;
     margin: auto;
     border-radius: 5px;
@@ -666,13 +661,15 @@
   }
   .mushroom_imgContainer {
     border-radius: 100%;
+    border: 1px solid black;
     margin: 8px;
     width: 128px;
     height: 128px;
     overflow: hidden;
     margin-left: auto;
     margin-right: auto;
-    background: transparent;
+    border-bottom-left-radius: 100%;
+    border-bottom-right-radius: 100%;
   }
   .trait_list {
     min-width: 50%;
@@ -682,8 +679,8 @@
     padding-top: 8px;
   }
   .properties {
-    border-top: 1px solid white;
-    border-left: 1px solid white;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
     padding: 8px;
     border-top-left-radius: 5px;
     padding-bottom: 0px;
@@ -706,9 +703,6 @@
     font-size: x-small;
     padding: 1px;
     float: none;
-  }
-  .mushroom_token strong {
-    color: white !important;
   }
 </style>
 <html lang="{{ site.lang | default: "en-US" }}">
@@ -1010,17 +1004,20 @@
           mushroom_token.innerHTML =
             '<div class="mushroomTokenCont">'+
               '<div style="text-align: left; margin: 8px; height: 16px;">'+
+                '<strong id="mushroom_'+mushroom_id+'" class="mushroom_name">'+mushroom_name+'</strong>'+
               '</div>'+
               '<div class="mushroom_imgContainer" id="cont_'+mushroom_id+'">'+
                 //'<img src="'+frog_external+'" class="frog_img"/>'+
               '</div>'+
               '<div id="traits_'+mushroom_id+'" class="trait_list">'+
-                '<strong id="mushroom_'+mushroom_id+'" class="mushroom_name">'+mushroom_name+'</strong><div id="owner_'+mushroom_id+'"style="float:right;">'+truncateAddress(owner)+'</div><div id="prop_'+mushroom_id+'" class="properties"></div>'+
+                '<strong>Properties</strong><div id="owner_'+mushroom_id+'"style="float:right;">'+truncateAddress(owner)+'</div><div id="prop_'+mushroom_id+'" class="properties"></div>'+
               '</div>'+
             '</div>';
 
           // Create Element -->
           mushroom_doc.appendChild(mushroom_token);
+          //document.getElementById('cont_'+mushroom_id).style.backgroundImage = 'url('+mushroom_external+')';
+         // document.getElementById('cont_'+mushroom_id).style.backgroundSize = "2048px 2048px";
 
           // Update Metadata!
           let metadata = await (await fetch("https://non-fungi-ble.io/mushroom/json/"+mushroom_id+".json")).json();
@@ -1080,7 +1077,7 @@
             <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><strong>OpenSea</strong>view on</a></li>
           </ul>
           <div class="bigContainer">
-            <img id="previewImg" class="mushroomImgMint" src="../blacknwhite.png"/>
+            <img id="previewImg" class="frogImgMint" src="../blacknwhite.png"/>
           </div>
         </div>
       </header>
