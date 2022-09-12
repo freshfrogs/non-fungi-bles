@@ -1014,9 +1014,9 @@
         let owner = await collection.methods.ownerOf(mushroom_id).call();
 
         // Token Variable Links
-        let mushroom_opensea = 'https://opensea.io/assets/0xbe4bef8735107db540de269ff82c7de9ef68c51b/'+mushroom_id;
-        let mushroom_etherscan = 'https://etherscan.io/nft/0xbe4bef8735107db540de269ff82c7de9ef68c51b/'+mushroom_id;
-        let mushroom_gemxyz = 'https://www.gem.xyz/asset/0xbe4bef8735107db540de269ff82c7de9ef68c51b/'+mushroom_id;
+        let mushroom_opensea = 'https://opensea.io/assets/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
+        let mushroom_etherscan = 'https://etherscan.io/nft/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
+        let mushroom_gemxyz = 'https://www.gem.xyz/asset/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
         let mushroom_external = 'https://non-fungi-ble.io/mushroom/'+mushroom_id+'.png';
         let mushroom_name = 'Mushroom #'+mushroom_id;
 
@@ -1031,7 +1031,7 @@
         mushroom_token.innerHTML =
           '<div class="mushroomTokenCont">'+
             '<div style="text-align: left; margin: 8px; height: 16px;">'+
-              '<strong id="mushroom_'+mushroom_id+'" class="mushroom_name"><a href="'+mushroom_opensea+'" target="_blank">'+mushroom_name+'</a></strong>'+
+              '<strong id="mushroom_'+mushroom_id+'" class="mushroom_name">'+mushroom_name+'</strong>'+
             '</div>'+
             '<div class="mushroom_imgContainer" id="cont_'+mushroom_id+'">'+
               //'<img src="'+frog_external+'" class="frog_img"/>'+
@@ -1075,8 +1075,8 @@
         <div class="downloads pre">
           <ul class="downloads2">
             <li><a id="mint_token" class="pointer" href=""><strong>Connect</strong>wallet</a></li>
-            <li><a id="mint_total" class="pointer" href="https://etherscan.io/token/0xbe4bef8735107db540de269ff82c7de9ef68c51b"><strong>Etherscan</strong>view on</a></li>
-            <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/fresh-frogs" target="_blank"><strong>OpenSea</strong>view on</a></li>
+            <li><a id="mint_total" class="pointer" href="https://etherscan.io/token/0x4aFd4635417132892A4eA9CAE128d03e803317fD"><strong>Etherscan</strong>view on</a></li>
+            <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><strong>OpenSea</strong>view on</a></li>
           </ul>
           <div class="bigContainer">
             <img id="previewImg" class="frogImgMint" src="../blacknwhite.png"/>
