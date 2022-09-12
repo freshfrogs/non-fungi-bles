@@ -693,9 +693,10 @@
     image-rendering: pixelated;
     overflow: hidden;
     position: absolute;
-    width: 128px;
-    height: 128px;
+    width: 256px;
+    height: 256px;
     border-radius: 5px;
+    margin: -64px;
   }
   .trait {
     border-radius: 2px;
@@ -798,6 +799,9 @@
 
           document.getElementById('mint_total').innerHTML = '<strong>MINT</strong>Ξ<b id="mint_total_actual">'+(mint_price*mint_quantity)+'</b> +gas';
           document.getElementById('mint_total').removeAttribute('href');
+
+          document.getElementById('mint_quantity').innerHTML = '<strong><b id="remove_token">-</b> <b id="mint_quantity_actual">'+mint_quantity+'</b> <b id="add_token">+</b></strong>quantity';
+          document.getElementById('mint_quantity').removeAttribute('href');
 
           getInvites();
 
@@ -971,9 +975,6 @@
 
           document.getElementById('mint_token').innerHTML = '<strong>Mushroom</strong>'+token_name//+token_type;
           document.getElementById('mint_token').removeAttribute('href');
-
-          document.getElementById('mint_quantity').innerHTML = '<strong><b id="remove_token">-</b> <b id="mint_quantity_actual">'+mint_quantity+'</b> <b id="add_token">+</b></strong>quantity';
-          document.getElementById('mint_quantity').removeAttribute('href');
           
           document.getElementById('previewImg').setAttribute('src', token_img)
 
@@ -982,8 +983,66 @@
       async function recent_fungi(thisMany) {
 
         for (var j = 1; j < 12; j++) {
-          let tokenId = thisMany - j;
-          render_token(tokenId);
+          let mushroom_id = thisMany - j;
+
+          //
+          let owner = await collection.methods.ownerOf(mushroom_id).call();
+
+          // Token Variable Links
+          let mushroom_opensea = 'https://opensea.io/assets/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
+          let mushroom_etherscan = 'https://etherscan.io/nft/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
+          let mushroom_gemxyz = 'https://www.gem.xyz/asset/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
+          let mushroom_external = 'https://non-fungi-ble.io/mushroom/'+mushroom_id+'.png';
+          let mushroom_name = 'Mushroom #'+mushroom_id;
+
+          // <-- Begin Element
+          mushroom_doc = document.getElementById('thePad');
+          mushroom_token = document.createElement('div');
+          mushroom_token.id = mushroom_name;
+          mushroom_token.className = 'mushroom_token';
+          //frog_token.onclick = function() { display_token(frog_id); }
+
+          // Element Inner HTML
+          mushroom_token.innerHTML =
+            '<div class="mushroomTokenCont">'+
+              '<div style="text-align: left; margin: 8px; height: 16px;">'+
+                '<strong id="mushroom_'+mushroom_id+'" class="mushroom_name">'+mushroom_name+'</strong>'+
+              '</div>'+
+              '<div class="mushroom_imgContainer" id="cont_'+mushroom_id+'">'+
+                //'<img src="'+frog_external+'" class="frog_img"/>'+
+              '</div>'+
+              '<div id="traits_'+mushroom_id+'" class="trait_list">'+
+                '<strong>Properties</strong><div id="owner_'+mushroom_id+'"style="float:right;">'+truncateAddress(owner)+'</div><div id="prop_'+mushroom_id+'" class="properties"></div>'+
+              '</div>'+
+            '</div>';
+
+          // Create Element -->
+          mushroom_doc.appendChild(mushroom_token);
+          document.getElementById('cont_'+mushroom_id).style.backgroundImage = 'url('+mushroom_external+')';
+          document.getElementById('cont_'+mushroom_id).style.backgroundSize = "2048px 2048px";
+
+          // Update Metadata!
+          let metadata = await (await fetch("https://non-fungi-ble.io/mushroom/json/"+mushroom_id+".json")).json();
+          for (let i = 0; i < metadata.attributes.length; i++) {
+
+            // attribute.trait_type : attribute.value
+            let attribute = metadata.attributes[i]
+            loadTrait(attribute.trait_type, attribute.value, 'cont_'+mushroom_id);
+
+            try { trait_rarity = ((traits_list[attribute.trait_type][attribute.value.toLowerCase()] / thisMany) * 100).toFixed(0); } catch (e) { trait_rarity = 'e'; }
+            if (trait_rarity < 1) { trait_rarity = '<1%' } else { trait_rarity = trait_rarity+'%' }
+
+            var trait_text = document.createElement('div');
+            trait_text.style.margin = '2px';
+            trait_text.style.marginLeft = '4px';
+            if (attribute.trait_type == 'Cap') { trait_text.innerHTML = attribute.trait_type+': <mushroom id="mushroomType_'+mushroom_id+'">'+attribute.value+'</mushroom> <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
+            else { trait_text.innerHTML = attribute.trait_type+': '+attribute.value+' <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
+            document.getElementById('prop_'+mushroom_id).appendChild(trait_text);
+
+          }
+          //
+
+
         }
 
       }
@@ -1008,74 +1067,15 @@
 
       }
 
-      // render_token()
-      async function render_token(mushroom_id) {
-
-        let owner = await collection.methods.ownerOf(mushroom_id).call();
-
-        // Token Variable Links
-        let mushroom_opensea = 'https://opensea.io/assets/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
-        let mushroom_etherscan = 'https://etherscan.io/nft/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
-        let mushroom_gemxyz = 'https://www.gem.xyz/asset/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
-        let mushroom_external = 'https://non-fungi-ble.io/mushroom/'+mushroom_id+'.png';
-        let mushroom_name = 'Mushroom #'+mushroom_id;
-
-        // <-- Begin Element
-        mushroom_doc = document.getElementById('thePad');
-        mushroom_token = document.createElement('div');
-        mushroom_token.id = mushroom_name;
-        mushroom_token.className = 'mushroom_token';
-        //frog_token.onclick = function() { display_token(frog_id); }
-
-        // Element Inner HTML
-        mushroom_token.innerHTML =
-          '<div class="mushroomTokenCont">'+
-            '<div style="text-align: left; margin: 8px; height: 16px;">'+
-              '<strong id="mushroom_'+mushroom_id+'" class="mushroom_name">'+mushroom_name+'</strong>'+
-            '</div>'+
-            '<div class="mushroom_imgContainer" id="cont_'+mushroom_id+'">'+
-              //'<img src="'+frog_external+'" class="frog_img"/>'+
-            '</div>'+
-            '<div id="traits_'+mushroom_id+'" class="trait_list">'+
-              '<strong>Properties</strong><div id="owner_'+mushroom_id+'"style="float:right;">'+truncateAddress(owner)+'</div><div id="prop_'+mushroom_id+'" class="properties"></div>'+
-            '</div>'+
-          '</div>';
-
-        // Create Element -->
-        mushroom_doc.appendChild(mushroom_token);
-        document.getElementById('cont_'+mushroom_id).style.backgroundImage = 'url('+mushroom_external+')';
-        document.getElementById('cont_'+mushroom_id).style.backgroundSize = "2048px 2048px";
-
-        // Update Metadata!
-        let metadata = await (await fetch("https://non-fungi-ble.io/mushroom/json/"+mushroom_id+".json")).json();
-        for (let i = 0; i < metadata.attributes.length; i++) {
-
-          // attribute.trait_type : attribute.value
-          let attribute = metadata.attributes[i]
-          loadTrait(attribute.trait_type, attribute.value, 'cont_'+mushroom_id);
-
-          try { trait_rarity = ((traits_list[attribute.trait_type][attribute.value.toLowerCase()] / 4040) * 100).toFixed(0); } catch (e) { trait_rarity = 'e'; }
-          if (trait_rarity < 1) { trait_rarity = '<1%' } else { trait_rarity = trait_rarity+'%' }
-
-          var trait_text = document.createElement('div');
-          trait_text.style.margin = '4px';
-          if (attribute.trait_type == 'Cap') { trait_text.innerHTML = attribute.trait_type+': <mushroom id="mushroomType_'+mushroom_id+'">'+attribute.value+'</mushroom> <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
-          else { trait_text.innerHTML = attribute.trait_type+': '+attribute.value+' <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
-          document.getElementById('prop_'+mushroom_id).appendChild(trait_text);
-
-        }
-      }
-
     </script>
   </head>
   <body class="bodyb">
-    <div class="top"><img style="width: 50%;" src="../banner2.png"/></div>
     <div class="wrapper">
       <header id="thisheader">
         <div class="downloads pre">
           <ul class="downloads2">
             <li><a id="mint_token" class="pointer" href=""><strong>Connect</strong>wallet</a></li>
-            <li><a id="mint_total" class="pointer" href="https://etherscan.io/token/0x4aFd4635417132892A4eA9CAE128d03e803317fD"><strong>Etherscan</strong>view on</a></li>
+            <li><a id="mint_total" class="pointer" href="https://discord.gg/xWMFWgpvd3"><strong>Discord</strong>server</a></li>
             <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><strong>OpenSea</strong>view on</a></li>
           </ul>
           <div class="bigContainer">
@@ -1092,7 +1092,7 @@
             <p style="padding: 10%; padding-top: 0%; padding-bottom: 0%;">
               A collection of 10,000 unique pixelated fungi growing on the Ethereum blockchain! Verified and stored on IPFS! Independent project that doubles as an add-on utility for FreshFrogsNFT!
               <br><br>
-              Staking Utility coming soon that optionally allows holders to grow and earn NEW Families of Fungi NFTS! 🍄
+              Staking utility coming soon that will optionally allow holders to grow and earn NEW families of Fungi! 🍄
             </p>
             opensea.io/collection/non-fungi-bles<a class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><b id="connected">Shop on OpenSea ⛵</b></a>
             <hr class="hr2">addon utility for Frog holders!<a class="pointer" href="https://freshfrogs.io/"><b>🐸 FreshFrogsNFT</b></a>
