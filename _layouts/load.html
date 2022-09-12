@@ -705,6 +705,21 @@
   .mintImgWrapper {
     display: inline-flex;
   }
+  .mushroomImgMint {
+    transition: transform .2s;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    overflow: hidden;
+    border-radius: 5px;
+  }
+  .mushroomImgMint:hover{
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Safari 3-8 */
+    transform: scale(1.5);
+    box-shadow: none;
+    border: none;
+  }
 </style>
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
@@ -825,10 +840,23 @@
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
 
               //
-              displayToken = document.createElement('img');
-              displayToken.src = '../mushroom/'+(contract_id+mint_quantity)+'.png';
-              displayToken.className = 'mintImg';
-              document.getElementById('mintImgWrapper').appendChild(displayToken);
+
+              if (mint_quantity <= 2) {
+                newMushroom = document.createElement("div")
+                newMushroom.className = "imgWrapperMint"
+                newMushroom.innerHTML = "<img class='mushroomImgMint' src='../mushroom/"+(contract_id+mint_quantity)+".png'/>"
+                document.getElementById("mushroomContainer3").appendChild(newMushroom)
+              } else if (mint_quantity <= 5) {
+                newMushroom = document.createElement("div")
+                newMushroom.className = "imgWrapperMint"
+                newMushroom.innerHTML = "<img class='mushroomImgMint' src='../mushroom/"+(contract_id+mint_quantity)+".png'/>"
+                document.getElementById("mushroomContainer2").appendChild(newMushroom)
+              } else if (mint_quantity <= 8) {
+                newMushroom = document.createElement("div")
+                newMushroom.className = "imgWrapperMint"
+                newMushroom.innerHTML = "<img class='mushroomImgMint' src='../mushroom/"+(contract_id+mint_quantity)+".png'/>"
+                document.getElementById("mushroomContainer").appendChild(newMushroom)
+              }
 
               //
 
@@ -1051,8 +1079,10 @@
             <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><strong>OpenSea</strong>view on</a></li>
           </ul>
           <div class="bigContainer">
-            <div id="mintImgWrapper" class="mintImgWrapper">
-              <img id="previewImg" class="mintImg" src="../blacknwhite.png"/>
+            <div id="mushroomContainer" class="containerMint"></div>
+            <div id="mushroomContainer2" class="containerMint"></div>
+            <div id="mushroomContainer3" class="containerMint">
+              <div class="imgWrapperMint"><img id="previewImg" class="mushroomImgMint" src="../blacknwhite.png"/></div>
             </div>
           </div>
         </div>
