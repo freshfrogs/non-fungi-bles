@@ -688,8 +688,6 @@
 
       document.addEventListener("DOMContentLoaded", async () => {
 
-        recent_fungi(10)
-
         const web3 = new Web3(window.ethereum);
         const f0 = new F0();
 
@@ -833,6 +831,8 @@
           display_token(contract_id);
           console.log('Nex token_id : ' + contract_id);
 
+          recent_fungi(contract_id);
+
         })
         .catch(e => {
 
@@ -891,8 +891,8 @@
 
       async function recent_fungi(thisMany) {
 
-        for (var j = 1; j < thisMany; j++) {
-          let tokenId = getRandomInt(1, 10000);
+        for (var j = thisMany; j < 0; j--) {
+          let tokenId = j; //getRandomInt(1, 10000);
           let mushroomFrame = document.createElement('div');
           mushroomFrame.id = 'Mushroom #'+tokenId;
           mushroomFrame.className = 'mushroom_frame';
