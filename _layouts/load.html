@@ -661,15 +661,13 @@
   }
   .mushroom_imgContainer {
     border-radius: 100%;
-    border: 1px solid black;
     margin: 8px;
     width: 128px;
     height: 128px;
     overflow: hidden;
     margin-left: auto;
     margin-right: auto;
-    border-bottom-left-radius: 100%;
-    border-bottom-right-radius: 100%;
+    background: transparent;
   }
   .trait_list {
     min-width: 50%;
@@ -1016,8 +1014,6 @@
 
           // Create Element -->
           mushroom_doc.appendChild(mushroom_token);
-          document.getElementById('cont_'+mushroom_id).style.backgroundImage = 'url('+mushroom_external+')';
-          document.getElementById('cont_'+mushroom_id).style.backgroundSize = "2048px 2048px";
 
           // Update Metadata!
           let metadata = await (await fetch("https://non-fungi-ble.io/mushroom/json/"+mushroom_id+".json")).json();
