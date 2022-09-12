@@ -795,6 +795,10 @@
           mint_id = contract_id = parseInt(contract_id);
 
           display_token(mint_id);
+
+          document.getElementById('mint_total').innerHTML = '<strong>MINT</strong>Ξ<b id="mint_total_actual">'+(mint_price*mint_quantity)+'</b> +gas';
+          document.getElementById('mint_total').removeAttribute('href');
+          
           getInvites();
 
           console.log('Connected  Smart Contract : '+contract_name+' ('+contract_symbol+')');
@@ -955,9 +959,6 @@
 
           document.getElementById('mint_token').innerHTML = '<strong>Mushroom</strong>'+token_name//+token_type;
           document.getElementById('mint_token').removeAttribute('href');
-
-          document.getElementById('mint_total').innerHTML = '<strong>MINT</strong>Ξ<b id="mint_total_actual">'+(mint_price*mint_quantity)+'</b> +gas';
-          document.getElementById('mint_total').removeAttribute('href');
 
           document.getElementById('mint_quantity').innerHTML = '<strong><b id="remove_token">-</b> <b id="mint_quantity_actual">'+mint_quantity+'</b> <b id="add_token">+</b></strong>quantity';
           document.getElementById('mint_quantity').removeAttribute('href');
