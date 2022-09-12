@@ -833,13 +833,6 @@
             if (mint_quantity >= 9) {
               return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
             } else {
-              mint_quantity = mint_quantity + 1;
-              priceupdate = (mint_price*mint_quantity).toFixed(3)
-              console.log(priceupdate);
-              document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 6);
-              document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
-
-              //
 
               if (mint_quantity <= 2) {
                 newMushroom = document.createElement("div")
@@ -857,8 +850,12 @@
                 newMushroom.innerHTML = "<img class='mushroomImgMint' src='../mushroom/"+(contract_id+mint_quantity)+".png'/>"
                 document.getElementById("mushroomContainer").appendChild(newMushroom)
               }
-
-              //
+              
+              mint_quantity = mint_quantity + 1;
+              priceupdate = (mint_price*mint_quantity).toFixed(3)
+              console.log(priceupdate);
+              document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 6);
+              document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
 
             }
 
