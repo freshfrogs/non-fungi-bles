@@ -660,12 +660,16 @@
     float: right;
   }
   .mushroom_imgContainer {
+    border-radius: 100%;
+    border: 1px solid black;
     margin: 8px;
     width: 128px;
     height: 128px;
     overflow: hidden;
     margin-left: auto;
     margin-right: auto;
+    border-bottom-left-radius: 100%;
+    border-bottom-right-radius: 100%;
   }
   .trait_list {
     min-width: 50%;
@@ -1003,8 +1007,8 @@
                 //'<img src="'+frog_external+'" class="frog_img"/>'+
               '</div>'+
               '<div style="text-align: left; margin: 8px; height: 16px;"><strong id="mushroom_'+mushroom_id+'" class="mushroom_name">'+mushroom_name+'</strong></div>'+
-              '<div id="owner_'+mushroom_id+'"style="float:right;">'+truncateAddress(owner)+'</div><div id="prop_'+mushroom_id+'" class="properties"></div>'+
               '<div id="traits_'+mushroom_id+'" class="trait_list">'+
+                '<div id="prop_'+mushroom_id+'" class="properties"></div>'+
               '</div>'+
             '</div>';
 
@@ -1084,10 +1088,10 @@
             <p style="padding: 10%; padding-top: 0%; padding-bottom: 0%;">
               A collection of 10,000 unique pixelated fungi growing on the Ethereum blockchain! Verified and stored on IPFS! Independent project that doubles as an add-on utility for FreshFrogsNFT!
               <br><br>
-              Staking utility that allows holders the option to grow and earn NEW families of Fungi! 🍄
+              Staking utility coming soon that will optionally allow holders to grow and earn NEW families of Fungi! 🍄
             </p>
             opensea.io/collection/non-fungi-bles<a class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><b id="connected">Shop on OpenSea ⛵</b></a>
-            <hr class="hr2">addon utility for Frog holders!<a class="pointer" href="https://freshfrogs.io/the-pond"><b>🐸 FreshFrogsNFT</b></a>
+            <hr class="hr2">addon utility for Frog holders!<a class="pointer" href="https://freshfrogs.io/"><b>🐸 FreshFrogsNFT</b></a>
             <br>
             <div id="pre" class="mintingTextWhite2"><strong></strong><br>Waiting to Connect Web3...<a class="pointer" href="https://non-fungi-ble.io/"><b id="connected">Connect Wallet 🔌</b></a></div>
           </div>
