@@ -743,8 +743,8 @@
           // Add token to minting tray mint_total
 
           document.querySelector("#add_token").addEventListener("click", async (e) => {
-            if (mint_quantity >= 9) {
-              return; // Quantity always greater than or equal to 1 AND always less than or equal to 9;
+            if (mint_quantity >= 10) {
+              return; // Quantity always greater than or equal to 1 AND always less than or equal to 10;
             } else {
               mint_quantity = mint_quantity + 1;
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity);//.slice(0, 6);
