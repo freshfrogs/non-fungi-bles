@@ -758,7 +758,7 @@
               return; // Quantity always greater than or equal to 1 AND always less than or equal to 10;
             } else {
               mint_quantity = mint_quantity + 1;
-              let priceupdate = Math.round((mint_price*mint_quantity) * 100) / 100
+              priceupdate = Math.round((mint_price*mint_quantity) * 100) / 100
               console.log(priceupdate);
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity);//.slice(0, 6);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
