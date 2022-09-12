@@ -991,7 +991,7 @@
             if (trait_rarity < 1) { trait_rarity = '<1%' } else { trait_rarity = trait_rarity+'%' }
 
             var trait_text = document.createElement('div');
-            trait_text.style.margin = '2px';
+            //trait_text.style.margin = '2px';
             trait_text.style.marginLeft = '4px';
             if (attribute.trait_type == 'Cap') { trait_text.innerHTML = attribute.trait_type+': <mushroom id="mushroomType_'+mushroom_id+'">'+attribute.value+'</mushroom> <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
             else { trait_text.innerHTML = attribute.trait_type+': '+attribute.value+' <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
