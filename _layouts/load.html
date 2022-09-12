@@ -810,7 +810,7 @@
               mint_quantity = mint_quantity - 1;
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 4);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
-              document.getElementById('previewImg').setAttribute('src', '../mushroom/'+(contract_id+mint_quantity)+'.png');
+              document.getElementById('previewImg').setAttribute('src', '../mushroom/'+((contract_id-1)+mint_quantity)+'.png');
             }
           })
 
@@ -825,7 +825,7 @@
               console.log(priceupdate);
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 6);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
-              document.getElementById('previewImg').setAttribute('src', '../mushroom/'+(contract_id+mint_quantity)+'.png');
+              document.getElementById('previewImg').setAttribute('src', '../mushroom/'+((contract_id-1)+mint_quantity)+'.png');
             }
 
           })
