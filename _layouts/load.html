@@ -698,10 +698,9 @@
     image-rendering: pixelated;
     overflow: hidden;
     position: absolute;
-    width: 256px;
-    height: 256px;
+    width: 128px;
+    height: 128px;
     border-radius: 5px;
-    margin: -64px;
   }
   .trait {
     border-radius: 2px;
@@ -784,7 +783,7 @@
 
       async function generate_NFB(mushroomNumber) {
 
-        mushroom_type = getRandomInt(1, 4);
+        mushroom_type = 4; //getRandomInt(1, 4);
 
         // Mushroom Variables
         const mushroom_1_stems = [ "black", "brown", "darkroot", "hazlenut", "moss", "oaknut", "tan" ]
