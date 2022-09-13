@@ -810,7 +810,7 @@
               mint_quantity = mint_quantity - 1;
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 4);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
-              document.getElementById('previewImg').setAttribute('src', '../mushroom/Build/'+((contract_id-1)+mint_quantity)+'.png');
+              document.getElementById('previewImg').setAttribute('src', '../mushroom/'+((contract_id-1)+mint_quantity)+'.png');
             }
           })
 
@@ -825,7 +825,7 @@
               console.log(priceupdate);
               document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 6);
               document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
-              document.getElementById('previewImg').setAttribute('src', '../mushroom/Build/'+((contract_id-1)+mint_quantity)+'.png');
+              document.getElementById('previewImg').setAttribute('src', '../mushroom/'+((contract_id-1)+mint_quantity)+'.png');
             }
 
           })
@@ -937,7 +937,7 @@
       // Display Frog
       async function display_token(token){
 
-          token_img = '../mushroom/Build/'+token+'.png'
+          token_img = '../mushroom/'+token+'.png'
           token_name = '#'+token
 
           document.getElementById('mint_token').innerHTML = '<strong>Mushroom</strong>'+token_name//+token_type;
@@ -958,7 +958,7 @@
           let mushroom_opensea = 'https://opensea.io/assets/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
           let mushroom_etherscan = 'https://etherscan.io/nft/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
           let mushroom_gemxyz = 'https://www.gem.xyz/asset/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
-          let mushroom_external = 'https://non-fungi-ble.io/mushroom/Build/'+mushroom_id+'.png';
+          let mushroom_external = 'https://non-fungi-ble.io/mushroom/'+mushroom_id+'.png';
           let mushroom_name = 'Mushroom #'+mushroom_id;
 
           // <-- Begin Element
@@ -984,7 +984,7 @@
          // document.getElementById('cont_'+mushroom_id).style.backgroundSize = "2048px 2048px";
 
           // Update Metadata!
-          let metadata = await (await fetch("https://non-fungi-ble.io/mushroom/Build/json/"+mushroom_id+".json")).json();
+          let metadata = await (await fetch("https://non-fungi-ble.io/mushroom/json/"+mushroom_id+".json")).json();
           for (let i = 0; i < metadata.attributes.length; i++) {
 
             // attribute.trait_type : attribute.value
@@ -1020,7 +1020,7 @@
       function loadTrait(trait, attribute, where) {
 
         newAttribute = document.createElement("img");
-        newAttribute.src = "../mushroom/Build/layers/"+trait+"/"+attribute+".png";
+        newAttribute.src = "../mushroom/layers/"+trait+"/"+attribute+".png";
         newAttribute.alt = attribute
 
         newAttribute.className = "mushroom_img";
