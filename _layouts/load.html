@@ -633,8 +633,8 @@
     width: 90%;
   }
   .mushroom_frame {
-    width: 128px;
-    height: 128px;
+    width: 256px;
+    height: 256px;
     border-radius: 5px;
     margin: 8px;
     padding: 0px;
@@ -773,7 +773,6 @@
           shroom_frame = document.createElement('div')
           shroom_frame.className = 'mushroom_frame'
           shroom_frame.id = 'mushroom_frame_'+i;
-          shroom_frame.innerHTML = '<div class="mushroom" id="shroom_'+i+'"></div>'
           document.getElementById('thePad').appendChild(shroom_frame)
           generate_NFB(i);
 
@@ -810,7 +809,7 @@
         const mushroom_4_stems = [ "Blue", "DarkBrown", "Green", "Grey", "LightBrown", "Purple" ]
 
         // Reset Generator
-        destination = document.getElementById('shroom_'+mushroomNumber);
+        destination = document.getElementById('mushroom_frame_'+mushroomNumber);
         //destination.innerHTML = ''
 
         const backgrounds = [ "#ff99a8", "#99ffe6", "#99ffaa", "#fffd99", "#ff99ec", "#a099ff", "#99ffbe", "#ffc299" ]
