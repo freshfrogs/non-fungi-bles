@@ -756,7 +756,7 @@
       var contract_name, contract_symbol, contract_id, collection, COLLECTION, traits_list, controller, CONTROLLER;
       var CONTRACT_ADDRESS = contract_address = "0x4aFd4635417132892A4eA9CAE128d03e803317fD";
       var NETWORK = "main";
-
+      
       // Load web page
       document.addEventListener("DOMContentLoaded", async () => {
 
@@ -766,19 +766,21 @@
 
       async function begin_build(howMany) {
 
-        document.getElementById('thePad').innerHTML = ''
+        document.getElementById('thePad').innerHTML = '';
+        var displayTokens = [];
 
-        for (let i = 0; i < howMany; i++) {
-
+        for (let i = 0; i < howMany;) {
           tokenId = getRandomInt(1, 50);
-          shroom_frame = document.createElement('img')
-          shroom_frame.className = 'mushroom_img'
-          shroom_frame.id = 'Mushroom #'+i;
-          shroom_frame.src = '../assets/preview/'+tokenId+'.png';
-          document.getElementById('thePad').appendChild(shroom_frame)
-
+          if (displayTokens.indexOf(tokenId) === -1) {
+            i++
+            displayTokens.push(tokenId);
+            shroom_frame = document.createElement('img')
+            shroom_frame.className = 'mushroom_img'
+            shroom_frame.id = 'Mushroom #'+i;
+            shroom_frame.src = '../assets/preview/'+tokenId+'.png';
+            document.getElementById('thePad').appendChild(shroom_frame)
+          }
         }
-
       }
 
       // Random Int //
