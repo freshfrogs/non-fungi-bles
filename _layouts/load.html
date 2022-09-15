@@ -759,7 +759,7 @@
       // Load web page
       document.addEventListener("DOMContentLoaded", async () => {
 
-        begin_build(100);
+        begin_build(50);
 
       })
 
@@ -769,11 +769,11 @@
 
         for (let i = 0; i < howMany; i++) {
 
-          tokenId = getRandomInt(1, 10000);
+          tokenId = getRandomInt(1, 60);
           shroom_frame = document.createElement('img')
           shroom_frame.className = 'mushroom_img'
           shroom_frame.id = 'Mushroom #'+i;
-          shroom_frame.src = '../mushroom/'+tokenId+'.png';
+          shroom_frame.src = '../assets/preview/'+tokenId+'.png';
           document.getElementById('thePad').appendChild(shroom_frame)
 
         }
