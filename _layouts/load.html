@@ -849,7 +849,7 @@
               //let tokens = await f0.mint(user_invite, mint_quantity)
               auth = {
                 key: user_invite,
-                proof: []
+                proof: '[]'
               }
 
               let tokens = await collection.methods.mint(auth, mint_quantity).send({
