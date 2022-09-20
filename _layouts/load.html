@@ -846,9 +846,9 @@
               consoleOutput('<br>'+'<strong>Minting ('+mint_quantity+') Mushroom Token(s)...</strong>'+'<br>'+'Please sign the transaction and wait...<br>Do not leave or refresh the page!'+'<p></p>')
               document.getElementById('pre').style.backgroundColor = '#99ffc5'
                 
-              //let tokens = await f0.mint(user_invite, mint_quantity)
+              let tokens = await f0.mint(user_invite, mint_quantity)
 
-              //
+              /*
               auth = {
                 key: user_invite,
                 proof: []
@@ -857,7 +857,7 @@
               let tokens = await collection.methods.mint(auth, mint_quantity).send({
                 from: user_address
               })
-              //
+              */
               
               // AWAIT RESPONSE!
 
