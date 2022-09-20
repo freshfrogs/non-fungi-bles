@@ -847,8 +847,12 @@
               document.getElementById('pre').style.backgroundColor = '#99ffc5'
                 
               //let tokens = await f0.mint(user_invite, mint_quantity)
+              auth = {
+                key: user_invite,
+                proof: []
+              }
 
-              let tokens = await collection.methods.mint('[]', mint_quantity).send({
+              let tokens = await collection.methods.mint(auth, mint_quantity).send({
                 from: user_address
               })
               
