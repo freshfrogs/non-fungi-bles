@@ -299,6 +299,11 @@
     padding: 0px !important;
     overflow: hidden;
     margin-bottom: 16px;
+    float: none !important;
+    min-width: 1500px;
+    min-height: 500px;
+    margin-left: auto;
+    margin-right: auto;
   }
   header {
     overflow: hidden;
@@ -529,6 +534,7 @@
     padding: 4px;
     background-color: #7cc1ff;
     display: inline-block;
+    width: 100%;
   }
   .headerDiv {
     border-bottom: 2px solid #7cc1ff;
@@ -615,12 +621,6 @@
     overflow: hidden;
   }
   .recentMint {
-    width: 256px;
-    height: 256px;
-    border-radius: 5px;
-    border: 1px solid black;
-  }
-  .logoImg {
     width: 128px;
     height: 128px;
     margin: 4px;
@@ -633,14 +633,15 @@
     width: 90%;
   }
   .mushroom_frame {
-    width: 128px;
-    height: 128px;
+    width: 256px;
+    height: 256px;
     border-radius: 5px;
     margin: 8px;
     padding: 0px;
     overflow: hidden;
     display: inline-block;
     margin-bottom: 16px;
+    border: 1px solid black;
   }
   .mushroom_token {
     display: block;
@@ -649,7 +650,9 @@
     padding: 4px;
     color: #333 !important;
     box-shadow: none;
+    margin: auto;
     border-radius: 5px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
@@ -671,11 +674,10 @@
   }
   .mushroom_imgContainer {
     margin: 8px;
-    width: 128px;
-    height: 128px;
+    width: 256px;
+    height: 256px;
     overflow: hidden;
-    margin-left: auto;
-    margin-right: auto;
+    display: inline-block;
   }
   .trait_list {
     min-width: 50%;
@@ -692,15 +694,13 @@
     text-align: left;
   }
   .mushroom_img {
-    transition: transform .2s;
-    display: block;
+    display: inline-block;
     image-rendering: pixelated;
-    overflow: hidden;
-    position: absolute;
-    width: 256px;
-    height: 256px;
+    width: 128px;
+    height: 128px;
     border-radius: 5px;
-    margin: -64px;
+    margin: 4px;
+    border: 1px solid black;
   }
   .trait {
     border-radius: 2px;
@@ -760,260 +760,28 @@
       // Load web page
       document.addEventListener("DOMContentLoaded", async () => {
 
-        fetch_opensea_data();
-
-        const web3 = new Web3(window.ethereum);
-        const f0 = new F0();
-
-        COLLECTION = collection = new web3.eth.Contract(token_abi, CONTRACT_ADDRESS);
-
-        try { // Connect
-
-          await f0.init({
-
-            web3: web3,
-            contract: CONTRACT_ADDRESS,
-            network: NETWORK
-
-          })
-
-          // Assign variables
-
-          user_address = await web3.currentProvider.selectedAddress;
-          user_invites = await f0.myInvites();
-          user_inviteKeys = Object.keys(user_invites);
-          user_invite = "0x0000000000000000000000000000000000000000000000000000000000000000";
-
-          user_tokens = await collection.methods.balanceOf(user_address).call();
-
-          contract_name = await f0.api.name().call();
-          contract_symbol = await f0.api.symbol().call();
-          contract_id = await f0.api.nextId().call();
-          mint_id = contract_id = parseInt(contract_id);
-
-          display_token(mint_id);
-
-          document.getElementById('mint_total').innerHTML = '<strong>MINT</strong>Ξ<b id="mint_total_actual">'+(mint_price*mint_quantity)+'</b> +gas';
-          document.getElementById('mint_total').removeAttribute('href');
-
-          document.getElementById('mint_quantity').innerHTML = '<strong><b id="remove_token">-</b> <b id="mint_quantity_actual">'+mint_quantity+'</b> <b id="add_token">+</b></strong>quantity';
-          document.getElementById('mint_quantity').removeAttribute('href');
-
-          getInvites();
-
-          console.log('Connected  Smart Contract : '+contract_name+' ('+contract_symbol+')');
-          console.log('Ethereum : '+contract_address);
-          console.log('Connected User : '+user_address);
-
-          // Remove token from minting tray mint_total
-
-          document.querySelector("#remove_token").addEventListener("click", async (e) => {
-            if (mint_quantity <= 1) {
-              return; // Quantity always greater than or equal to 1 AND always less than or equal to 10;
-            } else {
-              mint_quantity = mint_quantity - 1;
-              document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 4);
-              document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
-              document.getElementById('previewImg').setAttribute('src', '../mushroom/'+((contract_id-1)+mint_quantity)+'.png');
-            }
-          })
-
-          // Add token to minting tray mint_total
-
-          document.querySelector("#add_token").addEventListener("click", async (e) => {
-            if (mint_quantity >= 10) {
-              return; // Quantity always greater than or equal to 1 AND always less than or equal to 10;
-            } else {
-              mint_quantity = mint_quantity + 1;
-              priceupdate = (mint_price*mint_quantity).toFixed(3)
-              console.log(priceupdate);
-              document.getElementById('mint_total_actual').innerHTML = (mint_price*mint_quantity).toFixed(3);//.slice(0, 6);
-              document.getElementById('mint_quantity_actual').innerHTML = mint_quantity;
-              document.getElementById('previewImg').setAttribute('src', '../mushroom/'+((contract_id-1)+mint_quantity)+'.png');
-            }
-
-          })
-
-          // Send mint transaction to provider!
-
-          document.querySelector("#mint_total").addEventListener("click", async (e) => {
-
-            console.log('Sending mint transaction!');
-            console.log(mint_quantity+' Mushrooms @ Ξ'+mint_price+' : ['+(mint_price*mint_quantity)+']');
-            
-            try {
-                
-              consoleOutput('<br>'+'<strong>Minting ('+mint_quantity+') Mushroom Token(s)...</strong>'+'<br>'+'Please sign the transaction and wait...<br>Do not leave or refresh the page!'+'<p></p>')
-              document.getElementById('pre').style.backgroundColor = '#99ffc5'
-                
-              let tokens = await f0.mint(user_invite, mint_quantity)
-              
-              // AWAIT RESPONSE!
-
-              consoleOutput('<br>'+'<strong>Congratulations</strong><br><b>'+mint_quantity+' Mushroom Token(s)</b> successfully minted!'+'<p></p>');
-              document.getElementById('pre').style.backgroundColor = '#99ffc5'
-              return; // BREAK!
-
-            } catch (e) {
-                
-              // Something went wrong!
-              
-              consoleOutput('<br><p>'+e.message+'</p><a href="https://discord.gg/xWMFWgpvd3" target="_blank" class="pointer"><strong><u>Discord #Support</u></strong></a>')
-              document.getElementById('pre').style.backgroundColor = '#ff99b6'
-              return; // BREAK!
-
-            }
-
-          })
-
-        } catch (e) { consoleOutput('<strong></strong><br>Wallet failed to connect..<br>'+e.message+'<a class="pointer" href="https://non-fungi-ble.io/"><b id="connected">🔌 Connect Wallet</b></a>'); }
+        begin_build(10);
 
       })
 
-      function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min);
-      }
+      async function begin_build(howMany) {
 
-      function consoleOutput(output) {
-        document.getElementById("pre").innerHTML = output
-      }
+        document.getElementById('thePad').innerHTML = ''
 
-      function truncateAddress(address) {
-        if (!address) {
-          return "";
-        }
-        return `${address.substr(0, 5)}...${address.substr(
-          address.length - 5,
-          address.length
-        )}`;
-      }
+        for (let i = 0; i < howMany; i++) {
 
-      // Fetch OpenSea Data
-      function fetch_opensea_data() {
-
-        // Fetch Collection Data via OpenSea API
-        fetch('https://api.opensea.io/api/v1/collection/non-fungi-bles', options)
-        .then(collection => collection.json())
-        .then(collection => {
-          var { collection: { banner_image_url, created_date, description, dev_seller_fee_basis_points, external_url, featured_image_url, name, payout_address, traits, stats: { floor_price, market_cap, total_volume, count, num_owners } } } = collection
-          traits_list = traits;
-          contract_id = count+1;
-          display_token(contract_id);
-          console.log('Nex token_id : ' + contract_id);
-          //recent_fungi(contract_id);
-        })
-        .catch(e => {
-          console.log('Error: Failed to fetch OpenSea collection data!');
-          
-        });
-
-      }
-
-      // Check invites
-      async function getInvites() {
-
-        mint_price = JSON.stringify(user_invites[user_invite].condition.converted.eth, user_invite, 1);
-        mint_limit = JSON.stringify(user_invites[user_invite].condition.converted.limit, user_invite, 1);
-
-        for (var i = 0; i < 10; i++) { 
-
-          if (user_inviteKeys[i] === "0x8998b51794e854975484439f8d12ab4bb845d1378c538343c6014e01017bac31") {
-
-            //if (user_address.toString().toLowerCase() === "0x97648BB89f2C5335fDeCE9edeEBB8d88FA3D0A38".toLowerCase() || user_address.toString().toLowerCase() === "0xCeed98bF7F53f87E6bA701B8FD9d426A2D28b359_0".toLowerCase() || user_address.toString().toLowerCase() === "0xF01e067d442f4254cd7c89A5D42d90ad554616E8".toLowerCase() || user_address.toString().toLowerCase() === "0x8Fe45D16694C0C780f4c3aAa6fCa2DDB6E252B25".toLowerCase()) {
-
-              user_invite = "0x8998b51794e854975484439f8d12ab4bb845d1378c538343c6014e01017bac31";
-              mint_price = JSON.stringify(user_invites[user_invite].condition.converted.eth, user_invite, 1);
-              mint_limit = JSON.stringify(user_invites[user_invite].condition.converted.limit, user_invite, 1);
-
-              break;
-
-            //}
-          }
-        }
-        
-        document.getElementById('mint_total_actual').innerHTML = mint_price*mint_quantity;
-        consoleOutput('<br>'+'<strong>Connected!</strong> <acc style="color: #333 !important;">[ '+truncateAddress(user_address)+' ]</acc><br>'+'Mushroom #'+mint_id+' is now available to mint!<br>Max <u>'+mint_limit+'</u> Mushrooms per Wallet!<br>'+'<p></p>')
-
-      }
-
-      // Display Frog
-      async function display_token(token){
-
-          token_img = '../mushroom/'+token+'.png'
-          token_name = '#'+token
-
-          document.getElementById('mint_token').innerHTML = '<strong>Mushroom</strong>'+token_name//+token_type;
-          document.getElementById('mint_token').removeAttribute('href');
-          
-          document.getElementById('previewImg').setAttribute('src', token_img)
-
-      }
-
-      async function recent_fungi(thisMany) {
-
-        for (var j = 1; j < 12; j++) {
-          let mushroom_id = thisMany - j;
-
-          //let owner = await collection.methods.ownerOf(mushroom_id).call();
-
-          // Token Variable Links
-          let mushroom_opensea = 'https://opensea.io/assets/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
-          let mushroom_etherscan = 'https://etherscan.io/nft/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
-          let mushroom_gemxyz = 'https://www.gem.xyz/asset/0x4aFd4635417132892A4eA9CAE128d03e803317fD/'+mushroom_id;
-          let mushroom_external = 'https://non-fungi-ble.io/mushroom/'+mushroom_id+'.png';
-          let mushroom_name = 'Mushroom #'+mushroom_id;
-
-          // <-- Begin Element
-          mushroom_doc = document.getElementById('thePad');
-          mushroom_token = document.createElement('div');
-          mushroom_token.id = mushroom_name;
-          mushroom_token.className = 'mushroom_token';
-          //frog_token.onclick = function() { display_token(frog_id); }
-
-          // Element Inner HTML
-          mushroom_token.innerHTML =
-            '<div class="mushroomTokenCont">'+
-              '<div class="mushroom_imgContainer" id="cont_'+mushroom_id+'">'+
-                //'<img src="'+frog_external+'" class="frog_img"/>'+
-              '</div>'+
-              '<div style="text-align: left; margin: 8px; height: 16px;"><strong id="mushroom_'+mushroom_id+'" class="mushroom_name">'+mushroom_name+'</strong></div>'+
-              '<div id="prop_'+mushroom_id+'" class="properties"></div>'+
-            '</div>';
-
-          // Create Element -->
-          mushroom_doc.appendChild(mushroom_token);
-          //document.getElementById('cont_'+mushroom_id).style.backgroundImage = 'url('+mushroom_external+')';
-         // document.getElementById('cont_'+mushroom_id).style.backgroundSize = "2048px 2048px";
-
-          // Update Metadata!
-          let metadata = await (await fetch("https://non-fungi-ble.io/mushroom/json/"+mushroom_id+".json")).json();
-          for (let i = 0; i < metadata.attributes.length; i++) {
-
-            // attribute.trait_type : attribute.value
-            let attribute = metadata.attributes[i]
-            loadTrait(attribute.trait_type, attribute.value, 'cont_'+mushroom_id);
-
-            try { trait_rarity = ((traits_list[attribute.trait_type][attribute.value.toLowerCase()] / thisMany) * 100).toFixed(0); } catch (e) { trait_rarity = 'e'; }
-            if (trait_rarity < 1) { trait_rarity = '<1%' } else { trait_rarity = trait_rarity+'%' }
-
-            var trait_text = document.createElement('div');
-            trait_text.style.margin = '2px';
-            trait_text.style.marginLeft = '4px';
-            if (attribute.trait_type == 'Cap') { trait_text.innerHTML = attribute.trait_type+': <mushroom id="mushroomType_'+mushroom_id+'">'+attribute.value+'</mushroom> <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
-            else { trait_text.innerHTML = attribute.trait_type+': '+attribute.value+' <b class="trait" style="font-size: smaller;"><i>('+trait_rarity+')</i></b><br>'; }
-            document.getElementById('prop_'+mushroom_id).appendChild(trait_text);
-
-          }
-          //
-
+          tokenId = getRandomInt(1, 50);
+          shroom_frame = document.createElement('img')
+          shroom_frame.className = 'mushroom_img'
+          shroom_frame.id = 'Mushroom #'+i;
+          shroom_frame.src = '../assets/preview/'+tokenId+'.png';
+          document.getElementById('thePad').appendChild(shroom_frame)
 
         }
 
       }
 
-      // Random Int
+      // Random Int //
       function getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -1036,66 +804,9 @@
     </script>
   </head>
   <body class="bodyb">
-    <div class="wrapper">
-      <header id="thisheader">
-        <div class="downloads pre">
-          <ul class="downloads2">
-            <li><a id="mint_token" class="pointer" href=""><strong>Connect</strong>wallet</a></li>
-            <li><a id="mint_total" class="pointer" href="https://discord.gg/xWMFWgpvd3"><strong>Discord</strong>server</a></li>
-            <li><a id="mint_quantity" class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><strong>OpenSea</strong>view on</a></li>
-          </ul>
-          <div class="bigContainer">
-            <img id="previewImg" class="mushroomImgMint" src="../blacknwhite.png"/>
-          </div>
-        </div>
-      </header>
       <section>
-        <div class="top">{{ content }}</div>
-        <div class="downloads pre">
-          <div id="netStatus" class="netStatus">
-            <div id="recent_mints" class="recent_mints"><img src="../mushroomsGIF.gif" class="logoImg"></div>
-            <h1 style="color: white !important;">Non-Fungi-ble's</h1>
-            <p style="padding: 10%; padding-top: 0%; padding-bottom: 0%;">
-              A collection of 10,000 powerful Mushrooms growing on the Ethereum blockchain! Verified and stored on IPFS! ✅
-            </p>
-            opensea.io/collection/non-fungi-bles<a class="pointer" href="https://opensea.io/collection/non-fungi-bles" target="_blank"><b id="connected">Shop on OpenSea ⛵</b></a>
-            <hr class="hr2">addon utility for Frog holders!<a class="pointer" href="https://freshfrogs.io/the-pond"><b>🐸 FreshFrogsNFT</b></a>
-            <br>
-            <div id="pre" class="mintingTextWhite2"><strong></strong><br>Waiting to Connect Web3...<a class="pointer" href="https://non-fungi-ble.io/"><b id="connected">Connect Wallet 🔌</b></a></div>
-          </div>
-          <br>
-          <div id="thePad" class="thePad">
-            <div style="text-align: left;">
-                <strong class="mushroom_name">Toadstool Mushrooms</strong>
-                <br>Supply: #1 - #2,500
-              </div>
-              <br><img src="../assets/preview/Toadstool/1.png" class="recentMint">
-            </div>
-            <div class="mushroom_token">
-              <div style="text-align: left;">
-                <strong class="mushroom_name">Oyster Mushrooms</strong>
-                <br>Supply: #2,501 - #5,000
-              </div>
-              <br><img src="../assets/preview/Oyster/1.png" class="recentMint">
-            </div>
-            <div class="mushroom_token">
-              <div style="text-align: left;">
-                <strong class="mushroom_name">Morel Mushrooms</strong>
-                <br>Supply: #5,001 - #7,500
-              </div>
-              <br><img src="../assets/preview/Morel/1.png" class="recentMint">
-            </div>
-            <div class="mushroom_token">
-              <div style="text-align: left;">
-                <strong class="mushroom_name">Stocking Mushrooms</strong>
-                <br>Supply: #7,501 - #10,000
-              </div>
-              <br><img src="../assets/preview/Stocking/1.png" class="recentMint">
-            </div>
-          </div>
-        </div>
+        <div id="thePad" class="thePad"></div>
       </section>
-    </div>
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
   </body>
 </html>
