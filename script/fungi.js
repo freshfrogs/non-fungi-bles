@@ -153,23 +153,15 @@
 
   async function fetch_mushrooms() {
 
-    // Fetch OpenSea Data
-    fetch('https://api.opensea.io/api/v1/collection/non-fungi-bles', options)
-    .then((tokens) => tokens.json())
-    .then((tokens) => {
-      var { assets } = tokens
-      console.log(assets)
-      //assets.forEach((frog) => {
-        
-        //render_token(frog);
-
-      //})
+    // Fetch Collection Data via OpenSea API
+    fetch('https://api.opensea.io/api/v1/assets/non-fungi-bles', options)
+    .then(collection => collection.json())
+    .then(collection => {
+      console.log(collection)
     })
     .catch(e => {
-      
-      console.log(e.message)
-
-    })
+      console.log('Error: Failed to fetch OpenSea collection data!');
+    });
 
   }
 
