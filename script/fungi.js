@@ -106,11 +106,11 @@
             '</div>'+
             '<div class="terminalBottom">'+
               '<limit class="displayUnit">Limit</limit>'+
-              '<br>'+mint_limit+'Ξ'+
+              '<br>'+mint_limit+''+
             '</div>'+
             '<div class="terminalBottom">'+
               '<price class="displayUnit">Price</price>'+
-              '<br>'+''+mint_price+''+
+              '<br>'+''+mint_price+'Ξ'+
             '</div>'+
           '</div>'+
         '</div>'+
