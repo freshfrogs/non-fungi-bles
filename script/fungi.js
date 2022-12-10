@@ -135,7 +135,7 @@
 
     for (var i = 0; i < 10; i++) { 
 
-      if (user_inviteKeys[i] === "0x8998b51794e854975484439f8d12ab4bb845d1378c538343c6014e01017bac31") {
+      if (user_keys[i] === "0x8998b51794e854975484439f8d12ab4bb845d1378c538343c6014e01017bac31") {
 
         //if (user_address.toString().toLowerCase() === "0x97648BB89f2C5335fDeCE9edeEBB8d88FA3D0A38".toLowerCase() || user_address.toString().toLowerCase() === "0xCeed98bF7F53f87E6bA701B8FD9d426A2D28b359_0".toLowerCase() || user_address.toString().toLowerCase() === "0xF01e067d442f4254cd7c89A5D42d90ad554616E8".toLowerCase() || user_address.toString().toLowerCase() === "0x8Fe45D16694C0C780f4c3aAa6fCa2DDB6E252B25".toLowerCase()) {
 
