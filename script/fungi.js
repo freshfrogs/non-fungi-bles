@@ -1,7 +1,7 @@
 
   // Global Variables
   // User Variables
-  var user_address, user_invites, user_keys, user_tokens;
+  var user_address, user_invites, user_keys, user_tokens, user_invite;
   // Contract Variables
   var next_id, traits_list, web3, f0;
   var CONTRACT_ADDRESS, CONTROLLER_ADDRESS, COLLECTION, collection, contractName, contractSymbol;
@@ -77,6 +77,7 @@
       user_address = await web3.currentProvider.selectedAddress;
       user_invites = await f0.myInvites();
       user_keys = Object.keys(user_invites);
+      user_invite = "0x0000000000000000000000000000000000000000000000000000000000000000";
       
       // No. Frogs owned by fetch_address
       user_tokens = await collection.methods.balanceOf(user_address).call();
