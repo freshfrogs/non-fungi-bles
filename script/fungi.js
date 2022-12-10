@@ -155,12 +155,12 @@
 
     // Fetch Collection Data via OpenSea API
     fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&asset_contract_address=0x4aFd4635417132892A4eA9CAE128d03e803317fD&limit=12&include_orders=false', options)
-    .then(collection => collection.json())
-    .then(collection => {
-      console.log(collection)
+    .then(assets => assets.json())
+    .then(assets => {
+      console.log(assets)
     })
     .catch(e => {
-      console.log('Error: Failed to fetch OpenSea collection data!');
+      console.log('Error: Failed to fetch OpenSea assets!');
     });
 
   }
