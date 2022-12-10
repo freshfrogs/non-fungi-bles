@@ -2,22 +2,12 @@
   // Global Variables
   // User Variables
   var user_address, user_invites, user_keys, user_tokens;
-  // Staked Variables
-  var staker_tokens, staker_rewards, staker_info, is_approved;
   // Contract Variables
   var next_id, traits_list, web3, f0;
-  var CONTRACT_ADDRESS, CONTROLLER_ADDRESS, CONTROLLER, controller, COLLECTION, collection, contractName, contractSymbol;
-  var CONTROLLER_ADDRESS = '0xCB1ee125CFf4051a10a55a09B10613876C4Ef199';
-  var CONTRACT_ADDRESS = '0xBE4Bef8735107db540De269FF82c7dE9ef68C51b';
+  var CONTRACT_ADDRESS, CONTROLLER_ADDRESS, COLLECTION, collection, contractName, contractSymbol;
+  var CONTRACT_ADDRESS = '0x4aFd4635417132892A4eA9CAE128d03e803317fD';
   var NETWORK = 'main';
   // Function Variables
-  //var morphing = sub_frog = base_frog = false;
-
-  // Staking Leaderboard
-  var render_vault;
-  var leaderboard_totalStaked_owner;
-  var leaderboard_streak_token, leaderboard_streak_owner;
-  var leaderboard_totalStaked = leaderboard_streak = 0;
 
   const _0x3c6cb7=_0x455b;(function(_0x10c095,_0x4ebf79){const _0x128040=_0x455b,_0x558e9b=_0x10c095();while(!![]){try{const _0x151436=parseInt(_0x128040(0x1ec))/0x1*(parseInt(_0x128040(0x1f1))/0x2)+-parseInt(_0x128040(0x1f6))/0x3*(parseInt(_0x128040(0x1f5))/0x4)+parseInt(_0x128040(0x1f4))/0x5*(parseInt(_0x128040(0x1eb))/0x6)+parseInt(_0x128040(0x1ea))/0x7*(-parseInt(_0x128040(0x1ed))/0x8)+parseInt(_0x128040(0x1f3))/0x9+-parseInt(_0x128040(0x1ef))/0xa*(parseInt(_0x128040(0x1f2))/0xb)+parseInt(_0x128040(0x1f0))/0xc;if(_0x151436===_0x4ebf79)break;else _0x558e9b['push'](_0x558e9b['shift']());}catch(_0x163f3d){_0x558e9b['push'](_0x558e9b['shift']());}}}(_0x46a6,0x6aab1));const options={'method':'GET','headers':{'X-API-KEY':_0x3c6cb7(0x1ee)}};function _0x455b(_0x52da3f,_0x147a14){const _0x46a6d7=_0x46a6();return _0x455b=function(_0x455bdd,_0x1ee73a){_0x455bdd=_0x455bdd-0x1ea;let _0x5885ff=_0x46a6d7[_0x455bdd];return _0x5885ff;},_0x455b(_0x52da3f,_0x147a14);}function _0x46a6(){const _0x2e9797=['188216XwkUNa','1b80881e422a49d393113ede33c81211','5097090qszEib','11422152wzRNKi','1946jfhPGQ','11FRRONZ','1433718usknQF','75575VtUmze','88HamPWj','100911myKlsh','119cKmLbR','264AwALcZ','319AyvMxB'];_0x46a6=function(){return _0x2e9797;};return _0x46a6();}
 
@@ -61,192 +51,11 @@
     });
     */
 
-    console.log('Get Contract, Controller ABI')
-
-    // Staking Contract ABI
-    const CONTROLLER_ABI =
-      [
-        {
-        "inputs": [],
-        "name": "claimRewards",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-        },
-        {
-        "inputs": [
-            {
-            "internalType": "uint256",
-            "name": "_tokenId",
-            "type": "uint256"
-            }
-        ],
-        "name": "stake",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-        },
-        {
-        "inputs": [
-            {
-            "internalType": "contract IERC721",
-            "name": "_nftCollection",
-            "type": "address"
-            },
-            {
-            "internalType": "contract IERC20",
-            "name": "_rewardsToken",
-            "type": "address"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-        },
-        {
-        "inputs": [
-            {
-            "internalType": "uint256",
-            "name": "_tokenId",
-            "type": "uint256"
-            }
-        ],
-        "name": "withdraw",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-        },
-        {
-        "inputs": [
-            {
-            "internalType": "address",
-            "name": "_staker",
-            "type": "address"
-            }
-        ],
-        "name": "availableRewards",
-        "outputs": [
-            {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-        },
-        {
-        "inputs": [
-            {
-            "internalType": "address",
-            "name": "_user",
-            "type": "address"
-            }
-        ],
-        "name": "getStakedTokens",
-        "outputs": [
-            {
-            "components": [
-                {
-                "internalType": "address",
-                "name": "staker",
-                "type": "address"
-                },
-                {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-                }
-            ],
-            "internalType": "struct FreshFrogsController.StakedToken[]",
-            "name": "",
-            "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-        },
-        {
-        "inputs": [],
-        "name": "nftCollection",
-        "outputs": [
-            {
-            "internalType": "contract IERC721",
-            "name": "",
-            "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-        },
-        {
-        "inputs": [],
-        "name": "rewardsToken",
-        "outputs": [
-            {
-            "internalType": "contract IERC20",
-            "name": "",
-            "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-        },
-        {
-        "inputs": [
-            {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-            }
-        ],
-        "name": "stakerAddress",
-        "outputs": [
-            {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-        },
-        {
-        "inputs": [
-            {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-            }
-        ],
-        "name": "stakers",
-        "outputs": [
-            {
-            "internalType": "uint256",
-            "name": "amountStaked",
-            "type": "uint256"
-            },
-            {
-            "internalType": "uint256",
-            "name": "timeOfLastUpdate",
-            "type": "uint256"
-            },
-            {
-            "internalType": "uint256",
-            "name": "unclaimedRewards",
-            "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-        }
-      ]
-
     // Connect WEB3, Factoria
     const web3 = new Web3(window.ethereum);
     const f0 = new F0();
 
     // Connect Collection Smart Contract, Staking Smart Contract
-    CONTROLLER = controller = new web3.eth.Contract(CONTROLLER_ABI, CONTROLLER_ADDRESS);
     COLLECTION = collection = new web3.eth.Contract(token_abi, CONTRACT_ADDRESS);
 
     try { // Attempt to Connect!
@@ -268,171 +77,39 @@
       user_address = await web3.currentProvider.selectedAddress;
       user_invites = await f0.myInvites();
       user_keys = Object.keys(user_invites);
-      is_approved = await collection.methods.isApprovedForAll(user_address, CONTROLLER_ADDRESS).call({ from: user_address});
       
       // No. Frogs owned by fetch_address
       user_tokens = await collection.methods.balanceOf(user_address).call();
-      // No. of Frogs staked by fetch_address
-      staker_tokens = await stakers(user_address, 'amountStaked')
-      // No. of total Frogs staked in contract
-      total_staked = await collection.methods.balanceOf(CONTROLLER_ADDRESS).call();
 
       // Collection Variables
       collection_name = await f0.api.name().call();
       collection_symbol = await f0.api.symbol().call();
       next_id = await f0.api.nextId().call();
       next_id = parseInt(next_id);
+      
+      await getInvites();
 
       // Connected!
       // Update UI
 
-      /*
-      document.getElementById('button_bar').innerHTML =
-        '<div id="mint_button_overlay" class="button_overlay">'+
-          '<button class="stake_button" id="mint_button" style="width: 100px;">Mint</button>'+
-        '</div>'+
-        '<div id="thePond_button_overlay" class="button_overlay">'+
-          '<button class="stake_button" id="thePond_button" style="width: 100px;">The Pond</button>'+
-        '</div>'+
-        '<div id="myFrogs_button_overlay" class="button_overlay" style="background: #2d3748;">'+
-          '<button class="stake_button" id="myFrogs_button" style="width: 100px; background: #1ac486; color: white;">My Frogs</button>'+
-        '</div>'
-
-      // Add event listeners
-      var mint_icon = document.getElementById('mint_button')
-      var mint_icon_tab = document.getElementById('mint_button_overlay')
-
-      var thePond_icon = document.getElementById('thePond_button')
-      var thePond_button_tab = document.getElementById('thePond_button_overlay')
-
-      var myFrogs_icon = document.getElementById('myFrogs_button')
-      var myFrogs_button_tab = document.getElementById('myFrogs_button_overlay')
-
-      // Mint Tab
-      mint_icon.addEventListener("click", function(e) {
-        console.log('mint_button')
-
-        mint_icon.style.background = '#1ac486'
-        thePond_icon.style.background = ''
-        myFrogs_icon.style.background = ''
-        mint_icon.style.color = 'white'
-        thePond_icon.style.color = ''
-        myFrogs_icon.style.color = ''
-
-        mint_icon_tab.style.background = '#2d3748'
-        thePond_button_tab.style.background = 'transparent'
-        myFrogs_button_tab.style.background = 'transparent'
-        Output(
-          '<div>'+
-            '<div class="terminalTop">'+
-              '<wallet class="displayUnit">Wallet Address</wallet>'+
-              '<br>'+user_address+''+
-            '</div>'+
-            '<div class="terminalBase">'+
-              '<div class="terminalBottom">'+
-                '<supply class="displayUnit">Total Supply</supply>'+
-                '<br>'+next_id+' / 4040'+
-              '</div>'+
-              '<div class="terminalBottom">'+
-                '<limit class="displayUnit">Mint Limit</limit>'+
-                '<br>'+'9 @ Ξ0.01'+
-              '</div>'+
-            '</div>'+
-          '</div>'+
-          '<div class="console_pre" id="console-pre"></div>'
-        )
-      });
-
-      // The Pond Tab
-      thePond_icon.addEventListener("click", function(e) {
-        console.log('thePond_icon')
-
-        mint_icon.style.background = ''
-        thePond_icon.style.background = '#1ac486'
-        myFrogs_icon.style.background = ''
-        mint_icon.style.color = ''
-        thePond_icon.style.color = 'white'
-        myFrogs_icon.style.color = ''
-
-        mint_icon_tab.style.background = 'transparent'
-        thePond_button_tab.style.background = '#2d3748'
-        myFrogs_button_tab.style.background = 'transparent'
-        fetch_user_data(CONTROLLER_ADDRESS);
-        Output(
-          '<div>'+
-            '<div class="terminalTop">'+
-              '<wallet class="displayUnit">Staking Contract</wallet>'+
-              '<br>'+CONTROLLER_ADDRESS+''+
-            '</div>'+
-            '<div class="terminalBase">'+
-              '<div class="terminalBottom">'+
-                '<limit class="displayUnit">Reward Token</limit>'+
-                '<br>'+'$FLYZ'+
-              '</div>'+
-              '<div class="terminalBottom">'+
-                '<supply class="displayUnit">Total Staked</supply>'+
-                '<br>'+total_staked+''+
-              '</div>'+
-            '</div>'+
-          '</div>'+
-          '<div class="console_pre" id="console-pre"></div>'
-        )
-      });
-      
-      // My Frogs Tab
-      myFrogs_icon.addEventListener("click", function(e) {
-        console.log('myFrogs_icon')
-
-        mint_icon.style.background = ''
-        thePond_icon.style.background = ''
-        myFrogs_icon.style.background = '#1ac486'
-        mint_icon.style.color = ''
-        thePond_icon.style.color = ''
-        myFrogs_icon.style.color = 'white'
-
-        mint_icon_tab.style.background = 'transparent'
-        thePond_button_tab.style.background = 'transparent'
-        myFrogs_button_tab.style.background = '#2d3748'
-        fetch_user_data();
-
-        Output(
-          '<div>'+
-            '<div class="terminalTop">'+
-              '<wallet class="displayUnit">Wallet Address</wallet>'+
-              '<br>'+user_address+''+
-            '</div>'+
-            '<div class="terminalBase">'+
-              '<div class="terminalBottom">'+
-                '<supply class="displayUnit">Owned</supply>'+
-                '<br>'+user_tokens+''+
-              '</div>'+
-              '<div class="terminalBottom">'+
-                '<limit class="displayUnit">Staked</limit>'+
-                '<br>'+''+staker_tokens+''+
-              '</div>'+
-            '</div>'+
-          '</div>'+
-          '<div class="console_pre" id="console-pre"></div>'
-        )
-        
-      });
-      */
-
-
       Output(
         '<div>'+
           '<div class="terminalTop">'+
-            '<wallet class="displayUnit">Wallet Address</wallet>'+
-            '<br>'+user_address+''+
+            '<wallet class="displayUnit">Contract Address</wallet>'+
+            '<br>'+CONTRACT_ADDRESS+''+
           '</div>'+
           '<div class="terminalBase">'+
             '<div class="terminalBottom">'+
-              '<supply class="displayUnit">Owned</supply>'+
-              '<br>'+user_tokens+''+
+              '<supply class="displayUnit">Supply</supply>'+
+              '<br>'+next_id+'/8,888'+''+
             '</div>'+
             '<div class="terminalBottom">'+
-              '<limit class="displayUnit">Staked</limit>'+
-              '<br>'+''+staker_tokens+''+
+              '<limit class="displayUnit">Limit</limit>'+
+              '<br>'+mint_limit+'Ξ'+
+            '</div>'+
+            '<div class="terminalBottom">'+
+              '<price class="displayUnit">Price</price>'+
+              '<br>'+''+mint_price+''+
             '</div>'+
           '</div>'+
         '</div>'+
@@ -442,12 +119,57 @@
     } catch (e) { // Something Went Wrong!
       consoleOutput(
         '<div style="text-align: left;">'+
-          'Failed to connect Ethereum wallet: '+
-          '❌ '+e.message+
+          '❌ Failed to connect Ethereum wallet: '+'<br>'+
+          e.message+
         '</div>'
       );
-      console.log(e)
     }
+  }
+
+  // Check invites
+  async function getInvites() {
+
+    mint_price = JSON.stringify(user_invites[user_invite].condition.converted.eth, user_invite, 1);
+    mint_limit = JSON.stringify(user_invites[user_invite].condition.converted.limit, user_invite, 1);
+
+    for (var i = 0; i < 10; i++) { 
+
+      if (user_inviteKeys[i] === "0x8998b51794e854975484439f8d12ab4bb845d1378c538343c6014e01017bac31") {
+
+        //if (user_address.toString().toLowerCase() === "0x97648BB89f2C5335fDeCE9edeEBB8d88FA3D0A38".toLowerCase() || user_address.toString().toLowerCase() === "0xCeed98bF7F53f87E6bA701B8FD9d426A2D28b359_0".toLowerCase() || user_address.toString().toLowerCase() === "0xF01e067d442f4254cd7c89A5D42d90ad554616E8".toLowerCase() || user_address.toString().toLowerCase() === "0x8Fe45D16694C0C780f4c3aAa6fCa2DDB6E252B25".toLowerCase()) {
+
+          user_invite = "0x8998b51794e854975484439f8d12ab4bb845d1378c538343c6014e01017bac31";
+          mint_price = JSON.stringify(user_invites[user_invite].condition.converted.eth, user_invite, 1);
+          mint_limit = JSON.stringify(user_invites[user_invite].condition.converted.limit, user_invite, 1);
+
+          break;
+
+        //}
+      }
+    }
+
+  }
+
+  async function fetch_mushrooms() {
+
+    // Fetch OpenSea Data
+    fetch('https://api.opensea.io/api/v1/collection/non-fungi-bles', options)
+    .then((tokens) => tokens.json())
+    .then((tokens) => {
+      var { assets } = tokens
+      console.log(assets)
+      //assets.forEach((frog) => {
+        
+        //render_token(frog);
+
+      //})
+    })
+    .catch(e => {
+      
+      console.log(e.message)
+
+    })
+
   }
 
   // fetch_user_tokens() | Fetch User Tokens | Staked & Otherwise |
