@@ -160,7 +160,7 @@
       console.log(assets)
     })
     .catch(e => {
-      console.log('Error: Failed to fetch OpenSea assets!');
+      console.log('Failed to talk to Opensea! '+e.message);
     });
 
   }
