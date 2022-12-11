@@ -158,6 +158,7 @@
     .then((assets) => assets.json())
     .then((assets) => {
       var { tokens } = assets
+      console.log(tokens)
       tokens.forEach((token) => {
         
         render_token(token);
