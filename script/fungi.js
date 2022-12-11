@@ -155,11 +155,13 @@
 
     // Fetch Collection Data via OpenSea API
     fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&asset_contract_address=0x4aFd4635417132892A4eA9CAE128d03e803317fD&limit=12&include_orders=false', options)
-    .then(assets => assets.json())
-    .then(assets => {
-      console.log(assets)
-      assets.forEach(token => {
-        render_token(token)
+    .then((assets) => assets.json())
+    .then((assets) => {
+      var { tokens } = assets
+      tokens.forEach((token) => {
+        
+        render_token(token);
+
       })
     })
     .catch(e => {
@@ -469,6 +471,9 @@
               '<b>'+name+'</b> <text style="color: #1ac486;">'+opensea_username+'</text>'+'<text style="color: #1ac486; float: right;">'+rarity_rank+'%</text>'+
             '</div>'+
             '<div id="prop_'+token_id+'" class="properties">'+
+              '<div style="text-align: center;">'+
+                '<a href="'+permalink+'" target="_blank"><button class="os_button">View on Opensea</button></a>'+
+              '</div>'+
             '</div>'+
           '</div>'+
         '</div>'+
