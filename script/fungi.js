@@ -155,13 +155,13 @@
 
     // Fetch Collection Data via OpenSea API
     fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&asset_contract_address=0x4aFd4635417132892A4eA9CAE128d03e803317fD&limit=12&include_orders=false', options)
-    .then((assets) => assets.json())
-    .then((assets) => {
-      var { tokens } = assets
-      console.log(tokens)
-      tokens.forEach((token) => {
+    .then((tokens) => tokens.json())
+    .then((tokens) => {
+      var { assets } = tokens
+      console.log(assets)
+      assets.forEach((frog) => {
         
-        render_token(token);
+        render_token(frog);
 
       })
     })
