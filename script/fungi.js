@@ -448,6 +448,10 @@
       opensea_username = truncateAddress(address)
     }
 
+    if (typeof name == 'undefined' || name == '' || name == null) {
+      name = 'Mushroom #'+token_id
+    }
+
     let rarity_rank = Math.floor(parseFloat((( rank / 4040 ) * 100)))
     if (rarity_rank < 1) { rarity_rank = 1 }
 
