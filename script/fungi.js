@@ -165,7 +165,7 @@
       })
     })
     .catch(e => {
-      console.log('Failed to talk to Opensea! \n'+e.message);
+      console.log('Failed to talk to Opensea.! \n'+e.message);
     });
 
   }
