@@ -444,6 +444,8 @@
     let image_link = '../build/images/'+token_id+'.png'
     opensea_username = username
 
+    let address = await collection.methods.ownerOf(tokenId).call();
+
     if (typeof opensea_username == 'undefined' || opensea_username == '' || opensea_username == null) {
       opensea_username = truncateAddress(address)
     }
@@ -474,7 +476,7 @@
         '<div class="renderRight">'+
           '<div class="innerRight">'+
             '<div id="traits_'+token_id+'" class="trait_list">'+
-              '<b>'+name+'</b> <text style="color: #1ac486;">'+opensea_username+'</text>'+'<text style="color: #1ac486; float: right;">'+rarity_rank+'%</text>'+
+              '<b>'+name+'</b>'+' <text style="color: #1ac486; float: right;">'+opensea_username+'%</text>'+
             '</div>'+
             '<div id="prop_'+token_id+'" class="properties">'+
               '<div style="text-align: center;">'+
