@@ -155,13 +155,13 @@
 
     // Fetch Collection Data via OpenSea API
     fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&asset_contract_address=0x4aFd4635417132892A4eA9CAE128d03e803317fD&limit=12&include_orders=false', options)
-    .then((tokens) => tokens.json())
-    .then((tokens) => {
-      var { assets } = tokens
-      console.log(assets)
-      assets.forEach((frog) => {
+    .then((assets) => assets.json())
+    .then((assets) => {
+      var { tokens } = assets
+      console.log(tokens)
+      tokens.forEach((token) => {
         
-        render_token(frog);
+        render_token(token);
 
       })
     })
@@ -441,6 +441,8 @@
     // Assign token variables from data object
     try { var { token_id, external_link, permalink, name, rarity_data: { rank }, owner: { address, user: { username } } } = token } catch (e) {} // , last_sale: { payment_token: { decimals }, total_price }
 
+    console.log(token_id)
+    let image_link = '../build/images/'+token_id+'.png'
     opensea_username = username
 
     if (typeof opensea_username == 'undefined' || opensea_username == '' || opensea_username == null) {
@@ -462,7 +464,7 @@
         '<div id="'+token_id+'" class="renderLeft" style="background-image: url('+external_link+'); background-size: 2048px 2048px;">'+
           '<div class="innerLeft">'+
             '<div class="frog_imgContainer" id="cont_'+token_id+'" onclick="display_token('+token_id+')">'+
-            '<img src="'+external_link+'"/>'+
+              '<img src="'+image_link+'"/>'+
             '</div>'+
           '</div>'+
         '</div>'+
