@@ -1,55 +1,19 @@
 
   // Global Variables
-  // User Variables
   var user_address, user_invites, user_keys, user_tokens, user_invite;
   // Contract Variables
   var next_id, traits_list, web3, f0;
-  var CONTRACT_ADDRESS, CONTROLLER_ADDRESS, COLLECTION, collection, contractName, contractSymbol;
+  var CONTRACT_ADDRESS, COLLECTION, collection, contractName, contractSymbol;
   var CONTRACT_ADDRESS = '0x4aFd4635417132892A4eA9CAE128d03e803317fD';
   var NETWORK = 'main';
-  // Function Variables
 
+  // Function Variables
   const _0x3c6cb7=_0x455b;(function(_0x10c095,_0x4ebf79){const _0x128040=_0x455b,_0x558e9b=_0x10c095();while(!![]){try{const _0x151436=parseInt(_0x128040(0x1ec))/0x1*(parseInt(_0x128040(0x1f1))/0x2)+-parseInt(_0x128040(0x1f6))/0x3*(parseInt(_0x128040(0x1f5))/0x4)+parseInt(_0x128040(0x1f4))/0x5*(parseInt(_0x128040(0x1eb))/0x6)+parseInt(_0x128040(0x1ea))/0x7*(-parseInt(_0x128040(0x1ed))/0x8)+parseInt(_0x128040(0x1f3))/0x9+-parseInt(_0x128040(0x1ef))/0xa*(parseInt(_0x128040(0x1f2))/0xb)+parseInt(_0x128040(0x1f0))/0xc;if(_0x151436===_0x4ebf79)break;else _0x558e9b['push'](_0x558e9b['shift']());}catch(_0x163f3d){_0x558e9b['push'](_0x558e9b['shift']());}}}(_0x46a6,0x6aab1));const options={'method':'GET','headers':{'X-API-KEY':_0x3c6cb7(0x1ee)}};function _0x455b(_0x52da3f,_0x147a14){const _0x46a6d7=_0x46a6();return _0x455b=function(_0x455bdd,_0x1ee73a){_0x455bdd=_0x455bdd-0x1ea;let _0x5885ff=_0x46a6d7[_0x455bdd];return _0x5885ff;},_0x455b(_0x52da3f,_0x147a14);}function _0x46a6(){const _0x2e9797=['188216XwkUNa','1b80881e422a49d393113ede33c81211','5097090qszEib','11422152wzRNKi','1946jfhPGQ','11FRRONZ','1433718usknQF','75575VtUmze','88HamPWj','100911myKlsh','119cKmLbR','264AwALcZ','319AyvMxB'];_0x46a6=function(){return _0x2e9797;};return _0x46a6();}
 
   // connect() | Connect Wallet | Update Collection Data
   async function connect() {
 
-    // Connecting
-    consoleOutput(
-      '<div style="text-align: left;">'+
-        'Connect Ethereum wallet...<br>'+
-      '</div>'
-    );
-
-    /*
-    console.log('fetching opensea collection info')
-
-    // Fetch Collection Data via OpenSea API
-    fetch('https://api.opensea.io/api/v1/collection/fresh-frogs', options)
-    .then(collection => collection.json())
-    .then(collection => {
-
-      
-      consoleOutput(
-        '<div style="text-align: left;">'+
-          'Fetching collection data from Opensea...<br>'+
-        '</div>'
-      );
-
-      var { collection: { banner_image_url, created_date, description, dev_seller_fee_basis_points, external_url, featured_image_url, name, payout_address, traits, stats: { floor_price, market_cap, total_volume, count, num_owners } } } = collection
-      traits_list = traits;
-    })
-    .catch(e => {
-      console.log('Error: Failed to fetch OpenSea collection data!');
-
-      consoleOutput(
-        '<div style="text-align: left;">'+
-          'Something went wrong! Try refreshing the page!<br>'+
-        '</div>'
-      );
-      
-    });
-    */
+    console.log('Connecting to Ethereum network via web3 browser extension...')
 
     // Connect WEB3, Factoria
     const web3 = new Web3(window.ethereum);
@@ -59,13 +23,7 @@
     COLLECTION = collection = new web3.eth.Contract(token_abi, CONTRACT_ADDRESS);
 
     try { // Attempt to Connect!
-      console.log('Connecting factoria, web3')
-
-      consoleOutput(
-        '<div style="text-align: left;">'+
-          'Connecting... please wait<br>'+
-        '</div>'
-      );
+      console.log('Connecting factoria, web3, retrieving user and collection data...')
 
       await f0.init({
         web3: web3,
@@ -79,7 +37,7 @@
       user_keys = Object.keys(user_invites);
       user_invite = "0x0000000000000000000000000000000000000000000000000000000000000000";
       
-      // No. Frogs owned by fetch_address
+      // No. tokens owned by user_address
       user_tokens = await collection.methods.balanceOf(user_address).call();
 
       // Collection Variables
@@ -91,39 +49,15 @@
       await getInvites();
 
       // Connected!
-      // Update UI
+      console.log('Connected!')
+      console.log('Wallet Address: \n'+user_address)
+      console.log('\n'+collection_name+' ('+collection_symbol+')')
+      console.log('Collection Contract Address: \n'+CONTRACT_ADDRESS)
 
-      Output(
-        '<div>'+
-          '<div class="terminalTop">'+
-            '<wallet class="displayUnit">Contract Address</wallet>'+
-            '<br>'+CONTRACT_ADDRESS+''+
-          '</div>'+
-          '<div class="terminalBase">'+
-            '<div class="terminalBottom">'+
-              '<supply class="displayUnit">Supply</supply>'+
-              '<br>'+next_id+'/8,888'+''+
-            '</div>'+
-            '<div class="terminalBottom">'+
-              '<limit class="displayUnit">Limit</limit>'+
-              '<br>'+mint_limit+''+
-            '</div>'+
-            '<div class="terminalBottom">'+
-              '<price class="displayUnit">Price</price>'+
-              '<br>'+''+mint_price+'Ξ'+
-            '</div>'+
-          '</div>'+
-        '</div>'+
-        '<div class="console_pre" id="console-pre"></div>'
-      )
+    } catch (e) {
 
-    } catch (e) { // Something Went Wrong!
-      consoleOutput(
-        '<div style="text-align: left;">'+
-          '❌ Failed to connect Ethereum wallet: '+'<br>'+
-          e.message+
-        '</div>'
-      );
+      console.log('Something went wrong! :( \n'+e.message)
+
     }
   }
 
