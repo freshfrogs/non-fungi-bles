@@ -444,7 +444,9 @@
     let image_link = '../build/images/'+token_id+'.png'
     opensea_username = username
 
-    let address = await collection.methods.ownerOf(tokenId).call();
+    if (typeof address == 'undefined' || address == '' || address == null) {
+      address = await collection.methods.ownerOf(tokenId).call();
+    }
 
     if (typeof opensea_username == 'undefined' || opensea_username == '' || opensea_username == null) {
       opensea_username = truncateAddress(address)
