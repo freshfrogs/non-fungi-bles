@@ -1,5 +1,24 @@
 <!DOCTYPE html>
 <style>
+  ul.mint_buttons {
+    list-style: none;
+    height: 40px;
+    padding: 0;
+    background: white;
+    border-radius: 5px;
+    border: none;
+    width: 270px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16px;
+    margin-bottom: 0px;
+    line-height: 1;
+    text-align: center;
+    vertical-align: middle;
+    font-size: small !important;
+    color: #1a202c;
+    box-shadow: none;
+  }
 </style>
 <html lang="{{ site.lang | default: "en-US" }}">
   <link rel="icon" href="../assets/logo.png">
@@ -52,17 +71,15 @@
     </script>
     
   </head>
-  <body class="bodyb">
+  <body class="body">
     <div class="wrapper">
       <header id="header">
-        <div class="downloads pre">
-          <ul class="downloads2">
-            <li><a id="mint_txn" class="pointer"><strong>Mint</strong>Transact</a></li>
-            <li><a id="mint_total" class="pointer"><strong>0.001Ξ</strong>Total</a></li>
-            <li><a id="mint_quantity" class="pointer"><strong><strong id="quantity-">- </strong>1<strong id="quantity+"> +</strong></strong>Quantity</a></li>
-          </ul>
-          <div id="bigContainer" class="bigContainer"><img src="../build/images/1.png" class="mintImage"></div>
-        </div>
+        <ul class="mint_buttons">
+          <li><a id="mint_txn" class="pointer"><strong>Mint</strong>Transact</a></li>
+          <li><a id="mint_total" class="pointer"><strong>0.001Ξ</strong>Total</a></li>
+          <li><a id="mint_quantity" class="pointer"><strong><strong id="quantity-">- </strong>1<strong id="quantity+"> +</strong></strong>Quantity</a></li>
+        </ul>
+        <div id="displayContainer" class="displayContainer"><img src="../build/images/1.png" class="mintImage"></div>
       </header>
     </div>
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
