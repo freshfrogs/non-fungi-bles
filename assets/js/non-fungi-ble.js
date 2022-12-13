@@ -54,6 +54,11 @@
       console.log('\n'+collection_name+' ('+collection_symbol+')')
       console.log('Collection Contract Address: \n'+CONTRACT_ADDRESS)
 
+      // Update User Interface
+
+      // Mint Function(s)
+      
+
     } catch (e) {
 
       console.log('Something went wrong! :( \n'+e.message)
@@ -74,7 +79,7 @@
         mint_price = JSON.stringify(user_invites[user_invite].condition.converted.eth, user_invite, 1);
         mint_limit = JSON.stringify(user_invites[user_invite].condition.converted.limit, user_invite, 1);
         break;
-        
+
       }
     }
   }
