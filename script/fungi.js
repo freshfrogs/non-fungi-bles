@@ -481,7 +481,7 @@
             '</div>'+
             '<div id="prop_'+token_id+'" class="properties">'+
               '<div style="text-align: center;">'+
-                '<a href="'+permalink+'" target="_blank"><button class="os_button">View on Opensea</button></a>'+
+                '<a href="'+permalink+'" target="_blank"><button class="os_button">View on OpenSea</button></a>'+
               '</div>'+
             '</div>'+
           '</div>'+
