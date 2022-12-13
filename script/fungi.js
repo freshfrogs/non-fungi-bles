@@ -440,12 +440,11 @@
     // Assign token variables from data object
     try { var { token_id, external_link, permalink, name, rarity_data: { rank }, owner: { address, user: { username } } } = token } catch (e) {} // , last_sale: { payment_token: { decimals }, total_price }
 
-    console.log(token_id)
     let image_link = '../build/images/'+token_id+'.png'
     opensea_username = username
 
     if (typeof address == 'undefined' || address == '' || address == null) {
-      address = await collection.methods.ownerOf(tokenId).call();
+      address = await collection.methods.ownerOf(token_id).call();
     }
 
     if (typeof opensea_username == 'undefined' || opensea_username == '' || opensea_username == null) {
