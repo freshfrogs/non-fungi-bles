@@ -49,15 +49,16 @@
       await getInvites();
 
       // Connected!
-      console.log('Connected!')
-      console.log('Wallet Address: \n'+user_address)
-      console.log('\n'+collection_name+' ('+collection_symbol+')')
-      console.log('Collection Contract Address: \n'+CONTRACT_ADDRESS)
+      console.log(
+        'Connected!\n\n'+
+        'User Address: \n'+user_address+'\n'+
+        collection_name+' ('+collection_symbol+'):\n'+
+        CONTRACT_ADDRESS)
 
       // Update User Interface
 
       // Mint Function(s)
-      
+
 
     } catch (e) {
 
