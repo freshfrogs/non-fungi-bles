@@ -470,7 +470,7 @@
         '<div id="'+token_id+'" class="renderLeft" style="background-image: url('+image_link+'); background-size: 2048px 2048px;">'+
           '<div class="innerLeft">'+
             '<div class="frog_imgContainer" id="cont_'+token_id+'" onclick="display_token('+token_id+')">'+
-              '<img src="'+image_link+'"/>'+
+              //'<img src="'+image_link+'"/>'+
             '</div>'+
           '</div>'+
         '</div>'+
@@ -491,6 +491,22 @@
     // Create Element <--
     frog_doc.appendChild(frog_token);
 
+    // Update Metadata! Build Frog -->
+    let mushroom_type = 'null';
+    let metadata = await (await fetch("../build/json/"+token_id+".json")).json();
+
+    for (let i = 0; i < metadata.attributes.length; i++) {
+
+      let attribute = metadata.attributes[i]
+
+      if (attribute.trait_type == "Mushroom Type") {
+        mushroom_type = attribute.value
+      } else if (mushroom_type !== 'null') {
+        loadTrait(mushroom_type+'_'+attribute.trait_type, attribute.value, 'cont_'+token_id);
+      }
+
+    }
+
   }
 
   // loadTrait(_trait(family), _attribute(type), _where(element))
@@ -498,21 +514,8 @@
 
     newAttribute = document.createElement("img");
     newAttribute.alt = attribute
-
-    if (attribute == 'baseballCapWhite' || attribute == 'baseballCapBlue' || attribute == 'baseballCapRed' || attribute == 'tongueSpiderRed' || attribute == 'tongueSpider' || attribute == 'tongue' || attribute == 'tongueFly' || attribute == 'croaking' || attribute == 'peace' || attribute == 'inversedEyes' || attribute == 'closedEyes' || attribute == 'thirdEye' || attribute == 'mask' || attribute == 'smoking' || attribute == 'smokingCigar' || attribute == 'smokingPipe' || attribute == 'circleShadesRed' || attribute == 'circleShadesPurple' || attribute == 'shades' || attribute == 'shadesPurple' || attribute == 'shadesThreeD' || attribute == 'shadesWhite' || attribute == 'circleNightVision') {
-      newAttribute.src = "https://freshfrogs.io/the-pond/"+trait+"/animations/"+attribute+"_animation.gif";
-    } else {
-      newAttribute.src = "https://freshfrogs.io/the-pond/"+trait+"/"+attribute+".png";
-    }
-
-    if (trait == 'Trait') {
-      newAttribute.className = "frogImg5";
-
-    } else {
-      newAttribute.className = "frogImg3";
-
-    }
-
+    newAttribute.src = "../build/layers/"+trait+"/"+attribute+".png";
+    newAttribute.className = "frogImg5";
     document.getElementById(where).appendChild(newAttribute);
 
   }
