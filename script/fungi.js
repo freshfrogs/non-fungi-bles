@@ -96,13 +96,13 @@
       Output(
         '<div>'+
           '<div class="terminalTop">'+
-            '<wallet class="displayUnit">Contract Address</wallet>'+
-            '<br>'+CONTRACT_ADDRESS+''+
+            '<wallet class="displayUnit">Wallet Address</wallet>'+
+            '<br>'+user_address+''+
           '</div>'+
           '<div class="terminalBase">'+
             '<div class="terminalBottom">'+
-              '<supply class="displayUnit">Supply</supply>'+
-              '<br>'+next_id+'/8,888'+''+
+              '<supply class="displayUnit">Owned</supply>'+
+              '<br>'+user_tokens+''+
             '</div>'+
             '<div class="terminalBottom">'+
               '<limit class="displayUnit">Limit</limit>'+
