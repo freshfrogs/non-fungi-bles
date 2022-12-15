@@ -82,7 +82,7 @@
       user_keys = Object.keys(user_invites);
       user_invite = "0x0000000000000000000000000000000000000000000000000000000000000000";
       
-      // No. Frogs owned by fetch_address
+      // No. Tokens owned by fetch_address
       user_tokens = await collection.methods.balanceOf(user_address).call();
 
       // Collection Variables
@@ -162,9 +162,9 @@
     .then((tokens) => tokens.json())
     .then((tokens) => {
       var { assets } = tokens
-      assets.forEach((frog) => {
+      assets.forEach((token) => {
         
-        render_token(frog);
+        render_token(token);
 
       })
     })
