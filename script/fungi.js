@@ -164,8 +164,8 @@
 
       document.getElementById('button_left').addEventListener("click", async function(e) {
 
-        console.log('Sending mint transaction!');
-        console.log(mint_quantity+' Mushrooms @ Ξ'+mint_price+' : ['+(mint_total)+']');
+        console.log('Sending mint transaction!\n'+
+        mint_quantity+' Mushrooms @ Ξ'+mint_price+' : ['+(mint_total)+']');
 
         try {
           consoleOutput(
