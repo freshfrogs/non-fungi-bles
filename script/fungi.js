@@ -14,6 +14,7 @@
   // Update UI Display
   async function update_display() {
 
+    console.log('Updated Next ID: '+next_id)
     document.getElementById('supply').innerHTML = (next_id-1)+'/8,888';
     document.getElementById('mintImage').src = '../mushroom/'+next_id+'.png';
     document.getElementById('button_middle').innerHTML = '<strong>Mushroom</strong>'+next_id
@@ -47,19 +48,14 @@
       traits_list = traits;
 
       next_id = parseInt(count) + 1;
-      
+
       // Update UI
       update_display();
 
     })
     .catch(e => {
-      console.log('Error: Failed to fetch OpenSea collection data!');
 
-      consoleOutput(
-        '<div style="text-align: left;">'+
-          'Something went wrong! Try refreshing the page!<br>'+
-        '</div>'
-      );
+      console.log('Error: Failed to fetch OpenSea collection data!\n'+e.message);
       
     });
 
