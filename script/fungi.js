@@ -5,7 +5,7 @@
   var mint_price = mint_total = 0.001;
   var mint_quantity = 1;
   var next_id, traits_list, web3, f0;
-  var CONTRACT_ADDRESS, CONTROLLER_ADDRESS, COLLECTION, collection, contractName, contractSymbol;
+  var CONTRACT_ADDRESS, CONTROLLER_ADDRESS, COLLECTION, collection, collection_name, collection_symbol;
   var CONTRACT_ADDRESS = '0x4aFd4635417132892A4eA9CAE128d03e803317fD';
   var NETWORK = 'main';
 
@@ -170,7 +170,7 @@
         try {
           consoleOutput(
             '<div style="text-align: left;">'+
-              'Minting <b>'+contractName+'</b> x'+mint_quantity+'<br>'+
+              'Minting <b>'+collection_name+'</b> x'+mint_quantity+'<br>'+
               'Please sign the transaction and wait...'+
             '</div>'
           );
