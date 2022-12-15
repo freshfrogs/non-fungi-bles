@@ -68,7 +68,7 @@
     })
 
     document.getElementById('quantity-').addEventListener("click", function(e) {
-      if (mint_quantity <= 0) { return; }
+      if (mint_quantity <= 1) { return; }
       else {
         mint_quantity = mint_quantity - 1;
         mint_total = mint_price*mint_quantity;
