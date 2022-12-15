@@ -247,7 +247,7 @@
         '<div class="renderRight">'+
           '<div class="innerRight">'+
             '<div id="traits_'+token_id+'" class="trait_list">'+
-              '<b>'+name+'</b>'+'<text style="color: #1ac486; float: right;">'+opensea_username+'</text>'+
+              '<b>'+name+'</b>'+'<text style="color: #1a202c; float: right;">'+opensea_username+'</text>'+
             '</div>'+
             '<div id="prop_'+token_id+'" class="properties">'+
               '<div style="text-align: center;">'+
