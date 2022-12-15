@@ -47,6 +47,9 @@
       traits_list = traits;
 
       next_id = parseInt(count) + 1;
+      
+      // Update UI
+      update_display();
 
     })
     .catch(e => {
@@ -59,9 +62,6 @@
       );
       
     });
-
-    // Update UI
-    update_display();
 
     document.getElementById('quantity+').addEventListener("click", function(e) {
       mint_quantity = mint_quantity + 1;
