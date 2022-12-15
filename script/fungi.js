@@ -165,7 +165,30 @@
 
         console.log('Sending mint transaction!');
         console.log(mint_quantity+' Mushrooms @ Ξ'+mint_price+' : ['+(mint_total)+']');
-        let tokens = await f0.mint(user_invite, mint_quantity);
+
+        try {
+          consoleOutput(
+            '<div style="text-align: left;">'+
+              'Minting <b>'+contractName+'</b> x'+mint_quantity+'<br>'+
+              'Please sign the transaction and wait...'+
+            '</div>'
+          );
+
+          let tokens = await f0.mint(user_invite, mint_quantity);
+
+          consoleOutput(
+            '<div style="text-align: left;">'+
+              'Congratulations! Tokens succesfully minted!<br>'+
+            '</div>'
+          );
+
+        } catch (e) {
+          consoleOutput(
+            '<div style="text-align: left;">'+
+              'Tokens failed to mint!<br>'+
+            '</div>'
+          );
+        }
         
       })
 
