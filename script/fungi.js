@@ -178,7 +178,7 @@
 
           consoleOutput(
             '<div style="text-align: left;">'+
-              'Congratulations! Tokens succesfully minted!<br>'+
+              'Congratulations! Tokens successfully minted!<br>'+
             '</div>'
           );
 
