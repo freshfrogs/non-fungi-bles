@@ -75,18 +75,20 @@
         document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_total+'Ξ'
         document.getElementById('mintImage').src = '../build/images/'+((next_id+mint_quantity)-1)+'.png'
       }
-      
+
     })
 
     // Connect WEB3, Factoria
+    console.log('Connecting to Ethereum network...')
     const web3 = new Web3(window.ethereum);
+    console.log('Syncing with Factoria...')
     const f0 = new F0();
 
+    console.log('Defining Token ABI...')
     // Connect Collection Smart Contract, Staking Smart Contract
     COLLECTION = collection = new web3.eth.Contract(token_abi, CONTRACT_ADDRESS);
 
     try { // Attempt to Connect!
-      console.log('Connecting factoria, web3')
 
       consoleOutput(
         '<div style="text-align: left;">'+
@@ -94,11 +96,15 @@
         '</div>'
       );
 
+      console.log('Initiating...')
+
       await f0.init({
         web3: web3,
         contract: CONTRACT_ADDRESS,
         network: NETWORK
       })
+
+      console.log('success')
 
       // User Variables
       user_address = await web3.currentProvider.selectedAddress;
@@ -114,6 +120,8 @@
       collection_symbol = await f0.api.symbol().call();
       next_id = await f0.api.nextId().call();
       next_id = parseInt(next_id);
+
+      console.log('Retrieving user invites...')
 
       // User Invites
       await getInvites();
