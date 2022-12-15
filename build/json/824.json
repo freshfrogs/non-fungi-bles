@@ -1,0 +1,35 @@
+{
+  "name": "Mushroom #824",
+  "description": "Non-Fungi-ble's (FNGI) is a collection of 8,888 randomly generated pixel art mushrooms on the Ethereum blockchain. 5% Sales Royalty. Learn more at https://non-fungi-ble.io",
+  "external_url": "https://non-fungi-ble.io/mushroom/824.png",
+  "image": "ipfs://bafybeig4xeonck7ylk234n7j24wq7bye74fxcdv6hpwehydqnvcsdgrx4a/824.png",
+  "dna": "bbc052c572d2f5f2dcc4eee7d87a84a5527d2dfe",
+  "edition": 824,
+  "date": 1671069075240,
+  "attributes": [
+    {
+      "trait_type": "Species",
+      "value": "Stocking"
+    },
+    {
+      "trait_type": "Stem",
+      "value": "Green"
+    },
+    {
+      "trait_type": "Ears",
+      "value": "Lavender"
+    },
+    {
+      "trait_type": "SmallCap",
+      "value": "White"
+    },
+    {
+      "trait_type": "Cap",
+      "value": "Pearl"
+    },
+    {
+      "trait_type": "Spores",
+      "value": "Purple"
+    }
+  ]
+}
