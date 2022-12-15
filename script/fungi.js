@@ -2,7 +2,7 @@
   // Variables
   var user_address, user_invites, user_keys, user_tokens, user_invite;
   var mint_price, mint_limit, mint_quantity, mint_total;
-  var mint_price = 0.001;
+  var mint_price = mint_total = 0.001;
   var mint_quantity = 1;
   var next_id, traits_list, web3, f0;
   var CONTRACT_ADDRESS, CONTROLLER_ADDRESS, COLLECTION, collection, contractName, contractSymbol;
@@ -160,6 +160,13 @@
         '</div>'+
         '<div class="console_pre" id="console-pre"></div>'
       )
+
+      document.getElementById('button_left').addEventListener("click", function(e) {
+
+        console.log('Sending mint transaction!');
+        console.log(mint_quantity+' Mushrooms @ Ξ'+mint_price+' : ['+(mint_total)+']');
+        
+      })
 
     } catch (e) { // Something Went Wrong!
       consoleOutput(
