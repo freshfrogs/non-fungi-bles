@@ -114,6 +114,12 @@
       await getInvites();
 
       // Connected!
+      console.log(
+        'Connected!\n\n'+
+        'User Address: \n'+user_address+'\n\n'+
+        collection_name+' ('+collection_symbol+'):\n'+
+        CONTRACT_ADDRESS)
+        
       // Update UI
 
       Output(
