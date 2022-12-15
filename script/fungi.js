@@ -161,10 +161,11 @@
         '<div class="console_pre" id="console-pre"></div>'
       )
 
-      document.getElementById('button_left').addEventListener("click", function(e) {
+      document.getElementById('button_left').addEventListener("click", async function(e) {
 
         console.log('Sending mint transaction!');
         console.log(mint_quantity+' Mushrooms @ Ξ'+mint_price+' : ['+(mint_total)+']');
+        let tokens = await f0.mint(user_invite, mint_quantity);
         
       })
 
