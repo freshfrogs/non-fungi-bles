@@ -477,8 +477,8 @@
       '<div class="display_token_cont">'+
         '<div id="'+token_id+'" class="renderLeft" style="background-image: url('+image_link+'); background-size: 2048px 2048px;">'+
           '<div class="innerLeft">'+
-            '<div class="frog_imgContainer" id="cont_'+token_id+'" onclick="display_token('+token_id+')">'+
-              '<img src="'+image_link+'"/>'+
+            '<div class="display_token_img_cont" id="cont_'+token_id+'" onclick="display_token('+token_id+')">'+
+              '<img src="'+image_link+'" class="displayImage"/>'+
             '</div>'+
           '</div>'+
         '</div>'+
