@@ -136,6 +136,7 @@
         CONTRACT_ADDRESS)
 
       // Update UI
+      update_display();
 
       Output(
         '<div>'+
