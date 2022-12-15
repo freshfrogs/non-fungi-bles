@@ -21,11 +21,11 @@
       '</div>'
     );
 
-    /*
+    
     console.log('fetching opensea collection info')
 
     // Fetch Collection Data via OpenSea API
-    fetch('https://api.opensea.io/api/v1/collection/fresh-frogs', options)
+    fetch('https://api.opensea.io/api/v1/collection/non-fungi-bles', options)
     .then(collection => collection.json())
     .then(collection => {
 
@@ -38,6 +38,10 @@
 
       var { collection: { banner_image_url, created_date, description, dev_seller_fee_basis_points, external_url, featured_image_url, name, payout_address, traits, stats: { floor_price, market_cap, total_volume, count, num_owners } } } = collection
       traits_list = traits;
+
+      next_id = parseInt(count);
+      updateNextID(next_id);
+
     })
     .catch(e => {
       console.log('Error: Failed to fetch OpenSea collection data!');
@@ -49,7 +53,7 @@
       );
       
     });
-    */
+    
 
     // Connect WEB3, Factoria
     const web3 = new Web3(window.ethereum);
@@ -87,7 +91,7 @@
       collection_symbol = await f0.api.symbol().call();
       next_id = await f0.api.nextId().call();
       next_id = parseInt(next_id);
-      
+      updateNextID(next_id);
       await getInvites();
 
       // Connected!
@@ -149,6 +153,10 @@
       }
     }
 
+  }
+
+  async function updateNextID(tokenId) {
+    document.getElementById('supply').innerHTML = tokenId+'/8,888'
   }
 
   async function fetch_mushrooms() {
