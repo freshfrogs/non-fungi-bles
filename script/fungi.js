@@ -21,6 +21,52 @@
 
   }
 
+  // fetch_user_tokens() | address
+  async function fetch_user_tokens(fetch_address) {
+    if (! fetch_address) { fetch_address = user_address; }
+
+    // No. tokens owned by fetch_address
+    let user_tokens = await collection.methods.balanceOf(fetch_address).call();
+
+    document.getElementById('mushrooms').innerHTML = ''
+
+    if (user_tokens >= 1) {
+
+    // Render tokens Held by Fetch Address
+      let pages = parseInt(user_tokens/50) + 1;
+      for (var i = 0; i < pages; i++) {
+
+        // Fetch OpenSea Data
+        fetch('https://api.opensea.io/api/v1/assets?owner='+fetch_address+'&order_direction=asc&asset_contract_address='+CONTRACT_ADDRESS+'&offset='+(i * 50)+'&limit=50&include_orders=false', options)
+        .then((tokens) => tokens.json())
+        .then((tokens) => {
+          var { assets } = tokens
+          assets.forEach((token) => {
+            
+            render_token(token);
+
+          })
+        })
+        .catch(e => {
+          
+          consoleOutput(
+            '<div style="text-align: left;">'+
+              'Failed to fetch user data (partial). Try refreshing the page!<br>'+
+            '</div>'
+          );
+
+        })
+      }
+
+    // Does not own atleast one token!
+    } else {
+      Output('<br>'+'<strong>Connected!</strong> ❌ It seems you do not own any mushrooms! <br><hr>'+'<div class="console_pre" id="console-pre"></div>')
+      return;
+
+    }
+    
+  }
+
   // connect() | Connect Wallet | Update Collection Data
   async function connect() {
 
@@ -77,6 +123,13 @@
         document.getElementById('mintImage').src = '../build/images/'+((next_id+mint_quantity)-1)+'.png'
         document.getElementById('button_middle').innerHTML = '<strong>Mushroom</strong>'+((next_id+mint_quantity)-1)
       }
+
+    })
+
+    document.getElementById('ownedTokens').addEventListener("click", function(e) {
+
+      document.getElementById('mushrooms').innerHTML = '';
+      fetch_user_tokens();
 
     })
 
@@ -290,7 +343,7 @@
     }
 
     // <-- Begin Element
-    token_doc = document.getElementById('thePad');
+    token_doc = document.getElementById('mushrooms');
     token_element = document.createElement('div');
 
     // Element Details -->
