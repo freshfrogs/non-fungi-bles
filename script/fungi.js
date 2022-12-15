@@ -499,7 +499,7 @@
 
       let attribute = metadata.attributes[i]
 
-      if (attribute.trait_type == "Mushroom Type") {
+      if (attribute.trait_type == "Species") {
         mushroom_type = attribute.value
       } else if (mushroom_type !== 'null') {
         loadTrait(mushroom_type+'_'+attribute.trait_type, attribute.value, 'cont_'+token_id);
