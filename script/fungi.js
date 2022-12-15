@@ -27,7 +27,7 @@
     // Connecting
     consoleOutput(
       '<div style="text-align: left;">'+
-        'Connect Ethereum wallet...<br>'+
+        'Waiting to connect Ethereum wallet...<br>'+
       '</div>'
     );
     
@@ -37,12 +37,6 @@
     fetch('https://api.opensea.io/api/v1/collection/non-fungi-bles', options)
     .then(collection => collection.json())
     .then(collection => {
-      
-      consoleOutput(
-        '<div style="text-align: left;">'+
-          'Fetching collection data from Opensea...<br>'+
-        '</div>'
-      );
 
       var { collection: { banner_image_url, created_date, description, dev_seller_fee_basis_points, external_url, featured_image_url, name, payout_address, traits, stats: { floor_price, market_cap, total_volume, count, num_owners } } } = collection
       traits_list = traits;
