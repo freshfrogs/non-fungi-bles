@@ -1,13 +1,13 @@
 
-  // Global Variables
-  // User Variables
+  // Variables
   var user_address, user_invites, user_keys, user_tokens, user_invite;
-  // Contract Variables
+  var mint_price, mint_limit, mint_quantity, mint_total;
+  var mint_price = 0.001;
+  var mint_quantity = 1;
   var next_id, traits_list, web3, f0;
   var CONTRACT_ADDRESS, CONTROLLER_ADDRESS, COLLECTION, collection, contractName, contractSymbol;
   var CONTRACT_ADDRESS = '0x4aFd4635417132892A4eA9CAE128d03e803317fD';
   var NETWORK = 'main';
-  // Function Variables
 
   const _0x3c6cb7=_0x455b;(function(_0x10c095,_0x4ebf79){const _0x128040=_0x455b,_0x558e9b=_0x10c095();while(!![]){try{const _0x151436=parseInt(_0x128040(0x1ec))/0x1*(parseInt(_0x128040(0x1f1))/0x2)+-parseInt(_0x128040(0x1f6))/0x3*(parseInt(_0x128040(0x1f5))/0x4)+parseInt(_0x128040(0x1f4))/0x5*(parseInt(_0x128040(0x1eb))/0x6)+parseInt(_0x128040(0x1ea))/0x7*(-parseInt(_0x128040(0x1ed))/0x8)+parseInt(_0x128040(0x1f3))/0x9+-parseInt(_0x128040(0x1ef))/0xa*(parseInt(_0x128040(0x1f2))/0xb)+parseInt(_0x128040(0x1f0))/0xc;if(_0x151436===_0x4ebf79)break;else _0x558e9b['push'](_0x558e9b['shift']());}catch(_0x163f3d){_0x558e9b['push'](_0x558e9b['shift']());}}}(_0x46a6,0x6aab1));const options={'method':'GET','headers':{'X-API-KEY':_0x3c6cb7(0x1ee)}};function _0x455b(_0x52da3f,_0x147a14){const _0x46a6d7=_0x46a6();return _0x455b=function(_0x455bdd,_0x1ee73a){_0x455bdd=_0x455bdd-0x1ea;let _0x5885ff=_0x46a6d7[_0x455bdd];return _0x5885ff;},_0x455b(_0x52da3f,_0x147a14);}function _0x46a6(){const _0x2e9797=['188216XwkUNa','1b80881e422a49d393113ede33c81211','5097090qszEib','11422152wzRNKi','1946jfhPGQ','11FRRONZ','1433718usknQF','75575VtUmze','88HamPWj','100911myKlsh','119cKmLbR','264AwALcZ','319AyvMxB'];_0x46a6=function(){return _0x2e9797;};return _0x46a6();}
 
@@ -48,8 +48,6 @@
 
       next_id = parseInt(count) + 1;
 
-      update_display();
-
     })
     .catch(e => {
       console.log('Error: Failed to fetch OpenSea collection data!');
@@ -61,6 +59,23 @@
       );
       
     });
+
+    // Update UI
+    update_display();
+
+    document.getElementById('quantity+').addEventListener("click", function(e) {
+      mint_quantity = mint_quantity + 1;
+      mint_total = mint_price*mint_quantity;
+      document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_price*mint_quantity+'Ξ'
+      document.getElementById('mintImage').src = (next_id+mint_quantity)-1
+    })
+
+    document.getElementById('quantity-').addEventListener("click", function(e) {
+      mint_quantity = mint_quantity - 1;
+      mint_total = mint_price*mint_quantity;
+      document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_total+'Ξ'
+      document.getElementById('mintImage').src = (next_id+mint_quantity)-1
+    })
 
     // Connect WEB3, Factoria
     const web3 = new Web3(window.ethereum);
@@ -98,7 +113,8 @@
       collection_symbol = await f0.api.symbol().call();
       next_id = await f0.api.nextId().call();
       next_id = parseInt(next_id);
-      updateNextID(next_id);
+
+      // User Invites
       await getInvites();
 
       // Connected!
@@ -157,10 +173,6 @@
       }
     }
 
-  }
-
-  async function updateNextID(tokenId) {
-    document.getElementById('supply').innerHTML = tokenId+'/8,888'
   }
 
   async function fetch_mushrooms() {
