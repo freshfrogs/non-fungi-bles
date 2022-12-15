@@ -60,7 +60,7 @@
         mint_quantity = mint_quantity + 1;
         mint_total = mint_price*mint_quantity;
         document.getElementById('mint_quantity').innerHTML = mint_quantity
-        document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_price*mint_quantity+'Ξ'
+        document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_total.toFixed(2)+'Ξ'
         document.getElementById('mintImage').src = '../build/images/'+((next_id+mint_quantity)-1)+'.png'
         document.getElementById('button_middle').innerHTML = '<strong>Mushroom</strong>'+((next_id+mint_quantity)-1)
       }
@@ -73,7 +73,7 @@
         mint_quantity = mint_quantity - 1;
         mint_total = mint_price*mint_quantity;
         document.getElementById('mint_quantity').innerHTML = mint_quantity
-        document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_total+'Ξ'
+        document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_total.toFixed(2)+'Ξ'
         document.getElementById('mintImage').src = '../build/images/'+((next_id+mint_quantity)-1)+'.png'
         document.getElementById('button_middle').innerHTML = '<strong>Mushroom</strong>'+((next_id+mint_quantity)-1)
       }
@@ -192,10 +192,10 @@
 
   }
 
-  async function fetch_mushrooms() {
+  async function fetch_mushrooms(tokens) {
 
     // Fetch Collection Data via OpenSea API
-    fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&asset_contract_address=0x4aFd4635417132892A4eA9CAE128d03e803317fD&limit=12&include_orders=false', options)
+    fetch('https://api.opensea.io/api/v1/assets?order_direction=desc&asset_contract_address=0x4aFd4635417132892A4eA9CAE128d03e803317fD&limit='+tokens+'&include_orders=false', options)
     .then((tokens) => tokens.json())
     .then((tokens) => {
       var { assets } = tokens
