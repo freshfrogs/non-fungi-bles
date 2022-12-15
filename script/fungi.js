@@ -16,6 +16,7 @@
 
     document.getElementById('supply').innerHTML = (next_id-1)+'/8,888';
     document.getElementById('mintImage').src = '../mushroom/'+next_id+'.png';
+    document.getElementById('button_middle').innerHTML = '<strong>Mushroom</strong>'+next_id
 
   }
 
