@@ -470,7 +470,7 @@
         '<div id="'+token_id+'" class="renderLeft" style="background-image: url('+image_link+'); background-size: 2048px 2048px;">'+
           '<div class="innerLeft">'+
             '<div class="frog_imgContainer" id="cont_'+token_id+'" onclick="display_token('+token_id+')">'+
-              //'<img src="'+image_link+'"/>'+
+              '<img src="'+image_link+'"/>'+
             '</div>'+
           '</div>'+
         '</div>'+
@@ -491,6 +491,7 @@
     // Create Element <--
     frog_doc.appendChild(frog_token);
 
+    /*
     // Update Metadata! Build Frog -->
     let mushroom_type = 'null';
     let metadata = await (await fetch("../build/json/"+token_id+".json")).json();
@@ -506,7 +507,7 @@
       }
 
     }
-
+    */
   }
 
   // loadTrait(_trait(family), _attribute(type), _where(element))
