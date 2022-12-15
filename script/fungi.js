@@ -34,7 +34,7 @@
     console.log('Fetching OpenSea collection data...')
 
     // Fetch Collection Data via OpenSea API
-    fetch('https://api.opensea.io/api/v1/collection/non-fungi-bles', options)
+    fetch('https://api.opensea.io/api/v1/collection/non-fungi-blesss', options)
     .then(collection => collection.json())
     .then(collection => {
 
