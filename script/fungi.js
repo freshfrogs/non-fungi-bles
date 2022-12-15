@@ -60,17 +60,27 @@
     });
 
     document.getElementById('quantity+').addEventListener("click", function(e) {
-      mint_quantity = mint_quantity + 1;
-      mint_total = mint_price*mint_quantity;
-      document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_price*mint_quantity+'Ξ'
-      document.getElementById('mintImage').src = (next_id+mint_quantity)-1
+
+      if (mint_quantity >= 10) { return; }
+      else {
+        mint_quantity = mint_quantity + 1;
+        mint_total = mint_price*mint_quantity;
+        document.getElementById('mint_quantity').innerHTML = mint_quantity
+        document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_price*mint_quantity+'Ξ'
+        document.getElementById('mintImage').src = (next_id+mint_quantity)-1
+      }
+
     })
 
     document.getElementById('quantity-').addEventListener("click", function(e) {
-      mint_quantity = mint_quantity - 1;
-      mint_total = mint_price*mint_quantity;
-      document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_total+'Ξ'
-      document.getElementById('mintImage').src = (next_id+mint_quantity)-1
+      if (mint_quantity <= 0) { return; }
+      else {
+        mint_quantity = mint_quantity - 1;
+        mint_total = mint_price*mint_quantity;
+        document.getElementById('mint_quantity').innerHTML = mint_quantity
+        document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_total+'Ξ'
+        document.getElementById('mintImage').src = (next_id+mint_quantity)-1
+      }
     })
 
     // Connect WEB3, Factoria
@@ -119,7 +129,7 @@
         'User Address: \n'+user_address+'\n\n'+
         collection_name+' ('+collection_symbol+'):\n'+
         CONTRACT_ADDRESS)
-        
+
       // Update UI
 
       Output(
