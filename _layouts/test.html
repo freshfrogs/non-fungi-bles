@@ -296,6 +296,18 @@
     padding-bottom: 0px;
     text-align: left;
   }
+  .displayIcon {
+    width: 26px;
+    height: 26px;
+    border-radius: 100%;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .displayIcon:hover{
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1);
+  }
 </style>
 <html lang="{{ site.lang | default: "en-US" }}">
   <link rel="icon" href="../assets/logo.png">
@@ -354,6 +366,7 @@
           <div id="bigContainer" class="bigContainer"><img src="../build/images/1.png" id="mintImage" class="mintImage"></div>
         </div>
       </header>
+      <div class="iconShelf"><img class="displayIcon" src="../assets/opensea.png" /><img class="displayIcon" src="../assets/twitter.png" /><img class="displayIcon" src="../assets/etherscan.png" /><img class="displayIcon" src="../assets/discord.png" /></div>
       <section id="section" style="box-shadow: 1px 1px 1px 1px rgba(122, 122, 122, 0.20);">
         <div id="pre-top" class="mintingTextWhite1">
           <img src="../blacknwhite.png" class="logoImage" style="padding: 0px; background: transparent;" />
