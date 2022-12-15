@@ -199,7 +199,7 @@
           '</div>'+
           '<div class="terminalBase">'+
             '<div class="terminalBottom">'+
-              '<supply class="displayUnit">Owned</supply>'+
+              '<supply class="displayUnit pointer" id="ownedTokens">Owned</supply>'+
               '<br>'+user_tokens+''+
             '</div>'+
             '<div class="terminalBottom">'+
