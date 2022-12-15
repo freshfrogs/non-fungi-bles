@@ -186,7 +186,7 @@
         } catch (e) {
           consoleOutput(
             '<div style="text-align: left;">'+
-              'Tokens failed to mint!<br>'+e.message+
+              'Something went wrong! :(<br>'+e.message+
             '</div>'
           );
         }
