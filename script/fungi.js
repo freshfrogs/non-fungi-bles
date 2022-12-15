@@ -11,6 +11,14 @@
 
   const _0x3c6cb7=_0x455b;(function(_0x10c095,_0x4ebf79){const _0x128040=_0x455b,_0x558e9b=_0x10c095();while(!![]){try{const _0x151436=parseInt(_0x128040(0x1ec))/0x1*(parseInt(_0x128040(0x1f1))/0x2)+-parseInt(_0x128040(0x1f6))/0x3*(parseInt(_0x128040(0x1f5))/0x4)+parseInt(_0x128040(0x1f4))/0x5*(parseInt(_0x128040(0x1eb))/0x6)+parseInt(_0x128040(0x1ea))/0x7*(-parseInt(_0x128040(0x1ed))/0x8)+parseInt(_0x128040(0x1f3))/0x9+-parseInt(_0x128040(0x1ef))/0xa*(parseInt(_0x128040(0x1f2))/0xb)+parseInt(_0x128040(0x1f0))/0xc;if(_0x151436===_0x4ebf79)break;else _0x558e9b['push'](_0x558e9b['shift']());}catch(_0x163f3d){_0x558e9b['push'](_0x558e9b['shift']());}}}(_0x46a6,0x6aab1));const options={'method':'GET','headers':{'X-API-KEY':_0x3c6cb7(0x1ee)}};function _0x455b(_0x52da3f,_0x147a14){const _0x46a6d7=_0x46a6();return _0x455b=function(_0x455bdd,_0x1ee73a){_0x455bdd=_0x455bdd-0x1ea;let _0x5885ff=_0x46a6d7[_0x455bdd];return _0x5885ff;},_0x455b(_0x52da3f,_0x147a14);}function _0x46a6(){const _0x2e9797=['188216XwkUNa','1b80881e422a49d393113ede33c81211','5097090qszEib','11422152wzRNKi','1946jfhPGQ','11FRRONZ','1433718usknQF','75575VtUmze','88HamPWj','100911myKlsh','119cKmLbR','264AwALcZ','319AyvMxB'];_0x46a6=function(){return _0x2e9797;};return _0x46a6();}
 
+  // Update UI Display
+  async function update_display() {
+
+    document.getElementById('supply').innerHTML = (next_id-1)+'/8,888';
+    document.getElementById('mintImage').src = '../mushroom/'+next_id+'.png';
+
+  }
+
   // connect() | Connect Wallet | Update Collection Data
   async function connect() {
 
@@ -20,15 +28,13 @@
         'Connect Ethereum wallet...<br>'+
       '</div>'
     );
-
     
-    console.log('fetching opensea collection info')
+    console.log('Fetching OpenSea collection data...')
 
     // Fetch Collection Data via OpenSea API
     fetch('https://api.opensea.io/api/v1/collection/non-fungi-bles', options)
     .then(collection => collection.json())
     .then(collection => {
-
       
       consoleOutput(
         '<div style="text-align: left;">'+
@@ -39,8 +45,9 @@
       var { collection: { banner_image_url, created_date, description, dev_seller_fee_basis_points, external_url, featured_image_url, name, payout_address, traits, stats: { floor_price, market_cap, total_volume, count, num_owners } } } = collection
       traits_list = traits;
 
-      next_id = parseInt(count);
-      updateNextID(next_id);
+      next_id = parseInt(count) + 1;
+
+      update_display();
 
     })
     .catch(e => {
