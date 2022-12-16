@@ -192,7 +192,7 @@
           '</div>'+
           '<div class="terminalBase">'+
             '<div class="terminalBottom">'+
-              '<supply class="displayUnit pointer" id="ownedTokens">Owned</supply>'+
+              '<a class="displayUnit" id="ownedTokens" href="./owned">Owned</a>'+
               '<br>'+user_tokens+''+
             '</div>'+
             '<div class="terminalBottom">'+
@@ -207,13 +207,6 @@
         '</div>'+
         '<div class="console_pre" id="console-pre"></div>'
       )
-
-      document.getElementById('ownedTokens').addEventListener("click", function(e) {
-
-        document.getElementById('mushrooms').innerHTML = '';
-        fetch_user_tokens();
-  
-      })
 
       document.getElementById('button_left').addEventListener("click", async function(e) {
 
