@@ -43,7 +43,7 @@
           var { assets } = tokens
           assets.forEach((token) => {
             
-            render_token(token);
+            render_token(token, 2);
 
           })
         })
