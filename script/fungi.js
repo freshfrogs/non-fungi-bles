@@ -126,13 +126,6 @@
 
     })
 
-    document.getElementById('ownedTokens').addEventListener("click", function(e) {
-
-      document.getElementById('mushrooms').innerHTML = '';
-      fetch_user_tokens();
-
-    })
-
     // Connect WEB3, Factoria
     console.log('Connecting to Ethereum network...')
     const web3 = new Web3(window.ethereum);
@@ -214,6 +207,13 @@
         '</div>'+
         '<div class="console_pre" id="console-pre"></div>'
       )
+
+      document.getElementById('ownedTokens').addEventListener("click", function(e) {
+
+        document.getElementById('mushrooms').innerHTML = '';
+        fetch_user_tokens();
+  
+      })
 
       document.getElementById('button_left').addEventListener("click", async function(e) {
 
