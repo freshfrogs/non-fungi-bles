@@ -279,7 +279,7 @@
       var { assets } = tokens
       assets.forEach((token) => {
         
-        render_token(token);
+        render_token(token, 1);
 
       })
     })
@@ -312,7 +312,7 @@
 
   */
 
-  async function render_token(token) {
+  async function render_token(token, series) {
 
     let opensea_username = ''
     let token_owner = ''
@@ -320,8 +320,13 @@
     // Assign token variables from data object
     try { var { token_id, external_link, permalink, name, rarity_data: { rank }, owner: { address, user: { username } } } = token } catch (e) {} // , last_sale: { payment_token: { decimals }, total_price }
 
-    let image_link = '../build/images/'+token_id+'.png'
     opensea_username = username
+
+    if (series == 2) {
+      let image_link = '../build/images/'+token_id+'.png'
+    } else {
+      let image_link = '../mushroom/'+token_id+'.png'
+    }
 
     if (typeof address == 'undefined' || address == '' || address == null) {
       address = await collection.methods.ownerOf(token_id).call();
