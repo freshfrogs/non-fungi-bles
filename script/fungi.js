@@ -192,7 +192,7 @@
           '</div>'+
           '<div class="terminalBase">'+
             '<div class="terminalBottom">'+
-              '<a class="displayUnit" id="ownedTokens" href="./owned">Owned</a>'+
+              '<a class="displayUnit" id="ownedTokens" href="https://non-fungi-ble.io/owned">Owned</a>'+
               '<br>'+user_tokens+''+
             '</div>'+
             '<div class="terminalBottom">'+
