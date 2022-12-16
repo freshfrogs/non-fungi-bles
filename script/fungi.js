@@ -107,7 +107,7 @@
         mint_total = mint_price*mint_quantity;
         document.getElementById('mint_quantity').innerHTML = mint_quantity
         document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_total.toFixed(3)+'Ξ'
-        document.getElementById('mintImage').src = '../build/images/'+((next_id+mint_quantity)-1)+'.png'
+        document.getElementById('mintImage').src = '../mushroom/'+((next_id+mint_quantity)-1)+'.png'
         document.getElementById('button_middle').innerHTML = '<strong>Mushroom</strong>'+((next_id+mint_quantity)-1)
       }
 
@@ -120,7 +120,7 @@
         mint_total = mint_price*mint_quantity;
         document.getElementById('mint_quantity').innerHTML = mint_quantity
         document.getElementById('button_left').innerHTML = '<strong>Mint</strong>'+mint_total.toFixed(3)+'Ξ'
-        document.getElementById('mintImage').src = '../build/images/'+((next_id+mint_quantity)-1)+'.png'
+        document.getElementById('mintImage').src = '../mushroom/'+((next_id+mint_quantity)-1)+'.png'
         document.getElementById('button_middle').innerHTML = '<strong>Mushroom</strong>'+((next_id+mint_quantity)-1)
       }
 
