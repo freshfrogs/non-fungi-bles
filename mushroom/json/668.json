@@ -1,31 +1,35 @@
 {
   "name": "Mushroom #668",
-  "description": "A collection of 10,000 unique pixelated fungi growing on the Ethereum blockchain! Learn more at https://non-fungi-ble.io",
-  "image": "ipfs://bafybeig4xeonck7ylk234n7j24wq7bye74fxcdv6hpwehydqnvcsdgrx4a/668.png",
-  "dna": "60f41a26d56e82e70d03a328326aa832071e2fcb",
+  "description": "Non-Fungi-ble's (FNGI) is a collection of 8,888 randomly generated pixel art mushrooms on the Ethereum blockchain. 5% Sales Royalty. Learn more at https://non-fungi-ble.io",
+  "external_url": "https://non-fungi-ble.io/mushroom/668.png",
+  "image": "ipfs://bafybeigkbpbijz34jpg3wfz73cjjlkssm3mgmfqiibel7lmuzrg5ayg5qe/668.png",
+  "dna": "3de5a998b0222a7a395c54df5b97b11a98cddfb7",
   "edition": 668,
-  "date": 1662838755965,
+  "date": 1671068999050,
   "attributes": [
     {
+      "trait_type": "Species",
+      "value": "Toadstool"
+    },
+    {
       "trait_type": "Stem",
-      "value": "Black"
+      "value": "Hazlenut"
     },
     {
-      "trait_type": "Stripe",
-      "value": "Black"
-    },
-    {
-      "trait_type": "Cap",
-      "value": "Blue"
+      "trait_type": "Stripes",
+      "value": "Green"
     },
     {
       "trait_type": "Buttons",
-      "value": "Red"
+      "value": "Blue"
     },
     {
-      "trait_type": "Scales",
-      "value": "Cyan"
+      "trait_type": "Cap",
+      "value": "DarkGreen"
+    },
+    {
+      "trait_type": "Spots",
+      "value": "Magenta"
     }
-  ],
-  "compiler": "HashLips Art Engine"
+  ]
 }

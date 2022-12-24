@@ -724,10 +724,42 @@
 
     <script>
 
+      document.addEventListener("DOMContentLoaded", async () => {
+
+        var toadstool = morel = stocking = oyster = false;
+
+        for (var i = 1; i < 101; i++) {
+
+          let metadata = await (await fetch("../build/json/"+i+".json")).json();
+          for (var j = 0; j < metadata.attributes.length; j++) {
+
+            let attribute = metadata.attributes[j];
+
+            if (toadstool == true && morel == true && stocking == true && oyster == true) {
+              break
+            }
+
+            if (attribute.trait_type == 'Species') {
+
+              if (attribute.value == 'Toadstool' && toadstool == false) {
+
+              } else if (attribute.value == 'Morel' && morel == false) {
+
+              } else if (attribute.value == 'Stocking' && stocking == false) {
+
+              } else if (attribute.value == 'Oyster' && oyster == false) {
+
+              }
+
+            }
+          }
+        }
+      })
+
     </script>
   </head>
   <body class="bodyb">
-    
+
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
   </body>
 </html>

@@ -1,0 +1,27 @@
+{
+  "name": "Mushroom #3245",
+  "description": "A collection of 10,000 unique pixelated fungi growing on the Ethereum blockchain! Learn more at https://non-fungi-ble.io",
+  "image": "ipfs://bafybeig4xeonck7ylk234n7j24wq7bye74fxcdv6hpwehydqnvcsdgrx4a/3245.png",
+  "dna": "199ca8853d023f4751c26f9196c4608049246e3d",
+  "edition": 3245,
+  "date": 1662838833417,
+  "attributes": [
+    {
+      "trait_type": "Stem",
+      "value": "Tan"
+    },
+    {
+      "trait_type": "Cap",
+      "value": "LightBrown"
+    },
+    {
+      "trait_type": "Mycelia",
+      "value": "Tan"
+    },
+    {
+      "trait_type": "Scales",
+      "value": "Red"
+    }
+  ],
+  "compiler": "HashLips Art Engine"
+}

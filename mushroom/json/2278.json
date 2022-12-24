@@ -1,27 +1,31 @@
 {
   "name": "Mushroom #2278",
-  "description": "A collection of 10,000 unique pixelated fungi growing on the Ethereum blockchain! Learn more at https://non-fungi-ble.io",
-  "image": "ipfs://bafybeig4xeonck7ylk234n7j24wq7bye74fxcdv6hpwehydqnvcsdgrx4a/2278.png",
-  "dna": "a8f23c34867847252cd330205cd2f2c33bf13320",
+  "description": "Non-Fungi-ble's (FNGI) is a collection of 8,888 randomly generated pixel art mushrooms on the Ethereum blockchain. 5% Sales Royalty. Learn more at https://non-fungi-ble.io",
+  "external_url": "https://non-fungi-ble.io/mushroom/2278.png",
+  "image": "ipfs://bafybeigkbpbijz34jpg3wfz73cjjlkssm3mgmfqiibel7lmuzrg5ayg5qe/2278.png",
+  "dna": "361b8cf57dec66e94ca906039196aa13e4180a24",
   "edition": 2278,
-  "date": 1662838846064,
+  "date": 1671069022203,
   "attributes": [
     {
+      "trait_type": "Species",
+      "value": "Stocking"
+    },
+    {
       "trait_type": "Stem",
-      "value": "Oaknut"
+      "value": "Blue"
     },
     {
-      "trait_type": "Stripe",
-      "value": "Tan"
-    },
-    {
-      "trait_type": "Cap",
+      "trait_type": "Ears",
       "value": "Pink"
     },
     {
-      "trait_type": "Mycelia",
-      "value": "Brown"
+      "trait_type": "SmallCap",
+      "value": "Purple"
+    },
+    {
+      "trait_type": "Cap",
+      "value": "Gold"
     }
-  ],
-  "compiler": "HashLips Art Engine"
+  ]
 }
